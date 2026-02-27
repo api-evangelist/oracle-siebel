@@ -1,0 +1,87 @@
+name: Oracle Siebel APIs
+description: Oracle Siebel CRM APIs provide programmatic access to customer relationship management functionality including sales, marketing, and service automation capabilities.
+url: https://www.oracle.com/siebel/
+created: '2024'
+modified: '2024'
+specificationVersion: '0.18'
+apis:
+- name: Oracle Siebel REST API
+  description: RESTful API for accessing Siebel business objects and services, enabling integration with modern applications and mobile devices.
+  image: https://www.oracle.com/a/ocom/img/siebel-logo.png
+  humanURL: https://docs.oracle.com/cd/E95904_01/books/REST/
+  baseURL: https://<your-siebel-server>/siebel/v1.0
+  tags:
+  - CRM
+  - REST
+  - Customer Management
+  - Sales
+  - Marketing
+  - Service
+  properties:
+  - type: Documentation
+    url: https://docs.oracle.com/cd/E95904_01/books/REST/
+  - type: OpenAPI
+    url: https://<your-siebel-server>/siebel/v1.0/swagger.json
+  - type: Authentication
+    url: https://docs.oracle.com/cd/E95904_01/books/REST/RESTAPI_Authentication.html
+- name: Oracle Siebel SOAP Web Services
+  description: SOAP-based web services for enterprise integration with Siebel CRM, supporting complex business operations and workflows.
+  image: https://www.oracle.com/a/ocom/img/siebel-logo.png
+  humanURL: https://docs.oracle.com/cd/E95904_01/books/IntegSvcs/
+  baseURL: https://<your-siebel-server>/siebel/app/soap/services
+  tags:
+  - SOAP
+  - Web Services
+  - Enterprise Integration
+  - CRM
+  properties:
+  - type: Documentation
+    url: https://docs.oracle.com/cd/E95904_01/books/IntegSvcs/
+  - type: WSDL
+    url: https://<your-siebel-server>/siebel/app/soap/services?WSDL
+- name: Oracle Siebel Business Service API
+  description: APIs for creating and consuming custom business services within the Siebel platform for specialized business logic.
+  image: https://www.oracle.com/a/ocom/img/siebel-logo.png
+  humanURL: https://docs.oracle.com/cd/E95904_01/books/BusComp/
+  tags:
+  - Business Services
+  - Custom Logic
+  - Integration
+  properties:
+  - type: Documentation
+    url: https://docs.oracle.com/cd/E95904_01/books/BusComp/
+- name: Oracle Siebel EAI (Enterprise Application Integration)
+  description: Integration services for connecting Siebel with external systems using various protocols and data formats.
+  image: https://www.oracle.com/a/ocom/img/siebel-logo.png
+  humanURL: https://docs.oracle.com/cd/E95904_01/books/EAI/
+  tags:
+  - EAI
+  - Integration
+  - Middleware
+  - Data Exchange
+  properties:
+  - type: Documentation
+    url: https://docs.oracle.com/cd/E95904_01/books/EAI/
+common:
+- type: Portal
+  url: https://www.oracle.com/siebel/
+- type: Support
+  url: https://support.oracle.com/
+- type: Documentation
+  url: https://docs.oracle.com/en/applications/siebel/
+- type: Community
+  url: https://community.oracle.com/community/customer-relationship-management/siebel
+- type: Training
+  url: https://education.oracle.com/siebel
+maintainers:
+- name: Oracle Corporation
+  email: siebel-info_ww@oracle.com
+  url: https://www.oracle.com/
+tags:
+- CRM
+- Enterprise Software
+- Customer Management
+- Sales Automation
+- Marketing Automation
+- Service Automation
+- Oracle
