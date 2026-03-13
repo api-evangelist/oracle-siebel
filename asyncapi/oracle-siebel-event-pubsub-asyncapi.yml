@@ -1,0 +1,429 @@
+asyncapi: 2.6.0
+info:
+  title: Oracle Siebel CRM Event Pub/Sub
+  description: >-
+    Event-driven integration framework enabling real-time communication
+    between Oracle Siebel CRM and external systems using Apache Kafka.
+    The Event Pub/Sub system supports publishing events from Siebel to
+    Kafka topics when business object state changes occur, and consuming
+    events from Kafka into Siebel for inbound processing. Events are
+    posted as JSON payloads using the Siebel Event Handler business
+    service (CSSEAIEventHandler) and its SendEvent method. Dedicated
+    sidecar Application Interfaces communicate between Siebel Object
+    Managers and the Kafka server using the Kafka Client Java Producer
+    and Consumer APIs.
+  version: '1.0'
+  contact:
+    name: Oracle Support
+    url: https://support.oracle.com
+  license:
+    name: Oracle Cloud Services Agreement
+    url: https://www.oracle.com/corporate/contracts/cloud-services/
+  externalDocs:
+    description: >-
+      Overview of Siebel CRM Event Publication and Subscription
+    url: https://docs.oracle.com/cd/F26413_50/books/SystAdm/c-Overview-of-Siebel-CRM-Event-Publication-and-Subscription.html
+servers:
+  kafkaServer:
+    url: '{kafka-bootstrap-server}:{port}'
+    protocol: kafka
+    description: >-
+      Apache Kafka broker or compatible distribution supporting Java
+      producer and consumer APIs. The Kafka server is user-installed
+      and managed independently from the Siebel deployment.
+    variables:
+      kafka-bootstrap-server:
+        default: localhost
+        description: Kafka bootstrap server hostname
+      port:
+        default: '9092'
+        description: Kafka broker port
+    security:
+      - kafkaSasl: []
+channels:
+  AccountEvent:
+    description: >-
+      Channel for Account business object state change events. Events
+      are published when account records are created, updated, or when
+      critical field values change such as Account Status transitioning
+      from Unverified to Verified.
+    publish:
+      operationId: publishAccountEvent
+      summary: Publish an Account event to Kafka
+      description: >-
+        The Siebel Event Handler publishes Account business object events
+        to this Kafka topic when account-related state changes occur in
+        the CRM system.
+      message:
+        $ref: '#/components/messages/AccountEvent'
+    subscribe:
+      operationId: consumeAccountEvent
+      summary: Consume an Account event from Kafka
+      description: >-
+        External systems subscribe to Account events to receive real-time
+        notifications of account state changes in Siebel CRM.
+      message:
+        $ref: '#/components/messages/AccountEvent'
+  ContactEvent:
+    description: >-
+      Channel for Contact business object state change events. Events
+      are published when contact records are created, updated, or
+      deleted within Siebel CRM.
+    publish:
+      operationId: publishContactEvent
+      summary: Publish a Contact event to Kafka
+      description: >-
+        The Siebel Event Handler publishes Contact business object events
+        to this Kafka topic when contact-related state changes occur.
+      message:
+        $ref: '#/components/messages/ContactEvent'
+    subscribe:
+      operationId: consumeContactEvent
+      summary: Consume a Contact event from Kafka
+      description: >-
+        External systems subscribe to Contact events to receive real-time
+        notifications of contact changes in Siebel CRM.
+      message:
+        $ref: '#/components/messages/ContactEvent'
+  OpportunityEvent:
+    description: >-
+      Channel for Opportunity business object state change events. Events
+      are published when opportunities are created, advance through sales
+      stages, or have significant field changes.
+    publish:
+      operationId: publishOpportunityEvent
+      summary: Publish an Opportunity event to Kafka
+      description: >-
+        The Siebel Event Handler publishes Opportunity business object
+        events to this Kafka topic when opportunity state changes occur.
+      message:
+        $ref: '#/components/messages/OpportunityEvent'
+    subscribe:
+      operationId: consumeOpportunityEvent
+      summary: Consume an Opportunity event from Kafka
+      description: >-
+        External systems subscribe to Opportunity events to receive
+        real-time notifications of opportunity changes.
+      message:
+        $ref: '#/components/messages/OpportunityEvent'
+  ServiceRequestEvent:
+    description: >-
+      Channel for Service Request business object state change events.
+      Events are published when service requests are created, status
+      changes occur, or escalations are triggered.
+    publish:
+      operationId: publishServiceRequestEvent
+      summary: Publish a Service Request event to Kafka
+      description: >-
+        The Siebel Event Handler publishes Service Request events to
+        this Kafka topic when service case state changes occur.
+      message:
+        $ref: '#/components/messages/ServiceRequestEvent'
+    subscribe:
+      operationId: consumeServiceRequestEvent
+      summary: Consume a Service Request event from Kafka
+      description: >-
+        External systems subscribe to Service Request events to receive
+        real-time notifications of case updates.
+      message:
+        $ref: '#/components/messages/ServiceRequestEvent'
+  OrderEvent:
+    description: >-
+      Channel for Order business object state change events. Events are
+      published when orders are placed, modified, or when order status
+      transitions occur.
+    publish:
+      operationId: publishOrderEvent
+      summary: Publish an Order event to Kafka
+      description: >-
+        The Siebel Event Handler publishes Order events to this Kafka
+        topic when order state changes occur.
+      message:
+        $ref: '#/components/messages/OrderEvent'
+    subscribe:
+      operationId: consumeOrderEvent
+      summary: Consume an Order event from Kafka
+      description: >-
+        External systems subscribe to Order events to receive real-time
+        notifications of order changes.
+      message:
+        $ref: '#/components/messages/OrderEvent'
+components:
+  securitySchemes:
+    kafkaSasl:
+      type: scramSha256
+      description: >-
+        SASL/SCRAM authentication for Kafka broker connections. The Siebel
+        sidecar Application Interfaces authenticate to Kafka using
+        configured credentials.
+  messages:
+    AccountEvent:
+      name: AccountEvent
+      title: Account Event
+      summary: >-
+        Event representing a state change on an Account business object
+        in Siebel CRM
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/AccountEventPayload'
+    ContactEvent:
+      name: ContactEvent
+      title: Contact Event
+      summary: >-
+        Event representing a state change on a Contact business object
+        in Siebel CRM, including associated Account context
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ContactEventPayload'
+    OpportunityEvent:
+      name: OpportunityEvent
+      title: Opportunity Event
+      summary: >-
+        Event representing a state change on an Opportunity business
+        object in Siebel CRM
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/OpportunityEventPayload'
+    ServiceRequestEvent:
+      name: ServiceRequestEvent
+      title: Service Request Event
+      summary: >-
+        Event representing a state change on a Service Request business
+        object in Siebel CRM
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ServiceRequestEventPayload'
+    OrderEvent:
+      name: OrderEvent
+      title: Order Event
+      summary: >-
+        Event representing a state change on an Order business object
+        in Siebel CRM
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/OrderEventPayload'
+  schemas:
+    AccountEventPayload:
+      type: object
+      description: >-
+        JSON payload for an Account event published by the Siebel Event
+        Handler business service via the SendEvent method
+      properties:
+        BusinessObjName:
+          type: string
+          description: >-
+            Name of the Siebel business object that generated the event
+          const: Account
+        Account:
+          type: object
+          description: >-
+            Account business component data included in the event
+          properties:
+            BusinessCompName:
+              type: string
+              description: Name of the business component
+              const: Account
+            Fields:
+              type: object
+              description: >-
+                Key-value pairs of Account field names and their values
+                at the time of the event
+              properties:
+                Account Id:
+                  type: string
+                  description: Unique identifier of the account record
+                Name:
+                  type: string
+                  description: Account name
+                Location:
+                  type: string
+                  description: Account location
+                Account Status:
+                  type: string
+                  description: Current account status value
+                Industry:
+                  type: string
+                  description: Industry classification
+    ContactEventPayload:
+      type: object
+      description: >-
+        JSON payload for a Contact event published by the Siebel Event
+        Handler business service, including parent Account context
+      properties:
+        BusinessObjName:
+          type: string
+          description: >-
+            Name of the Siebel business object that generated the event
+          const: Contact
+        Contact:
+          type: object
+          description: >-
+            Contact business component data included in the event
+          properties:
+            BusinessCompName:
+              type: string
+              description: Name of the business component
+              const: Contact
+            Fields:
+              type: object
+              description: >-
+                Key-value pairs of Contact field names and their values
+              properties:
+                Contact Id:
+                  type: string
+                  description: Unique identifier of the contact record
+                First Name:
+                  type: string
+                  description: Contact first name
+                Last Name:
+                  type: string
+                  description: Contact last name
+                Email Address:
+                  type: string
+                  description: Contact email address
+        Account:
+          type: object
+          description: >-
+            Associated Account business component context for the contact
+          properties:
+            BusinessCompName:
+              type: string
+              description: Name of the business component
+              const: Account
+            Field List:
+              type: object
+              properties:
+                Fields:
+                  type: object
+                  description: >-
+                    Key-value pairs of associated Account field values
+                  properties:
+                    Name:
+                      type: string
+                      description: Associated account name
+                    Location:
+                      type: string
+                      description: Account location
+                    CSN:
+                      type: string
+                      description: Customer service number
+                    City:
+                      type: string
+                      description: Account city
+    OpportunityEventPayload:
+      type: object
+      description: >-
+        JSON payload for an Opportunity event published by the Siebel
+        Event Handler business service
+      properties:
+        BusinessObjName:
+          type: string
+          description: >-
+            Name of the Siebel business object that generated the event
+          const: Opportunity
+        Opportunity:
+          type: object
+          description: >-
+            Opportunity business component data included in the event
+          properties:
+            BusinessCompName:
+              type: string
+              description: Name of the business component
+              const: Opportunity
+            Fields:
+              type: object
+              description: >-
+                Key-value pairs of Opportunity field names and values
+              properties:
+                Opportunity Id:
+                  type: string
+                  description: Unique identifier of the opportunity
+                Name:
+                  type: string
+                  description: Opportunity name
+                Sales Stage:
+                  type: string
+                  description: Current sales stage
+                Revenue:
+                  type: string
+                  description: Expected revenue amount
+                Close Date:
+                  type: string
+                  description: Expected close date
+    ServiceRequestEventPayload:
+      type: object
+      description: >-
+        JSON payload for a Service Request event published by the Siebel
+        Event Handler business service
+      properties:
+        BusinessObjName:
+          type: string
+          description: >-
+            Name of the Siebel business object that generated the event
+          const: Service Request
+        Service Request:
+          type: object
+          description: >-
+            Service Request business component data included in the event
+          properties:
+            BusinessCompName:
+              type: string
+              description: Name of the business component
+              const: Service Request
+            Fields:
+              type: object
+              description: >-
+                Key-value pairs of Service Request field names and values
+              properties:
+                SR Number:
+                  type: string
+                  description: Service request number
+                Abstract:
+                  type: string
+                  description: Brief summary
+                Status:
+                  type: string
+                  description: Current status
+                Priority:
+                  type: string
+                  description: Priority level
+                Severity:
+                  type: string
+                  description: Severity level
+    OrderEventPayload:
+      type: object
+      description: >-
+        JSON payload for an Order event published by the Siebel Event
+        Handler business service
+      properties:
+        BusinessObjName:
+          type: string
+          description: >-
+            Name of the Siebel business object that generated the event
+          const: Order Entry
+        Order:
+          type: object
+          description: >-
+            Order business component data included in the event
+          properties:
+            BusinessCompName:
+              type: string
+              description: Name of the business component
+              const: Order Entry - Orders
+            Fields:
+              type: object
+              description: >-
+                Key-value pairs of Order field names and values
+              properties:
+                Order Number:
+                  type: string
+                  description: Unique order number
+                Status:
+                  type: string
+                  description: Order status
+                Order Date:
+                  type: string
+                  description: Date the order was placed
+                Total:
+                  type: string
+                  description: Order total amount

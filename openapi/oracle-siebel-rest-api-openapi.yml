@@ -1,0 +1,1822 @@
+openapi: 3.1.0
+info:
+  title: Oracle Siebel REST API
+  description: >-
+    RESTful API for accessing Siebel CRM business objects, business services,
+    and repository objects. The Siebel REST API supports standard CRUD
+    operations using HTTP verbs (GET, POST, PUT, DELETE) against business
+    object data resources, business service invocation, and workspace-based
+    repository management. Responses are available in JSON or XML format,
+    and the API provides built-in metadata discovery through describe
+    endpoints that return OpenAPI-compatible specifications.
+  version: '1.0'
+  contact:
+    name: Oracle Support
+    url: https://support.oracle.com
+  termsOfService: https://www.oracle.com/legal/terms.html
+externalDocs:
+  description: Oracle Siebel REST API Documentation
+  url: https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html
+servers:
+  - url: https://{siebel-server}/siebel/v1.0
+    description: Siebel Application Interface Server
+    variables:
+      siebel-server:
+        default: localhost
+        description: >-
+          Hostname and port of the Siebel Application Interface running
+          the siebel-rest.war deployment on Apache Tomcat
+tags:
+  - name: Accounts
+    description: >-
+      Operations on Account business objects including customer and prospect
+      organizations with associated contacts, opportunities, and addresses
+  - name: Contacts
+    description: >-
+      Operations on Contact business objects representing individual people
+      associated with accounts and organizations
+  - name: Opportunities
+    description: >-
+      Operations on Opportunity business objects for managing sales pipeline,
+      deals, and revenue forecasting
+  - name: Service Requests
+    description: >-
+      Operations on Service Request business objects for customer service
+      case management and issue tracking
+  - name: Activities
+    description: >-
+      Operations on Activity business objects for managing tasks,
+      appointments, call logs, and other scheduled items
+  - name: Products
+    description: >-
+      Operations on Product business objects for product catalog management
+      including pricing and product hierarchies
+  - name: Orders
+    description: >-
+      Operations on Order business objects for managing sales orders,
+      order line items, and order fulfillment
+  - name: Business Services
+    description: >-
+      Invocation of Siebel business services and their methods for executing
+      server-side business logic including integration object operations
+  - name: Repository
+    description: >-
+      Access to Siebel repository objects including applets, views, business
+      components, and other metadata through workspace-based paths
+  - name: Metadata
+    description: >-
+      Discovery endpoints that return OpenAPI-compatible metadata describing
+      available resources, fields, and operations
+security:
+  - basicAuth: []
+  - oauth2: []
+paths:
+  /data/Account/Account:
+    get:
+      operationId: listAccounts
+      summary: List accounts
+      description: >-
+        Retrieve a collection of Account business component records from the
+        Account business object. Returns account details including name,
+        location, status, and links to child business components such as
+        Contact, Opportunity, and Address.
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/searchspec'
+        - $ref: '#/components/parameters/ChildLinks'
+        - $ref: '#/components/parameters/uniformresponse'
+        - $ref: '#/components/parameters/ViewMode'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/StartRowNum'
+      responses:
+        '200':
+          description: Accounts retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Account'
+                  Link:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkObject'
+        '204':
+          description: No accounts found
+        '401':
+          description: Authentication credentials missing or invalid
+        '500':
+          description: Internal server error or business logic error
+    post:
+      operationId: createAccount
+      summary: Create an account
+      description: >-
+        Insert a new Account business component record into the Account
+        business object. The request body must contain the required account
+        fields including Name and Primary Organization.
+      tags:
+        - Accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountInput'
+      responses:
+        '201':
+          description: Account created successfully
+        '400':
+          description: Invalid request body or missing required fields
+        '401':
+          description: Authentication credentials missing or invalid
+        '500':
+          description: Internal server error or business logic error
+  /data/Account/Account/{AccountId}:
+    get:
+      operationId: getAccount
+      summary: Get an account by ID
+      description: >-
+        Retrieve a single Account business component record by its unique
+        row identifier. Supports field selection and child link expansion
+        to include related contacts, opportunities, and other child
+        business components in the response.
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/AccountId'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/ChildLinks'
+      responses:
+        '200':
+          description: Account retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Account not found
+        '500':
+          description: Internal server error
+    put:
+      operationId: upsertAccount
+      summary: Upsert an account
+      description: >-
+        Insert or update an Account business component record. If the
+        record exists, the specified fields are updated. If the record
+        does not exist, a new record is created with the provided data.
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/AccountId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountInput'
+      responses:
+        '200':
+          description: Account upserted successfully
+        '400':
+          description: Invalid request body
+        '401':
+          description: Authentication credentials missing or invalid
+        '500':
+          description: Internal server error or business logic error
+    delete:
+      operationId: deleteAccount
+      summary: Delete an account
+      description: >-
+        Delete an Account business component record by its unique row
+        identifier. This operation permanently removes the account record
+        from the Siebel database.
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/AccountId'
+      responses:
+        '200':
+          description: Account deleted successfully
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Account not found
+        '500':
+          description: Internal server error
+  /data/Account/Account/{AccountId}/Contact:
+    get:
+      operationId: listAccountContacts
+      summary: List contacts for an account
+      description: >-
+        Retrieve the Contact child business component records associated
+        with a specific Account. Returns contact details including name,
+        email, phone, and job title for all contacts linked to the
+        parent account.
+      tags:
+        - Accounts
+        - Contacts
+      parameters:
+        - $ref: '#/components/parameters/AccountId'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/searchspec'
+        - $ref: '#/components/parameters/uniformresponse'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/StartRowNum'
+      responses:
+        '200':
+          description: Contacts retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Contact'
+                  Link:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkObject'
+        '204':
+          description: No contacts found for this account
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Parent account not found
+    put:
+      operationId: upsertAccountContact
+      summary: Add or update a contact for an account
+      description: >-
+        Insert or update a Contact child record under a specific Account.
+        Supports inserting single contacts or multiple contacts in a
+        batch using an array payload.
+      tags:
+        - Accounts
+        - Contacts
+      parameters:
+        - $ref: '#/components/parameters/AccountId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInput'
+      responses:
+        '200':
+          description: Contact upserted successfully
+        '201':
+          description: Contact created successfully
+        '400':
+          description: Invalid request body
+        '401':
+          description: Authentication credentials missing or invalid
+  /data/Account/Account/{AccountId}/Opportunity:
+    get:
+      operationId: listAccountOpportunities
+      summary: List opportunities for an account
+      description: >-
+        Retrieve the Opportunity child business component records associated
+        with a specific Account. Returns opportunity details including name,
+        sales stage, close date, and revenue amount.
+      tags:
+        - Accounts
+        - Opportunities
+      parameters:
+        - $ref: '#/components/parameters/AccountId'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/searchspec'
+        - $ref: '#/components/parameters/uniformresponse'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/StartRowNum'
+      responses:
+        '200':
+          description: Opportunities retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Opportunity'
+                  Link:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkObject'
+        '204':
+          description: No opportunities found for this account
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Parent account not found
+  /data/Contact/Contact:
+    get:
+      operationId: listContacts
+      summary: List contacts
+      description: >-
+        Retrieve a collection of Contact business component records from
+        the Contact business object. Returns contact details including
+        name, email, phone number, job title, and account associations.
+      tags:
+        - Contacts
+      parameters:
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/searchspec'
+        - $ref: '#/components/parameters/ChildLinks'
+        - $ref: '#/components/parameters/uniformresponse'
+        - $ref: '#/components/parameters/ViewMode'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/StartRowNum'
+      responses:
+        '200':
+          description: Contacts retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Contact'
+                  Link:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkObject'
+        '204':
+          description: No contacts found
+        '401':
+          description: Authentication credentials missing or invalid
+    post:
+      operationId: createContact
+      summary: Create a contact
+      description: >-
+        Insert a new Contact business component record into the Contact
+        business object. The request body must contain the required contact
+        fields including First Name, Last Name, and Primary Organization Id.
+      tags:
+        - Contacts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInput'
+      responses:
+        '201':
+          description: Contact created successfully
+        '400':
+          description: Invalid request body or missing required fields
+        '401':
+          description: Authentication credentials missing or invalid
+  /data/Contact/Contact/{ContactId}:
+    get:
+      operationId: getContact
+      summary: Get a contact by ID
+      description: >-
+        Retrieve a single Contact business component record by its unique
+        row identifier.
+      tags:
+        - Contacts
+      parameters:
+        - $ref: '#/components/parameters/ContactId'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/ChildLinks'
+      responses:
+        '200':
+          description: Contact retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Contact not found
+    put:
+      operationId: upsertContact
+      summary: Upsert a contact
+      description: >-
+        Insert or update a Contact business component record by its unique
+        row identifier.
+      tags:
+        - Contacts
+      parameters:
+        - $ref: '#/components/parameters/ContactId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInput'
+      responses:
+        '200':
+          description: Contact upserted successfully
+        '400':
+          description: Invalid request body
+        '401':
+          description: Authentication credentials missing or invalid
+    delete:
+      operationId: deleteContact
+      summary: Delete a contact
+      description: >-
+        Delete a Contact business component record by its unique row
+        identifier.
+      tags:
+        - Contacts
+      parameters:
+        - $ref: '#/components/parameters/ContactId'
+      responses:
+        '200':
+          description: Contact deleted successfully
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Contact not found
+  /data/Opportunity/Opportunity:
+    get:
+      operationId: listOpportunities
+      summary: List opportunities
+      description: >-
+        Retrieve a collection of Opportunity business component records
+        from the Opportunity business object. Returns opportunity details
+        including name, sales stage, revenue, close date, and associated
+        account information.
+      tags:
+        - Opportunities
+      parameters:
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/searchspec'
+        - $ref: '#/components/parameters/ChildLinks'
+        - $ref: '#/components/parameters/uniformresponse'
+        - $ref: '#/components/parameters/ViewMode'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/StartRowNum'
+      responses:
+        '200':
+          description: Opportunities retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Opportunity'
+                  Link:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkObject'
+        '204':
+          description: No opportunities found
+        '401':
+          description: Authentication credentials missing or invalid
+    post:
+      operationId: createOpportunity
+      summary: Create an opportunity
+      description: >-
+        Insert a new Opportunity business component record into the
+        Opportunity business object.
+      tags:
+        - Opportunities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpportunityInput'
+      responses:
+        '201':
+          description: Opportunity created successfully
+        '400':
+          description: Invalid request body or missing required fields
+        '401':
+          description: Authentication credentials missing or invalid
+  /data/Opportunity/Opportunity/{OpportunityId}:
+    get:
+      operationId: getOpportunity
+      summary: Get an opportunity by ID
+      description: >-
+        Retrieve a single Opportunity business component record by its
+        unique row identifier.
+      tags:
+        - Opportunities
+      parameters:
+        - $ref: '#/components/parameters/OpportunityId'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/ChildLinks'
+      responses:
+        '200':
+          description: Opportunity retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity'
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Opportunity not found
+    put:
+      operationId: upsertOpportunity
+      summary: Upsert an opportunity
+      description: >-
+        Insert or update an Opportunity business component record by its
+        unique row identifier.
+      tags:
+        - Opportunities
+      parameters:
+        - $ref: '#/components/parameters/OpportunityId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpportunityInput'
+      responses:
+        '200':
+          description: Opportunity upserted successfully
+        '400':
+          description: Invalid request body
+        '401':
+          description: Authentication credentials missing or invalid
+    delete:
+      operationId: deleteOpportunity
+      summary: Delete an opportunity
+      description: >-
+        Delete an Opportunity business component record by its unique
+        row identifier.
+      tags:
+        - Opportunities
+      parameters:
+        - $ref: '#/components/parameters/OpportunityId'
+      responses:
+        '200':
+          description: Opportunity deleted successfully
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Opportunity not found
+  /data/Service Request/Service Request:
+    get:
+      operationId: listServiceRequests
+      summary: List service requests
+      description: >-
+        Retrieve a collection of Service Request business component records
+        from the Service Request business object. Returns service request
+        details including status, priority, description, owner, and
+        associated account and contact information.
+      tags:
+        - Service Requests
+      parameters:
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/searchspec'
+        - $ref: '#/components/parameters/ChildLinks'
+        - $ref: '#/components/parameters/uniformresponse'
+        - $ref: '#/components/parameters/ViewMode'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/StartRowNum'
+      responses:
+        '200':
+          description: Service requests retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ServiceRequest'
+                  Link:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkObject'
+        '204':
+          description: No service requests found
+        '401':
+          description: Authentication credentials missing or invalid
+    post:
+      operationId: createServiceRequest
+      summary: Create a service request
+      description: >-
+        Insert a new Service Request business component record into the
+        Service Request business object.
+      tags:
+        - Service Requests
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestInput'
+      responses:
+        '201':
+          description: Service request created successfully
+        '400':
+          description: Invalid request body or missing required fields
+        '401':
+          description: Authentication credentials missing or invalid
+  /data/Service Request/Service Request/{ServiceRequestId}:
+    get:
+      operationId: getServiceRequest
+      summary: Get a service request by ID
+      description: >-
+        Retrieve a single Service Request business component record by its
+        unique row identifier.
+      tags:
+        - Service Requests
+      parameters:
+        - $ref: '#/components/parameters/ServiceRequestId'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/ChildLinks'
+      responses:
+        '200':
+          description: Service request retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceRequest'
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Service request not found
+    put:
+      operationId: upsertServiceRequest
+      summary: Upsert a service request
+      description: >-
+        Insert or update a Service Request business component record by
+        its unique row identifier.
+      tags:
+        - Service Requests
+      parameters:
+        - $ref: '#/components/parameters/ServiceRequestId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestInput'
+      responses:
+        '200':
+          description: Service request upserted successfully
+        '400':
+          description: Invalid request body
+        '401':
+          description: Authentication credentials missing or invalid
+    delete:
+      operationId: deleteServiceRequest
+      summary: Delete a service request
+      description: >-
+        Delete a Service Request business component record by its unique
+        row identifier.
+      tags:
+        - Service Requests
+      parameters:
+        - $ref: '#/components/parameters/ServiceRequestId'
+      responses:
+        '200':
+          description: Service request deleted successfully
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Service request not found
+  /data/Activity/Activity:
+    get:
+      operationId: listActivities
+      summary: List activities
+      description: >-
+        Retrieve a collection of Activity business component records from
+        the Activity business object. Returns activity details including
+        type, status, due date, description, and associated account and
+        contact information.
+      tags:
+        - Activities
+      parameters:
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/searchspec'
+        - $ref: '#/components/parameters/ChildLinks'
+        - $ref: '#/components/parameters/uniformresponse'
+        - $ref: '#/components/parameters/ViewMode'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/StartRowNum'
+      responses:
+        '200':
+          description: Activities retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Activity'
+                  Link:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkObject'
+        '204':
+          description: No activities found
+        '401':
+          description: Authentication credentials missing or invalid
+    post:
+      operationId: createActivity
+      summary: Create an activity
+      description: >-
+        Insert a new Activity business component record into the Activity
+        business object.
+      tags:
+        - Activities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivityInput'
+      responses:
+        '201':
+          description: Activity created successfully
+        '400':
+          description: Invalid request body or missing required fields
+        '401':
+          description: Authentication credentials missing or invalid
+  /data/Activity/Activity/{ActivityId}:
+    get:
+      operationId: getActivity
+      summary: Get an activity by ID
+      description: >-
+        Retrieve a single Activity business component record by its unique
+        row identifier.
+      tags:
+        - Activities
+      parameters:
+        - $ref: '#/components/parameters/ActivityId'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/ChildLinks'
+      responses:
+        '200':
+          description: Activity retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Activity not found
+    put:
+      operationId: upsertActivity
+      summary: Upsert an activity
+      description: >-
+        Insert or update an Activity business component record by its
+        unique row identifier.
+      tags:
+        - Activities
+      parameters:
+        - $ref: '#/components/parameters/ActivityId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivityInput'
+      responses:
+        '200':
+          description: Activity upserted successfully
+        '400':
+          description: Invalid request body
+        '401':
+          description: Authentication credentials missing or invalid
+    delete:
+      operationId: deleteActivity
+      summary: Delete an activity
+      description: >-
+        Delete an Activity business component record by its unique row
+        identifier.
+      tags:
+        - Activities
+      parameters:
+        - $ref: '#/components/parameters/ActivityId'
+      responses:
+        '200':
+          description: Activity deleted successfully
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Activity not found
+  /data/Product/Product:
+    get:
+      operationId: listProducts
+      summary: List products
+      description: >-
+        Retrieve a collection of Product business component records from
+        the Product business object. Returns product catalog details
+        including name, description, part number, pricing, and product
+        line information.
+      tags:
+        - Products
+      parameters:
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/searchspec'
+        - $ref: '#/components/parameters/ChildLinks'
+        - $ref: '#/components/parameters/uniformresponse'
+        - $ref: '#/components/parameters/ViewMode'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/StartRowNum'
+      responses:
+        '200':
+          description: Products retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  Link:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkObject'
+        '204':
+          description: No products found
+        '401':
+          description: Authentication credentials missing or invalid
+  /data/Order Entry/Order Entry - Orders:
+    get:
+      operationId: listOrders
+      summary: List orders
+      description: >-
+        Retrieve a collection of Order Entry business component records
+        from the Order Entry business object. Returns order details
+        including order number, status, account, and order total.
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/searchspec'
+        - $ref: '#/components/parameters/ChildLinks'
+        - $ref: '#/components/parameters/uniformresponse'
+        - $ref: '#/components/parameters/ViewMode'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/StartRowNum'
+      responses:
+        '200':
+          description: Orders retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+                  Link:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkObject'
+        '204':
+          description: No orders found
+        '401':
+          description: Authentication credentials missing or invalid
+  /service/{ServiceName}/{MethodName}:
+    post:
+      operationId: invokeBusinessService
+      summary: Invoke a business service method
+      description: >-
+        Execute a method on a named Siebel business service. The service
+        name and method name are specified in the URL path. The request
+        body contains the input parameters as a Siebel property set or
+        integration object message. Business services must be explicitly
+        configured for REST access and associated with a responsibility
+        to control access.
+      tags:
+        - Business Services
+      parameters:
+        - name: ServiceName
+          in: path
+          required: true
+          description: >-
+            Name of the Siebel business service to invoke
+          schema:
+            type: string
+            examples:
+              - Siebel Account
+        - name: MethodName
+          in: path
+          required: true
+          description: >-
+            Name of the method to execute on the business service
+          schema:
+            type: string
+            examples:
+              - Insert
+              - QueryById
+              - QueryByExample
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessServiceRequest'
+      responses:
+        '200':
+          description: Business service method executed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessServiceResponse'
+        '400':
+          description: Invalid request or method parameters
+        '401':
+          description: Authentication credentials missing or invalid
+        '500':
+          description: Business service execution error
+  /service/describe:
+    get:
+      operationId: describeBusinessServices
+      summary: Get business service catalog
+      description: >-
+        Retrieve a catalog of all Siebel business service names, methods
+        defined for each service, and links to individual service
+        descriptions. Returns an OpenAPI-compatible specification.
+      tags:
+        - Business Services
+        - Metadata
+      responses:
+        '200':
+          description: Business service catalog retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Authentication credentials missing or invalid
+  /service/{ServiceName}/describe:
+    get:
+      operationId: describeBusinessService
+      summary: Describe a business service
+      description: >-
+        Retrieve the metadata description for a specific business service
+        including its methods, input and output arguments, and data types.
+      tags:
+        - Business Services
+        - Metadata
+      parameters:
+        - name: ServiceName
+          in: path
+          required: true
+          description: >-
+            Name of the Siebel business service to describe
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Business service description retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Business service not found
+  /workspace/{WorkspaceName}/describe:
+    get:
+      operationId: describeWorkspace
+      summary: Describe workspace repository objects
+      description: >-
+        Retrieve a catalog of all repository objects available in the
+        specified workspace. Returns an OpenAPI-compatible specification
+        listing available applets, views, business components, and other
+        Siebel repository metadata.
+      tags:
+        - Repository
+        - Metadata
+      parameters:
+        - $ref: '#/components/parameters/WorkspaceName'
+      responses:
+        '200':
+          description: Workspace description retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Authentication credentials missing or invalid
+  /workspace/{WorkspaceName}/{RepositoryObject}/{ObjectName}:
+    get:
+      operationId: getRepositoryObject
+      summary: Get a repository object
+      description: >-
+        Retrieve the definition of a specific repository object within
+        a workspace. Returns the object properties including child
+        objects such as controls, columns, and list items for applets.
+      tags:
+        - Repository
+      parameters:
+        - $ref: '#/components/parameters/WorkspaceName'
+        - name: RepositoryObject
+          in: path
+          required: true
+          description: >-
+            Type of repository object (e.g., Applet, View,
+            Business Component)
+          schema:
+            type: string
+        - name: ObjectName
+          in: path
+          required: true
+          description: >-
+            Name of the specific repository object
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Repository object retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Repository object not found
+  /data/{BusinessObject}/{BusinessComponent}/describe:
+    get:
+      operationId: describeBusinessComponent
+      summary: Describe a business component
+      description: >-
+        Retrieve the OpenAPI-compatible metadata description for a specific
+        business component within a business object. Returns field names,
+        data types, picklist values, and available operations.
+      tags:
+        - Metadata
+      parameters:
+        - name: BusinessObject
+          in: path
+          required: true
+          description: >-
+            Name of the Siebel business object
+          schema:
+            type: string
+        - name: BusinessComponent
+          in: path
+          required: true
+          description: >-
+            Name of the Siebel business component
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Business component description retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Business object or component not found
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: >-
+        HTTP Basic Authentication using Siebel CRM user credentials
+        encoded as Base64 in the Authorization header
+    oauth2:
+      type: oauth2
+      description: >-
+        OAuth 2.0 authentication for token-based access to the Siebel
+        REST API
+      flows:
+        authorizationCode:
+          authorizationUrl: https://{siebel-server}/siebel/v1.0/auth/authorize
+          tokenUrl: https://{siebel-server}/siebel/v1.0/auth/token
+          scopes: {}
+  parameters:
+    AccountId:
+      name: AccountId
+      in: path
+      required: true
+      description: >-
+        Unique row identifier for the Account record
+      schema:
+        type: string
+        examples:
+          - 88-26CND
+    ContactId:
+      name: ContactId
+      in: path
+      required: true
+      description: >-
+        Unique row identifier for the Contact record
+      schema:
+        type: string
+        examples:
+          - 0CR-1MF5Z6
+    OpportunityId:
+      name: OpportunityId
+      in: path
+      required: true
+      description: >-
+        Unique row identifier for the Opportunity record
+      schema:
+        type: string
+    ServiceRequestId:
+      name: ServiceRequestId
+      in: path
+      required: true
+      description: >-
+        Unique row identifier for the Service Request record
+      schema:
+        type: string
+    ActivityId:
+      name: ActivityId
+      in: path
+      required: true
+      description: >-
+        Unique row identifier for the Activity record
+      schema:
+        type: string
+    WorkspaceName:
+      name: WorkspaceName
+      in: path
+      required: true
+      description: >-
+        Name of the Siebel workspace (use 'main' for the default workspace)
+      schema:
+        type: string
+        default: main
+    fields:
+      name: fields
+      in: query
+      required: false
+      description: >-
+        Comma-separated list of field names to include in the response.
+        When specified, only the listed fields are returned instead of
+        all available fields.
+      schema:
+        type: string
+        examples:
+          - Name,Location,Account Status
+    searchspec:
+      name: searchspec
+      in: query
+      required: false
+      description: >-
+        Siebel search specification expression for filtering records.
+        Uses Siebel query language syntax with field names in square
+        brackets and standard comparison operators.
+      schema:
+        type: string
+        examples:
+          - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
+    ChildLinks:
+      name: ChildLinks
+      in: query
+      required: false
+      description: >-
+        Comma-separated list of child business component names to include
+        as link references in the response. Use 'None' to suppress all
+        child links.
+      schema:
+        type: string
+        examples:
+          - Contact,Opportunity
+          - None
+    uniformresponse:
+      name: uniformresponse
+      in: query
+      required: false
+      description: >-
+        When set to 'yes' or 'y', forces the response to always use the
+        JSON array format with an items wrapper, regardless of whether
+        the result contains a single record or multiple records.
+      schema:
+        type: string
+        enum:
+          - 'yes'
+          - 'no'
+          - 'y'
+          - 'n'
+    ViewMode:
+      name: ViewMode
+      in: query
+      required: false
+      description: >-
+        Access control mode that determines which records are visible.
+        Personal returns records owned by the user, Sales Rep uses
+        position-based access, and Organization uses organization-level
+        visibility rules.
+      schema:
+        type: string
+        enum:
+          - Personal
+          - Sales Rep
+          - Organization
+    PageSize:
+      name: PageSize
+      in: query
+      required: false
+      description: >-
+        Maximum number of records to return in the response. Controls
+        pagination by limiting the result set size.
+      schema:
+        type: integer
+        minimum: 1
+        examples:
+          - 20
+    StartRowNum:
+      name: StartRowNum
+      in: query
+      required: false
+      description: >-
+        Zero-based index of the first record to return. Used in
+        combination with PageSize for pagination through large result
+        sets.
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+  schemas:
+    Account:
+      type: object
+      description: >-
+        A Siebel CRM Account business component record representing a
+        customer, prospect, or partner organization
+      properties:
+        Id:
+          type: string
+          description: Unique row identifier for the account record
+        Name:
+          type: string
+          description: Account name
+        Location:
+          type: string
+          description: Account location identifier
+        Account Status:
+          type: string
+          description: Current status of the account
+        Account Type:
+          type: string
+          description: Type classification of the account
+        Description:
+          type: string
+          description: Detailed description of the account
+        Industry:
+          type: string
+          description: Industry classification
+        Primary Organization:
+          type: string
+          description: Primary organization associated with the account
+        Primary Organization Id:
+          type: string
+          description: Row identifier of the primary organization
+        Main Phone Number:
+          type: string
+          description: Primary phone number for the account
+        Main Fax Number:
+          type: string
+          description: Primary fax number for the account
+        Email Address:
+          type: string
+          description: Primary email address for the account
+        Home Page:
+          type: string
+          description: Website URL for the account
+        Current Volume:
+          type: number
+          description: Current business volume
+        Alias:
+          type: string
+          description: Alternate name or alias for the account
+        Link:
+          type: array
+          description: HATEOAS links to related resources
+          items:
+            $ref: '#/components/schemas/LinkObject'
+    AccountInput:
+      type: object
+      description: >-
+        Input payload for creating or updating an Account record
+      required:
+        - Name
+      properties:
+        Name:
+          type: string
+          description: Account name
+        Location:
+          type: string
+          description: Account location identifier
+        Description:
+          type: string
+          description: Detailed description of the account
+        Account Status:
+          type: string
+          description: Current status of the account
+        Account Type:
+          type: string
+          description: Type classification of the account
+        Industry:
+          type: string
+          description: Industry classification
+        Primary Organization:
+          type: string
+          description: Primary organization name
+        Primary Organization Id:
+          type: string
+          description: Row identifier of the primary organization
+        Main Phone Number:
+          type: string
+          description: Primary phone number
+        Email Address:
+          type: string
+          description: Primary email address
+        Home Page:
+          type: string
+          description: Website URL
+    Contact:
+      type: object
+      description: >-
+        A Siebel CRM Contact business component record representing an
+        individual person associated with an account
+      properties:
+        Id:
+          type: string
+          description: Unique row identifier for the contact record
+        First Name:
+          type: string
+          description: Contact first name
+        Last Name:
+          type: string
+          description: Contact last name
+        Job Title:
+          type: string
+          description: Job title or role
+        Email Address:
+          type: string
+          description: Email address
+        Work Phone #:
+          type: string
+          description: Work phone number
+        Cellular Phone #:
+          type: string
+          description: Mobile phone number
+        Account:
+          type: string
+          description: Associated account name
+        Account Id:
+          type: string
+          description: Row identifier of the associated account
+        Employee Number:
+          type: string
+          description: Employee number if applicable
+        Employer Name:
+          type: string
+          description: Employer organization name
+        Primary Organization Id:
+          type: string
+          description: Row identifier of the primary organization
+        Status:
+          type: string
+          description: Contact status
+        Link:
+          type: array
+          description: HATEOAS links to related resources
+          items:
+            $ref: '#/components/schemas/LinkObject'
+    ContactInput:
+      type: object
+      description: >-
+        Input payload for creating or updating a Contact record
+      required:
+        - First Name
+        - Last Name
+      properties:
+        First Name:
+          type: string
+          description: Contact first name
+        Last Name:
+          type: string
+          description: Contact last name
+        Job Title:
+          type: string
+          description: Job title or role
+        Email Address:
+          type: string
+          description: Email address
+        Work Phone #:
+          type: string
+          description: Work phone number
+        Cellular Phone #:
+          type: string
+          description: Mobile phone number
+        Employee Number:
+          type: string
+          description: Employee number
+        Employer Name:
+          type: string
+          description: Employer organization name
+        Primary Organization Id:
+          type: string
+          description: Row identifier of the primary organization
+    Opportunity:
+      type: object
+      description: >-
+        A Siebel CRM Opportunity business component record representing
+        a potential sales deal in the pipeline
+      properties:
+        Id:
+          type: string
+          description: Unique row identifier for the opportunity record
+        Name:
+          type: string
+          description: Opportunity name
+        Account:
+          type: string
+          description: Associated account name
+        Account Id:
+          type: string
+          description: Row identifier of the associated account
+        Sales Stage:
+          type: string
+          description: Current stage in the sales process
+        Status:
+          type: string
+          description: Opportunity status
+        Close Date:
+          type: string
+          description: Expected close date
+        Revenue:
+          type: number
+          description: Expected revenue amount
+        Win Probability:
+          type: number
+          description: Estimated probability of winning the deal
+          minimum: 0
+          maximum: 100
+        Description:
+          type: string
+          description: Detailed description of the opportunity
+        Primary Organization Id:
+          type: string
+          description: Row identifier of the primary organization
+        Link:
+          type: array
+          description: HATEOAS links to related resources
+          items:
+            $ref: '#/components/schemas/LinkObject'
+    OpportunityInput:
+      type: object
+      description: >-
+        Input payload for creating or updating an Opportunity record
+      required:
+        - Name
+      properties:
+        Name:
+          type: string
+          description: Opportunity name
+        Account:
+          type: string
+          description: Associated account name
+        Sales Stage:
+          type: string
+          description: Current stage in the sales process
+        Close Date:
+          type: string
+          description: Expected close date
+        Revenue:
+          type: number
+          description: Expected revenue amount
+        Win Probability:
+          type: number
+          description: Estimated probability of winning
+          minimum: 0
+          maximum: 100
+        Description:
+          type: string
+          description: Detailed description
+    ServiceRequest:
+      type: object
+      description: >-
+        A Siebel CRM Service Request business component record representing
+        a customer service case or issue
+      properties:
+        Id:
+          type: string
+          description: Unique row identifier for the service request record
+        SR Number:
+          type: string
+          description: Service request number
+        Abstract:
+          type: string
+          description: Brief summary of the service request
+        Description:
+          type: string
+          description: Detailed description of the issue
+        Status:
+          type: string
+          description: Current status of the service request
+        Sub-Status:
+          type: string
+          description: Sub-status for additional classification
+        Priority:
+          type: string
+          description: Priority level of the service request
+        Severity:
+          type: string
+          description: Severity level of the issue
+        Type:
+          type: string
+          description: Service request type classification
+        Sub-Type:
+          type: string
+          description: Service request sub-type
+        Account:
+          type: string
+          description: Associated account name
+        Account Id:
+          type: string
+          description: Row identifier of the associated account
+        Contact First Name:
+          type: string
+          description: First name of the reporting contact
+        Contact Last Name:
+          type: string
+          description: Last name of the reporting contact
+        Owner:
+          type: string
+          description: Owner or assignee of the service request
+        Created:
+          type: string
+          description: Date and time the record was created
+        Link:
+          type: array
+          description: HATEOAS links to related resources
+          items:
+            $ref: '#/components/schemas/LinkObject'
+    ServiceRequestInput:
+      type: object
+      description: >-
+        Input payload for creating or updating a Service Request record
+      required:
+        - Abstract
+      properties:
+        Abstract:
+          type: string
+          description: Brief summary of the service request
+        Description:
+          type: string
+          description: Detailed description of the issue
+        Status:
+          type: string
+          description: Current status
+        Priority:
+          type: string
+          description: Priority level
+        Severity:
+          type: string
+          description: Severity level
+        Type:
+          type: string
+          description: Service request type
+        Account:
+          type: string
+          description: Associated account name
+    Activity:
+      type: object
+      description: >-
+        A Siebel CRM Activity business component record representing a
+        task, appointment, call log, or other scheduled item
+      properties:
+        Id:
+          type: string
+          description: Unique row identifier for the activity record
+        Type:
+          type: string
+          description: Activity type (e.g., Task, Appointment, Call)
+        Description:
+          type: string
+          description: Activity description
+        Status:
+          type: string
+          description: Current status of the activity
+        Priority:
+          type: string
+          description: Priority level
+        Due:
+          type: string
+          description: Due date for the activity
+        Planned:
+          type: string
+          description: Planned date and time
+        Account:
+          type: string
+          description: Associated account name
+        Account Id:
+          type: string
+          description: Row identifier of the associated account
+        Contact First Name:
+          type: string
+          description: First name of the associated contact
+        Contact Last Name:
+          type: string
+          description: Last name of the associated contact
+        Owner:
+          type: string
+          description: Owner or assignee
+        Link:
+          type: array
+          description: HATEOAS links to related resources
+          items:
+            $ref: '#/components/schemas/LinkObject'
+    ActivityInput:
+      type: object
+      description: >-
+        Input payload for creating or updating an Activity record
+      required:
+        - Type
+        - Description
+      properties:
+        Type:
+          type: string
+          description: Activity type (e.g., Task, Appointment, Call)
+        Description:
+          type: string
+          description: Activity description
+        Status:
+          type: string
+          description: Current status
+        Priority:
+          type: string
+          description: Priority level
+        Due:
+          type: string
+          description: Due date
+        Planned:
+          type: string
+          description: Planned date and time
+        Account:
+          type: string
+          description: Associated account name
+    Product:
+      type: object
+      description: >-
+        A Siebel CRM Product business component record representing an
+        item in the product catalog
+      properties:
+        Id:
+          type: string
+          description: Unique row identifier for the product record
+        Name:
+          type: string
+          description: Product name
+        Part Number:
+          type: string
+          description: Unique part number or SKU
+        Description:
+          type: string
+          description: Product description
+        Product Line:
+          type: string
+          description: Product line or category
+        Status:
+          type: string
+          description: Product availability status
+        Price:
+          type: number
+          description: List price
+        Cost:
+          type: number
+          description: Cost price
+        Start Date:
+          type: string
+          description: Product availability start date
+        End Date:
+          type: string
+          description: Product availability end date
+        Link:
+          type: array
+          description: HATEOAS links to related resources
+          items:
+            $ref: '#/components/schemas/LinkObject'
+    Order:
+      type: object
+      description: >-
+        A Siebel CRM Order Entry business component record representing
+        a sales order
+      properties:
+        Id:
+          type: string
+          description: Unique row identifier for the order record
+        Order Number:
+          type: string
+          description: Unique order number
+        Revision:
+          type: string
+          description: Order revision number
+        Status:
+          type: string
+          description: Order status
+        Order Type:
+          type: string
+          description: Type classification of the order
+        Account:
+          type: string
+          description: Associated account name
+        Account Id:
+          type: string
+          description: Row identifier of the associated account
+        Order Date:
+          type: string
+          description: Date the order was placed
+        Requested Ship Date:
+          type: string
+          description: Requested delivery date
+        Total:
+          type: number
+          description: Order total amount
+        Currency Code:
+          type: string
+          description: Currency code for the order
+        Link:
+          type: array
+          description: HATEOAS links to related resources
+          items:
+            $ref: '#/components/schemas/LinkObject'
+    BusinessServiceRequest:
+      type: object
+      description: >-
+        Request payload for invoking a Siebel business service method.
+        Contains optional body with SiebelMessage integration object
+        format for structured data operations.
+      properties:
+        body:
+          type: object
+          description: >-
+            Wrapper containing the SiebelMessage integration object
+          properties:
+            SiebelMessage:
+              type: object
+              description: >-
+                Siebel integration object message containing the data
+                payload for the business service operation
+              properties:
+                MessageId:
+                  type: string
+                  description: Optional message identifier
+                MessageType:
+                  type: string
+                  description: Message type identifier
+                  default: Integration Object
+                IntObjectName:
+                  type: string
+                  description: >-
+                    Name of the integration object (e.g., Account Interface)
+                IntObjectFormat:
+                  type: string
+                  description: Format of the integration object
+                  default: Siebel Hierarchical
+    BusinessServiceResponse:
+      type: object
+      description: >-
+        Response payload from a Siebel business service method invocation.
+        Contains the output data from the executed business service method.
+    LinkObject:
+      type: object
+      description: >-
+        HATEOAS link object providing navigation references to related
+        Siebel REST API resources
+      properties:
+        rel:
+          type: string
+          description: >-
+            Relationship type (self, child, parent)
+          enum:
+            - self
+            - child
+            - parent
+        href:
+          type: string
+          format: uri
+          description: >-
+            Full URL to the related resource
+        name:
+          type: string
+          description: >-
+            Name of the related business component

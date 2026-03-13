@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.oracle.com/schemas/oracle-siebel/account.json",
+  "title": "Oracle Siebel CRM Account",
+  "description": "An Account business component record in Oracle Siebel CRM representing a customer, prospect, or partner organization. Accounts are the primary organizational entity in Siebel CRM and serve as the parent for contacts, opportunities, service requests, orders, and other related business components.",
+  "type": "object",
+  "required": ["Name"],
+  "properties": {
+    "Id": {
+      "type": "string",
+      "description": "Unique system-generated row identifier for the account record"
+    },
+    "Name": {
+      "type": "string",
+      "description": "Account name representing the organization",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "Location": {
+      "type": "string",
+      "description": "Location identifier distinguishing multiple sites for the same organization (e.g., Headquarters, HQ-Distribution)"
+    },
+    "Account Status": {
+      "type": "string",
+      "description": "Current lifecycle status of the account",
+      "enum": ["Active", "Inactive", "Unverified", "Verified"]
+    },
+    "Account Type": {
+      "type": "string",
+      "description": "Type classification of the account (e.g., Customer, Prospect, Partner, Competitor)"
+    },
+    "Description": {
+      "type": "string",
+      "description": "Detailed description of the account and business relationship"
+    },
+    "Industry": {
+      "type": "string",
+      "description": "Industry classification for the organization"
+    },
+    "Primary Organization": {
+      "type": "string",
+      "description": "Name of the primary Siebel organization associated with the account for visibility and access control"
+    },
+    "Primary Organization Id": {
+      "type": "string",
+      "description": "Row identifier of the primary Siebel organization"
+    },
+    "Main Phone Number": {
+      "type": "string",
+      "description": "Primary telephone number for the account"
+    },
+    "Main Fax Number": {
+      "type": "string",
+      "description": "Primary fax number for the account"
+    },
+    "Email Address": {
+      "type": "string",
+      "format": "email",
+      "description": "Primary email address for the account"
+    },
+    "Home Page": {
+      "type": "string",
+      "format": "uri",
+      "description": "Website URL for the account organization"
+    },
+    "Current Volume": {
+      "type": "number",
+      "description": "Current business volume or revenue amount",
+      "minimum": 0
+    },
+    "Alias": {
+      "type": "string",
+      "description": "Alternate name or alias for the account"
+    },
+    "Parent Account Id": {
+      "type": "string",
+      "description": "Row identifier of the parent account for hierarchical account structures"
+    },
+    "CSN": {
+      "type": "string",
+      "description": "Customer service number assigned to the account"
+    },
+    "DUNS Number": {
+      "type": "string",
+      "description": "Dun and Bradstreet DUNS number for the organization",
+      "pattern": "^[0-9]{9}$"
+    },
+    "Number of Employees": {
+      "type": "integer",
+      "description": "Approximate number of employees in the organization",
+      "minimum": 0
+    },
+    "Annual Revenue": {
+      "type": "number",
+      "description": "Estimated annual revenue of the organization",
+      "minimum": 0
+    },
+    "Currency Code": {
+      "type": "string",
+      "description": "ISO 4217 currency code for monetary values",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "Address": {
+      "$ref": "#/$defs/Address"
+    }
+  },
+  "$defs": {
+    "Address": {
+      "type": "object",
+      "description": "Physical address associated with the account",
+      "properties": {
+        "Street Address": {
+          "type": "string",
+          "description": "Street address line"
+        },
+        "Street Address 2": {
+          "type": "string",
+          "description": "Secondary address line"
+        },
+        "City": {
+          "type": "string",
+          "description": "City name"
+        },
+        "State": {
+          "type": "string",
+          "description": "State or province"
+        },
+        "Postal Code": {
+          "type": "string",
+          "description": "Postal or ZIP code"
+        },
+        "Country": {
+          "type": "string",
+          "description": "Country name"
+        }
+      }
+    }
+  }
+}
