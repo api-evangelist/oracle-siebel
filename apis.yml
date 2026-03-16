@@ -1,14 +1,19 @@
+aid: oracle-siebel
 name: Oracle Siebel APIs
 description: >-
   Oracle Siebel CRM APIs provide programmatic access to customer relationship
   management functionality including sales, marketing, and service automation
   capabilities. Siebel CRM offers REST, SOAP, scripting, and event-driven
   integration interfaces for building integrations with enterprise systems.
-image: https://www.oracle.com/a/ocom/img/siebel-logo.png
-url: https://raw.githubusercontent.com/api-evangelist/oracle-siebel/refs/heads/main/apis.yml
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/oracle-siebel/refs/heads/main/apis.yml
 created: '2024-01-01'
-modified: '2026-03-04'
-specificationVersion: '0.18'
+modified: '2026-03-16'
+specificationVersion: '0.19'
 apis:
 - name: Oracle Siebel REST API
   description: >-
@@ -182,9 +187,8 @@ common:
 - type: GitHubRepository
   url: https://github.com/OracleSiebel/ConfiguringSiebel
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
-  url: https://apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com
 tags:
 - CRM
 - Enterprise Software
