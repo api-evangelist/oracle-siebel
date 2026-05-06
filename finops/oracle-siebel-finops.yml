@@ -1,5 +1,6 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
@@ -8,182 +9,124 @@ alignedWith:
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 provider: Oracle Siebel
 providerId: oracle-siebel
-publisherName: Oracle Siebel
-serviceCategory: API
+publisherName: Oracle America, Inc.
+serviceCategory: CRM
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
   - CRM
-  - Customer Management
   - Enterprise Software
-  - Marketing Automation
-  - Oracle
-  - Sales Automation
-  - Service Automation
+  - Oracle Cloud
   - FinOps
-  - Cost Management
   - FOCUS
-description: FinOps framework definition for the Oracle Siebel API surface. Provides a FOCUS-aligned mapping
-  for cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+description: >-
+  FOCUS-aligned FinOps view for Oracle Siebel CRM: contractual Oracle
+  Applications licenses (per Application User, Component User, or Processor)
+  plus the underlying infrastructure cost (on-premises hardware or OCI
+  compute, block storage, and networking) used to host the Siebel
+  Application Object Manager, Application Server, Web Server, and Database.
+  REST, SOAP, EAI, and Object Interface APIs are bundled with the license.
+sources:
+  - https://www.oracle.com/cx/siebel/
+  - https://docs.oracle.com/cd/F26413_01/
+notes: >-
+  No per-API meter exists. Track contractual license counts per metric and
+  the underlying compute / storage cost for the Siebel deployment; reconcile
+  annually against the Oracle support and update license invoice.
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
+  pricingCategory: Per-User / Per-Processor License (BYOL)
+  billingFrequency: Annual
   billingCurrency: USD
   chargeCategories:
-    - Usage
     - Purchase
+    - Usage
     - Tax
-    - Credit
     - Adjustment
-  chargeFrequency: Recurring
+    - Credit
 focusColumns:
-  ServiceName: Oracle Siebel
-  ServiceCategory: Developer Tools / API
-  ProviderName: Oracle Siebel
-  PublisherName: Oracle Siebel
-  InvoiceIssuerName: Oracle Siebel
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  ServiceName: Oracle Siebel CRM
+  ServiceCategory: CRM
+  ProviderName: Oracle
+  PublisherName: Oracle America, Inc.
+  InvoiceIssuerName: Oracle America, Inc.
   BillingCurrency: USD
-  ChargeCategory: Usage
+  PricingCategory: License + Support
+  ChargeCategory: Purchase
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
+  - name: siebel_application_user_license
+    description: Active Application User licenses contracted with Oracle
+    unit: user
+    aggregation: max
+    dimensions:
+      - business_unit
+  - name: siebel_component_user_license
+    description: Active Component User licenses contracted with Oracle
+    unit: user
+    aggregation: max
+    dimensions:
+      - component
+      - business_unit
+  - name: siebel_per_processor_license
+    description: Per-processor licenses contracted with Oracle
+    unit: processor
+    aggregation: max
+    dimensions:
+      - environment
+  - name: support_and_update_license
+    description: Annual support and update license fee (typically a percentage of contract value)
+    unit: usd-annual
+    aggregation: sum
+  - name: hosting_compute
+    description: Underlying infrastructure compute cost (on-premises or OCI) for the Siebel deployment
+    unit: ocpu-hour
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
-      - tier
+      - environment
       - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
-    aggregation: sum
-    dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
+principles:
+  - name: Visibility
+    description: >-
+      Maintain a contract-level inventory of Siebel license counts per
+      metric, plus an infrastructure inventory of the AOM, Application
+      Server, Web Server, and Database tiers; reconcile each annually.
+  - name: Allocation
+    description: >-
+      Tag each Siebel environment (development, test, production, DR) and
+      allocate license + infrastructure cost to the consuming sales,
+      marketing, or service organization.
+  - name: Optimization
+    description: >-
+      Reclaim inactive Application User accounts, retire unused Siebel
+      modules to reduce support fees, and right-size the AOM, Application
+      Server, and Database tiers when migrating to OCI compute.
+  - name: Accountability
+    description: >-
+      Pair the Siebel applications administrator with the customer-experience
+      finance partner; review license utilization annually before the
+      support and update renewal.
 apis:
   - name: Oracle Siebel REST API
-    baseURL: https://{siebel-server}/siebel/v1.0
-    tags:
-      - CRM
-      - Customer Management
-      - Integration
-      - REST
-      - Sales
     serviceName: Oracle Siebel REST API
-    serviceCategory: API
+    serviceCategory: CRM
   - name: Oracle Siebel SOAP Web Services
-    baseURL: https://{siebel-server}/siebel/app/soap/services
-    tags:
-      - CRM
-      - Enterprise Integration
-      - SOAP
-      - Web Services
     serviceName: Oracle Siebel SOAP Web Services
-    serviceCategory: API
+    serviceCategory: CRM
   - name: Oracle Siebel Business Service API
-    baseURL: ''
-    tags:
-      - Business Services
-      - Custom Logic
-      - Integration
     serviceName: Oracle Siebel Business Service API
-    serviceCategory: API
+    serviceCategory: CRM
   - name: Oracle Siebel EAI (Enterprise Application Integration)
-    baseURL: ''
-    tags:
-      - Data Exchange
-      - EAI
-      - Integration
-      - Middleware
     serviceName: Oracle Siebel EAI (Enterprise Application Integration)
-    serviceCategory: API
+    serviceCategory: CRM
   - name: Oracle Siebel Object Interfaces API
-    baseURL: ''
-    tags:
-      - Business Components
-      - Java Data Bean
-      - Object Interfaces
-      - Scripting
     serviceName: Oracle Siebel Object Interfaces API
-    serviceCategory: API
+    serviceCategory: CRM
   - name: Oracle Siebel Open UI JavaScript API
-    baseURL: ''
-    tags:
-      - Customization
-      - JavaScript
-      - Open UI
-      - User Interface
     serviceName: Oracle Siebel Open UI JavaScript API
-    serviceCategory: API
+    serviceCategory: CRM
   - name: Oracle Siebel Event Pub/Sub API
-    baseURL: ''
-    tags:
-      - Event-Driven
-      - Kafka
-      - Pub/Sub
-      - Real-Time Integration
     serviceName: Oracle Siebel Event Pub/Sub API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+    serviceCategory: CRM
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

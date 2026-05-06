@@ -4,118 +4,77 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Oracle Siebel
 providerId: oracle-siebel
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
   - CRM
-  - Customer Management
   - Enterprise Software
-  - Marketing Automation
-  - Oracle
-  - Sales Automation
-  - Service Automation
+  - Oracle Cloud
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Oracle Siebel API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+description: >-
+  Oracle Siebel CRM is a customer-deployed application; its REST, SOAP, EAI,
+  and Object Interface APIs do not enforce a centrally-published per-second
+  or per-minute rate-limit table. Throughput is bound by the customer-deployed
+  Siebel Application Object Manager (AOM), Application Server, Web Server,
+  and Database tier capacity. Rate limiting, when enforced, is implemented at
+  the surrounding application server (Oracle WebLogic / IIS / Apache) or via
+  a customer-fronted API gateway.
+sources:
+  - https://docs.oracle.com/cd/F26413_01/
+  - https://docs.oracle.com/cd/F26413_01/books/SystemAdmin/
+notes: >-
+  No public per-tier RPS/RPM numbers are published. Siebel deployments are
+  capacity-planned per AOM, Application Server, and Database tier; set
+  reconciled to true after capturing deployment-specific tuning values.
 responseCodes:
-  throttled: 429
-  quotaExceeded: 429
+  unauthorized: 401
+  forbidden: 403
+  notFound: 404
+  serverError: 500
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Oracle Siebel REST API
-      - Oracle Siebel SOAP Web Services
-      - Oracle Siebel Business Service API
-      - Oracle Siebel EAI (Enterprise Application Integration)
-      - Oracle Siebel Object Interfaces API
-      - Oracle Siebel Open UI JavaScript API
-      - Oracle Siebel Event Pub/Sub API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Oracle Siebel REST API
-      - Oracle Siebel SOAP Web Services
-      - Oracle Siebel Business Service API
-      - Oracle Siebel EAI (Enterprise Application Integration)
-      - Oracle Siebel Object Interfaces API
-      - Oracle Siebel Open UI JavaScript API
-      - Oracle Siebel Event Pub/Sub API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Oracle Siebel REST API
-      - Oracle Siebel SOAP Web Services
-      - Oracle Siebel Business Service API
-      - Oracle Siebel EAI (Enterprise Application Integration)
-      - Oracle Siebel Object Interfaces API
-      - Oracle Siebel Open UI JavaScript API
-      - Oracle Siebel Event Pub/Sub API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Oracle Siebel REST API
-      - Oracle Siebel SOAP Web Services
-      - Oracle Siebel Business Service API
-      - Oracle Siebel EAI (Enterprise Application Integration)
-      - Oracle Siebel Object Interfaces API
-      - Oracle Siebel Open UI JavaScript API
-      - Oracle Siebel Event Pub/Sub API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Oracle Siebel REST API
-      - Oracle Siebel SOAP Web Services
-      - Oracle Siebel Business Service API
-      - Oracle Siebel EAI (Enterprise Application Integration)
-      - Oracle Siebel Object Interfaces API
-      - Oracle Siebel Open UI JavaScript API
-      - Oracle Siebel Event Pub/Sub API
+  - name: REST API Throughput
+    scope: deployment
+    metric: varies
+    limit: bound by Siebel AOM / Application Server capacity
+    notes: >-
+      Throughput is governed by the deployed Siebel Application Object
+      Manager and Application Server sizing rather than a public per-tenancy
+      rate.
+  - name: SOAP Web Services Throughput
+    scope: deployment
+    metric: varies
+    limit: bound by Siebel AOM / Application Server capacity
+    notes: >-
+      As with REST, SOAP web service throughput is bound by the deployed
+      Siebel server tier.
+  - name: EAI Inbound / Outbound Throughput
+    scope: deployment
+    metric: varies
+    limit: bound by deployed EAI configuration
+    notes: >-
+      EAI throughput depends on the configured business-service component
+      pools and underlying transport (HTTP, JMS, MQ).
 policies:
+  - name: Capacity-Bound Throttling
+    description: >-
+      Throughput limits are determined by the deployed Siebel Application
+      Object Manager, Application Server, Web Server, and Database tier
+      sizing rather than a published per-tenancy rate-limit table.
   - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+    description: >-
+      Clients should implement exponential backoff with jitter on 5xx
+      responses; honor any Retry-After header when present.
+  - name: AOM Tuning
+    description: >-
+      Siebel administrators should tune AOM component thread pools,
+      MaxTasks, and MaxMTServers settings to match observed load rather
+      than relying on a centrally-imposed rate.
+  - name: API Gateway Pattern
+    description: >-
+      Customers exposing Siebel APIs to third parties should front them
+      with an API gateway (Oracle API Platform, Apigee, etc.) and apply
+      rate limits there.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
