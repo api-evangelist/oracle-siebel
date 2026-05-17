@@ -38,7 +38,7 @@ apis:
         url: https://{siebel-server}/siebel/v1.0/swagger.json
       - type: Authentication
         url: https://docs.oracle.com/cd/F26413_26/books/Secur/single-sign-on-authentication.html
-      - type: Getting Started
+      - type: GettingStarted
         url: https://docs.oracle.com/cd/E95904_01/books/RestAPI/getting-started-with-the-siebel-rest-api.html
   - name: Oracle Siebel SOAP Web Services
     description: >-
@@ -158,7 +158,7 @@ common:
     url: https://www.oracle.com/applications/siebel/
   - type: Documentation
     url: https://docs.oracle.com/en/applications/siebel/
-  - type: Getting Started
+  - type: GettingStarted
     url: https://docs.oracle.com/cd/F26413_61/books/FundOUI/index.html
   - type: Authentication
     url: https://docs.oracle.com/cd/F26413_26/books/Secur/single-sign-on-authentication.html
@@ -170,19 +170,19 @@ common:
     url: https://community.oracle.com/customerconnect/categories/onprem-siebel-crm
   - type: Blog
     url: https://blogs.oracle.com/siebelcrm/
-  - type: Change Log
+  - type: ChangeLog
     url: https://docs.oracle.com/cd/F26413_61/homepage.htm
   - type: Training
     url: https://learn.oracle.com/ols/home/38497
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://www.oracle.com/legal/terms.html
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://www.oracle.com/legal/privacy/
-  - type: Status
+  - type: StatusPage
     url: https://ocistatus.oraclecloud.com/
   - type: Login
     url: https://support.oracle.com/
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/OracleSiebel
   - type: GitHubRepository
     url: https://github.com/OracleSiebel/ConfiguringSiebel
