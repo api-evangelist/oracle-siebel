@@ -152,6 +152,8 @@ apis:
       - type: Documentation
         url: https://docs.oracle.com/cd/F26413_50/books/SystAdm/c-Overview-of-Siebel-CRM-Event-Publication-and-Subscription.html
 common:
+  - type: DomainSecurity
+    url: security/oracle-siebel-domain-security.yml
   - type: Portal
     url: https://docs.oracle.com/cd/G15000_01/SiebelInfoPortal/
   - type: Website
