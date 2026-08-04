@@ -1371,10 +1371,10 @@ components:
         Email Address:
           type: string
           description: Email address
-        Work Phone #:
+        "Work Phone #":
           type: string
           description: Work phone number
-        Cellular Phone #:
+        "Cellular Phone #":
           type: string
           description: Mobile phone number
         Account:
@@ -1420,10 +1420,10 @@ components:
         Email Address:
           type: string
           description: Email address
-        Work Phone #:
+        "Work Phone #":
           type: string
           description: Work phone number
-        Cellular Phone #:
+        "Cellular Phone #":
           type: string
           description: Mobile phone number
         Employee Number:
