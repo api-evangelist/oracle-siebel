@@ -135,17 +135,195 @@ apis:
   - type: Documentation
     url: >-
       https://docs.oracle.com/cd/F26413_50/books/SystAdm/c-Overview-of-Siebel-CRM-Event-Publication-and-Subscription.html
-- aid: oracle-siebel:oracle-siebel-rest-api
-  name: Oracle Siebel Siebel Rest API
-  description: The Siebel Rest API from Oracle Siebel — 0 operation(s) for siebel rest.
-  humanURL: >-
-    https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html
-  baseURL: https://{siebel-server}/siebel/v1.0
+- aid: oracle-siebel:oracle-siebel-accounts-api
+  name: Oracle Siebel Accounts API
+  description: >-
+    Operations on Account business objects including customer and prospect organizations with associated
+    contacts, opportunities, and addresses
+  humanURL: https://docs.oracle.com/cd/F26413_08/books/CRMWeb/siebel-crm-web-services-overview.html
+  baseURL: https://{siebel-server}/siebel/app/soap/services
   tags:
-  - Siebel Rest
+  - Accounts
   properties:
   - type: OpenAPI
-    url: openapi/oracle-siebel-rest-api-openapi.yml
+    url: openapi/oracle-siebel-accounts-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html
+  - type: Authentication
+    url: https://docs.oracle.com/cd/F26413_26/books/Secur/single-sign-on-authentication.html
+  - type: GettingStarted
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/getting-started-with-the-siebel-rest-api.html
+- aid: oracle-siebel:oracle-siebel-activities-api
+  name: Oracle Siebel Activities API
+  description: >-
+    Operations on Activity business objects for managing tasks, appointments, call logs, and other scheduled
+    items
+  humanURL: https://docs.oracle.com/cd/F26413_08/books/CRMWeb/siebel-crm-web-services-overview.html
+  baseURL: https://{siebel-server}/siebel/app/soap/services
+  tags:
+  - Activities
+  properties:
+  - type: OpenAPI
+    url: openapi/oracle-siebel-activities-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html
+  - type: Authentication
+    url: https://docs.oracle.com/cd/F26413_26/books/Secur/single-sign-on-authentication.html
+  - type: GettingStarted
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/getting-started-with-the-siebel-rest-api.html
+- aid: oracle-siebel:oracle-siebel-business-services-api
+  name: Oracle Siebel Business Services API
+  description: >-
+    Invocation of Siebel business services and their methods for executing server-side business logic
+    including integration object operations
+  humanURL: https://docs.oracle.com/cd/F26413_08/books/CRMWeb/siebel-crm-web-services-overview.html
+  baseURL: https://{siebel-server}/siebel/app/soap/services
+  tags:
+  - Business Services
+  properties:
+  - type: OpenAPI
+    url: openapi/oracle-siebel-business-services-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html
+  - type: Authentication
+    url: https://docs.oracle.com/cd/F26413_26/books/Secur/single-sign-on-authentication.html
+  - type: GettingStarted
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/getting-started-with-the-siebel-rest-api.html
+- aid: oracle-siebel:oracle-siebel-contacts-api
+  name: Oracle Siebel Contacts API
+  description: >-
+    Operations on Contact business objects representing individual people associated with accounts and
+    organizations
+  humanURL: https://docs.oracle.com/cd/F26413_08/books/CRMWeb/siebel-crm-web-services-overview.html
+  baseURL: https://{siebel-server}/siebel/app/soap/services
+  tags:
+  - Contacts
+  properties:
+  - type: OpenAPI
+    url: openapi/oracle-siebel-contacts-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html
+  - type: Authentication
+    url: https://docs.oracle.com/cd/F26413_26/books/Secur/single-sign-on-authentication.html
+  - type: GettingStarted
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/getting-started-with-the-siebel-rest-api.html
+- aid: oracle-siebel:oracle-siebel-metadata-api
+  name: Oracle Siebel Metadata API
+  description: >-
+    Discovery endpoints that return OpenAPI-compatible metadata describing available resources, fields,
+    and operations
+  humanURL: https://docs.oracle.com/cd/F26413_08/books/CRMWeb/siebel-crm-web-services-overview.html
+  baseURL: https://{siebel-server}/siebel/app/soap/services
+  tags:
+  - Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/oracle-siebel-metadata-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html
+  - type: Authentication
+    url: https://docs.oracle.com/cd/F26413_26/books/Secur/single-sign-on-authentication.html
+  - type: GettingStarted
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/getting-started-with-the-siebel-rest-api.html
+- aid: oracle-siebel:oracle-siebel-opportunities-api
+  name: Oracle Siebel Opportunities API
+  description: >-
+    Operations on Opportunity business objects for managing sales pipeline, deals, and revenue forecasting
+  humanURL: https://docs.oracle.com/cd/F26413_08/books/CRMWeb/siebel-crm-web-services-overview.html
+  baseURL: https://{siebel-server}/siebel/app/soap/services
+  tags:
+  - Opportunities
+  properties:
+  - type: OpenAPI
+    url: openapi/oracle-siebel-opportunities-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html
+  - type: Authentication
+    url: https://docs.oracle.com/cd/F26413_26/books/Secur/single-sign-on-authentication.html
+  - type: GettingStarted
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/getting-started-with-the-siebel-rest-api.html
+- aid: oracle-siebel:oracle-siebel-orders-api
+  name: Oracle Siebel Orders API
+  description: >-
+    Operations on Order business objects for managing sales orders, order line items, and order fulfillment
+  humanURL: https://docs.oracle.com/cd/F26413_08/books/CRMWeb/siebel-crm-web-services-overview.html
+  baseURL: https://{siebel-server}/siebel/app/soap/services
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/oracle-siebel-orders-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html
+  - type: Authentication
+    url: https://docs.oracle.com/cd/F26413_26/books/Secur/single-sign-on-authentication.html
+  - type: GettingStarted
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/getting-started-with-the-siebel-rest-api.html
+- aid: oracle-siebel:oracle-siebel-products-api
+  name: Oracle Siebel Products API
+  description: >-
+    Operations on Product business objects for product catalog management including pricing and product
+    hierarchies
+  humanURL: https://docs.oracle.com/cd/F26413_08/books/CRMWeb/siebel-crm-web-services-overview.html
+  baseURL: https://{siebel-server}/siebel/app/soap/services
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/oracle-siebel-products-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html
+  - type: Authentication
+    url: https://docs.oracle.com/cd/F26413_26/books/Secur/single-sign-on-authentication.html
+  - type: GettingStarted
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/getting-started-with-the-siebel-rest-api.html
+- aid: oracle-siebel:oracle-siebel-repository-api
+  name: Oracle Siebel Repository API
+  description: >-
+    Access to Siebel repository objects including applets, views, business components, and other metadata
+    through workspace-based paths
+  humanURL: https://docs.oracle.com/cd/F26413_08/books/CRMWeb/siebel-crm-web-services-overview.html
+  baseURL: https://{siebel-server}/siebel/app/soap/services
+  tags:
+  - Repository
+  properties:
+  - type: OpenAPI
+    url: openapi/oracle-siebel-repository-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html
+  - type: Authentication
+    url: https://docs.oracle.com/cd/F26413_26/books/Secur/single-sign-on-authentication.html
+  - type: GettingStarted
+    url: >-
+      https://docs.oracle.com/cd/E95904_01/books/RestAPI/getting-started-with-the-siebel-rest-api.html
+- aid: oracle-siebel:oracle-siebel-service-requests-api
+  name: Oracle Siebel Service Requests API
+  description: >-
+    Operations on Service Request business objects for customer service case management and issue tracking
+  humanURL: https://docs.oracle.com/cd/F26413_08/books/CRMWeb/siebel-crm-web-services-overview.html
+  baseURL: https://{siebel-server}/siebel/app/soap/services
+  tags:
+  - Service Requests
+  properties:
+  - type: OpenAPI
+    url: openapi/oracle-siebel-service-requests-api-openapi.yml
   - type: Documentation
     url: >-
       https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html
