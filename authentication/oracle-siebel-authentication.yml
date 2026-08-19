@@ -1,0 +1,111 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.oracle.com/cd/G30562_01/books/Secur/c-Using-OAuth-with-REST-Inbound-Web-Services.html,
+  https://docs.oracle.com/cd/G30554_01/books/RestAPI/c-About-Supported-HTTP-Header-Fields--ti1009563.html,
+  https://docs.oracle.com/cd/F26413_26/books/Secur/single-sign-on-authentication.html,
+  https://docs.oracle.com/cd/F26413_26/books/Secur/index.html —
+  upgraded from the securityScheme baseline derived out of openapi/*.yml
+docs: https://docs.oracle.com/cd/F26413_26/books/Secur/index.html
+provider: Oracle Siebel
+providerId: oracle-siebel
+summary: >-
+  Siebel REST authentication is decided by ONE server-side setting: the
+  Authentication type in siebsrvr.properties. Set it to Basic or SSO and callers
+  send `Authorization: Basic`; set it to OAuth and callers send `Authorization:
+  Bearer`. There is no per-client choice, and there is no API key. Siebel is a
+  resource server only — it never issues a token. Bearer tokens come from an
+  external OAuth provider and are validated by INTROSPECTION over HTTPS on every
+  call.
+summary_types:
+  types:
+    - http
+    - oauth2
+  oauth2_flows:
+    - external
+  api_keys: false
+schemes:
+  - name: basicAuth
+    type: http
+    scheme: basic
+    header: 'Authorization: Basic <base64(user:password)>'
+    description: >-
+      HTTP Basic authentication using Siebel CRM user credentials. Applies when
+      the Authentication type configured in siebsrvr.properties is Basic or SSO.
+      The authenticated Siebel user's position and responsibilities determine
+      record visibility, so authorization is data-level rather than scope-level.
+    sources:
+      - openapi/*.yml
+      - https://docs.oracle.com/cd/G30554_01/books/RestAPI/c-About-Supported-HTTP-Header-Fields--ti1009563.html
+  - name: oauth2
+    type: oauth2
+    header: 'Authorization: Bearer <access_token>'
+    role: resource-server
+    description: >-
+      OAuth 2.0 bearer-token access. Applies when the Authentication type
+      configured in siebsrvr.properties is OAuth.
+    token_issuer: external
+    validation:
+      method: introspection
+      rfc: RFC 7662
+      statement: >-
+        "The Siebel application supports only the introspection method of
+        validating incoming access tokens." Signature-based validation of JWTs is
+        explicitly unavailable.
+      transport: >-
+        The Siebel REST API layer contacts the OAuth server over a secure channel
+        (HTTPS) to validate the received access token or obtain additional token
+        information. The OAuth server's certificates must be installed in the
+        environment hosting the Siebel REST API.
+      workaround: >-
+        If JWTs must be validated by signature, validation has to happen at an
+        API gateway BEFORE the request reaches Siebel.
+    scope_handling: >-
+      "If the token scope is used while retrieving the token, then the token
+      scope must match the executed operation." Scope names are defined by the
+      customer's own OAuth provider — Siebel publishes no scope registry.
+    prerequisite: >-
+      The Siebel Object Manager must be configured for SSO when OAuth is enabled
+      for authentication.
+    sources:
+      - openapi/*.yml
+      - https://docs.oracle.com/cd/G30562_01/books/Secur/c-Using-OAuth-with-REST-Inbound-Web-Services.html
+configuration:
+  file: siebsrvr.properties
+  parameter: Authentication type
+  values:
+    - Basic
+    - SSO
+    - OAuth
+  note: >-
+    Server-wide. A single Siebel Application Interface cannot offer Basic to one
+    caller and Bearer to another.
+authorization_model:
+  style: data-visibility
+  mechanism: >-
+    Siebel authorizes by Siebel responsibilities, positions and organization
+    visibility, applied per Business Component and modulated at call time by the
+    ViewMode query parameter. There are no API permissions, no roles exposed over
+    REST, and no scope-to-operation mapping.
+  see_also: scopes/oracle-siebel-scopes.yml
+spec_discrepancy:
+  finding: >-
+    The OpenAPI documents in openapi/ declare an oauth2 authorizationCode flow
+    with authorizationUrl https://{siebel-server}/siebel/v1.0/auth/authorize and
+    tokenUrl https://{siebel-server}/siebel/v1.0/auth/token. Oracle documents no
+    such endpoints. Siebel does not host an authorization server; it validates
+    tokens issued elsewhere. Those two URLs should be read as spec-authoring
+    placeholders, not as callable endpoints.
+  action: >-
+    Recorded here and in overlays/ rather than silently propagated. Nothing in
+    this artifact is derived from those two URLs.
+mcp_authentication:
+  runtime: Siebel AI Connectors
+  scheme: oauth2-jwt
+  note: >-
+    The MCP runtime validates JWTs LOCALLY against a configured issuer,
+    audience, required scope and JWKS URI — the opposite of the Siebel REST
+    layer, which cannot do signature validation. See mcp/oracle-siebel-mcp.yml.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

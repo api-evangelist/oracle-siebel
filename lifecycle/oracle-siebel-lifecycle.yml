@@ -1,0 +1,79 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://blogs.oracle.com/siebelcrm/siebel-crm-support-extended-through-at-least-2037-long-term-confidence-continued-innovation,
+  https://www.oracle.com/us/assets/lifetime-support-applications-069216.pdf,
+  https://support.oracle.com/knowledge/Siebel/2416948_1.html,
+  https://docs.oracle.com/cd/G30554_01/books/RestAPI/,
+  https://ocistatus.oraclecloud.com/
+provider: Oracle Siebel
+providerId: oracle-siebel
+summary: >-
+  Siebel CRM is on Oracle's Continuous Delivery model: a numbered update ships
+  roughly monthly (26.4, 26.5, 26.6, 26.7 …), each cumulative and applied by the
+  customer to their own installation. The REST path version has stayed at v1.0
+  throughout. Support is the strongest lifecycle signal Siebel has — Oracle
+  publicly commits to a rolling ten-year Premier Support window, now stated
+  through at least 2037.
+versioning:
+  api_version_scheme: path
+  current_api_version: v1.0
+  product_version_scheme: 'YY.M (calendar update)'
+  current_product_version: '26.7'
+  cadence: monthly
+  model: Continuous Delivery
+  note: >-
+    Product updates do not rev the REST path version. A customer on 26.7 and a
+    customer on 24.6 both call /siebel/v1.0; the difference shows up in which
+    Business Objects and describe output their instance exposes, not in the URL.
+    There is therefore no version negotiation available to a caller.
+support_policy:
+  program: Oracle Lifetime Support Policy — Oracle Applications
+  premier_support_through: '2037'
+  statement: >-
+    Oracle has extended Siebel CRM support on a rolling ten-year basis, publicly
+    stated as at least 2037. The Lifetime Support Policy datasheet for
+    Applications carries the authoritative dates.
+  datasheet: https://www.oracle.com/a/ocom/docs/support/premier/lifetime-support-applications-069216.pdf
+  my_oracle_support_note: https://support.oracle.com/knowledge/Siebel/2416948_1.html
+  statement_of_direction: https://blogs.oracle.com/siebelcrm/siebel-crm-statement-of-direction-2024-update
+deprecation:
+  policy_published: true
+  policy_url: https://www.oracle.com/us/assets/lifetime-support-applications-069216.pdf
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  mechanism: >-
+    Deprecations and desupport notices are published per release in the
+    "Installation-Related Changes for Siebel CRM" and "What's New" sections of
+    the Siebel documentation for each update, and in My Oracle Support desupport
+    notices. There is no runtime Deprecation or Sunset header on the REST API, so
+    a caller gets no in-band warning that an interface is going away.
+  example: >-
+    https://docs.oracle.com/en/applications/siebel/siebel-crm/26.3/szsig/c-Installation-Related-Changes-for-Siebel-CRM.html
+  deprecated_operations_in_openapi: 0
+  deprecated_operations_note: >-
+    No operation in any of the ten OpenAPI documents in openapi/ carries
+    deprecated: true.
+status_page:
+  url: https://ocistatus.oraclecloud.com/
+  covers: Oracle Cloud Infrastructure services
+  covers_siebel: false
+  note: >-
+    There is no Siebel status page and there cannot usefully be one: Siebel runs
+    on the customer's own infrastructure. The OCI status page is listed because
+    it covers the OCI compute a customer-managed Siebel deployment may sit on,
+    not because Oracle operates a Siebel service whose uptime it reports.
+sla:
+  published: false
+  note: >-
+    No public API SLA. Availability is a property of the customer's own
+    deployment. Contractual support response targets come from the Oracle
+    Premier Support agreement, not from a published API SLA.
+release_notes:
+  changelog_artifact: changelog/oracle-siebel-changelog.yml
+  docs_home: https://docs.oracle.com/cd/F26413_61/homepage.htm
+  blog: https://blogs.oracle.com/siebelcrm/
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

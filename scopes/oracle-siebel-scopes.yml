@@ -1,0 +1,59 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.oracle.com/cd/G30562_01/books/Secur/c-Using-OAuth-with-REST-Inbound-Web-Services.html
+  and https://docs.oracle.com/cd/F26413_26/books/Secur/index.html, read against
+  the oauth2 securitySchemes declared in openapi/*.yml
+docs: https://docs.oracle.com/cd/G30562_01/books/Secur/c-Using-OAuth-with-REST-Inbound-Web-Services.html
+provider: Oracle Siebel
+providerId: oracle-siebel
+scope_count: 0
+scopes: []
+summary: >-
+  Oracle publishes NO OAuth scope registry for Siebel, and the absence is
+  structural rather than an omission. Siebel is a resource server that never
+  issues tokens: scope names are minted by whatever external OAuth provider the
+  customer configures (Oracle Access Manager, IDCS/IAM, or a third party). All
+  Oracle states is the matching rule — "if the token scope is used while
+  retrieving the token, then the token scope must match the executed operation."
+  There is consequently nothing for this artifact to enumerate, and enumerating
+  plausible scope strings would fabricate a contract that does not exist.
+finding: no-published-scope-registry
+authorization_model:
+  primary: siebel-responsibilities-positions-and-view-mode
+  description: >-
+    Real authorization in Siebel is data-level, not scope-level. The
+    authenticated user's responsibilities, position and organization determine
+    which records are visible, refined per request by the ViewMode query
+    parameter. Two callers presenting tokens with identical scopes can legally
+    see completely different data.
+  scope_role: >-
+    Where scopes exist at all, they are a coarse gate in front of Siebel, not a
+    permission model inside it.
+schemes:
+  - name: oauth2
+    declared_in:
+      - openapi/oracle-siebel-accounts-api-openapi.yml
+      - openapi/oracle-siebel-activities-api-openapi.yml
+      - openapi/oracle-siebel-business-services-api-openapi.yml
+      - openapi/oracle-siebel-contacts-api-openapi.yml
+      - openapi/oracle-siebel-metadata-api-openapi.yml
+      - openapi/oracle-siebel-opportunities-api-openapi.yml
+      - openapi/oracle-siebel-orders-api-openapi.yml
+      - openapi/oracle-siebel-products-api-openapi.yml
+      - openapi/oracle-siebel-repository-api-openapi.yml
+      - openapi/oracle-siebel-service-requests-api-openapi.yml
+    declared_scopes: 0
+    note: >-
+      Every one of the ten specs declares an oauth2 scheme with an EMPTY scopes
+      map. That is consistent with the documentation: there is no Siebel scope
+      vocabulary to declare. The authorizationUrl and tokenUrl carried in those
+      schemes are placeholders — Siebel exposes no such endpoints. See
+      authentication/oracle-siebel-authentication.yml (spec_discrepancy).
+mcp_scope_note: >-
+  The Siebel AI Connectors MCP runtime does have a scope hook —
+  security.jwt.required-scope in application.yaml — but the value is chosen by
+  the deploying customer, so it too is deployment-specific rather than published.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

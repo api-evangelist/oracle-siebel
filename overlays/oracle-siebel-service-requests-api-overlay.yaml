@@ -1,0 +1,70 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay — Oracle Siebel REST Service Requests API
+  version: 1.0.0
+extends: ../openapi/oracle-siebel-service-requests-api-openapi.yml
+x-provenance:
+  generated: '2026-08-13'
+  method: generated
+  source: openapi/oracle-siebel-service-requests-api-openapi.yml + docs.oracle.com Siebel REST API guide;
+    captures API Evangelist enrichment, does not mutate the original spec
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enrichment:
+      profile: oracle-siebel
+      artifacts:
+      - conventions/oracle-siebel-conventions.yml
+      - errors/oracle-siebel-problem-types.yml
+      - authentication/oracle-siebel-authentication.yml
+      - rate-limits/oracle-siebel-rate-limits.yml
+      - lifecycle/oracle-siebel-lifecycle.yml
+      - data-model/oracle-siebel-data-model.yml
+- target: $.servers[0]
+  description: 'Record that the base URL is legitimately templated: Siebel is customer-deployed and Oracle
+    operates no Siebel API host.'
+  update:
+    x-templated-reason: Customer-deployed software. {siebel-server} is the customer Siebel Application
+      Interface host running siebel-rest.war; Oracle publishes no shared base URL.
+- target: $.components.securitySchemes.oauth2
+  description: 'Correct the OAuth model: Siebel is a resource server only. The authorizationUrl/tokenUrl
+    in the base document are placeholders — Siebel exposes no such endpoints and validates externally-issued
+    tokens by introspection (RFC 7662) instead.'
+  update:
+    x-oauth-role: resource-server
+    x-token-validation: introspection-only (RFC 7662); signature/local JWT validation is unavailable and
+      must be terminated at an API gateway
+    x-token-issuer: external OAuth provider configured by the customer; Siebel issues no tokens
+    x-endpoints-are-placeholders: true
+    x-source: https://docs.oracle.com/cd/G30562_01/books/Secur/c-Using-OAuth-with-REST-Inbound-Web-Services.html
+- target: $.paths.*.*
+  description: Document the status codes Oracle publishes for the Siebel REST API that this document does
+    not declare (405 Not Allowed, 406 Not Acceptable, 415 Unsupported Media Type), and the absence of
+    any rate-limit or idempotency signal.
+  update:
+    x-undeclared-status-codes:
+    - 405
+    - 406
+    - 415
+    x-idempotency: none — no Idempotency-Key header; a retried POST creates a duplicate record
+    x-rate-limit-headers: none published
+    x-error-format: siebel-proprietary field/value pairs; not RFC 9457
+- target: $.paths.*.get
+  description: Attach the documented pagination and query semantics to every read operation.
+  update:
+    x-pagination:
+      style: offset
+      parameters:
+      - PageSize
+      - StartRowNum
+      default_page_size: 10
+      max_page_size: 100
+      total_count: null
+      next_link: null
+    x-query-parameters:
+    - searchspec
+    - ViewMode
+    - uniformresponse
+    - fields
+    - ChildLinks
+    x-empty-result-status: 204

@@ -1,0 +1,99 @@
+openapi: 3.2.0
+info:
+  title: Oracle Siebel REST Repository API
+  description: RESTful API for accessing Siebel CRM business objects, business services, and repository objects. The Siebel REST API supports standard CRUD operations using HTTP verbs (GET, POST, PUT, DELETE) against business object data resources, business service invocation, and workspace-based repository management. Responses are available in JSON or XML format, and the API provides built-in metadata discovery through describe endpoints that return OpenAPI-compatible specifications.
+  version: '1.0'
+  contact:
+    name: Oracle Support
+    url: https://support.oracle.com
+  termsOfService: https://www.oracle.com/legal/terms.html
+servers:
+- url: https://{siebel-server}/siebel/v1.0
+  description: Siebel Application Interface Server
+  variables:
+    siebel-server:
+      default: localhost
+      description: Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat
+security:
+- basicAuth: []
+- oauth2: []
+tags:
+- name: Repository
+  description: Access to Siebel repository objects including applets, views, business components, and other metadata through workspace-based paths
+paths:
+  /workspace/{WorkspaceName}/describe:
+    get:
+      operationId: describeWorkspace
+      summary: Describe workspace repository objects
+      description: Retrieve a catalog of all repository objects available in the specified workspace. Returns an OpenAPI-compatible specification listing available applets, views, business components, and other Siebel repository metadata.
+      tags:
+      - Repository
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceName'
+      responses:
+        '200':
+          description: Workspace description retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Authentication credentials missing or invalid
+  /workspace/{WorkspaceName}/{RepositoryObject}/{ObjectName}:
+    get:
+      operationId: getRepositoryObject
+      summary: Get a repository object
+      description: Retrieve the definition of a specific repository object within a workspace. Returns the object properties including child objects such as controls, columns, and list items for applets.
+      tags:
+      - Repository
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceName'
+      - name: RepositoryObject
+        in: path
+        required: true
+        description: Type of repository object (e.g., Applet, View, Business Component)
+        schema:
+          type: string
+      - name: ObjectName
+        in: path
+        required: true
+        description: Name of the specific repository object
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Repository object retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Repository object not found
+components:
+  parameters:
+    WorkspaceName:
+      name: WorkspaceName
+      in: path
+      required: true
+      description: Name of the Siebel workspace (use 'main' for the default workspace)
+      schema:
+        type: string
+        default: main
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication using Siebel CRM user credentials encoded as Base64 in the Authorization header
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authentication for token-based access to the Siebel REST API
+      flows:
+        authorizationCode:
+          authorizationUrl: https://{siebel-server}/siebel/v1.0/auth/authorize
+          tokenUrl: https://{siebel-server}/siebel/v1.0/auth/token
+          scopes: {}
+externalDocs:
+  description: Oracle Siebel REST API Documentation
+  url: https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html

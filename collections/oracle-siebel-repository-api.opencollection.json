@@ -1,0 +1,75 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Oracle Siebel REST Repository API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Repository",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Describe workspace repository objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{siebel-server}/siebel/v1.0/workspace/:WorkspaceName/describe",
+            "params": [
+              {
+                "name": "WorkspaceName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Siebel workspace (use 'main' for the default workspace)"
+              }
+            ]
+          },
+          "docs": "Retrieve a catalog of all repository objects available in the specified workspace. Returns an OpenAPI-compatible specification listing available applets, views, business components, and other Siebel repository metadata."
+        },
+        {
+          "info": {
+            "name": "Get a repository object",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{siebel-server}/siebel/v1.0/workspace/:WorkspaceName/:RepositoryObject/:ObjectName",
+            "params": [
+              {
+                "name": "WorkspaceName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Siebel workspace (use 'main' for the default workspace)"
+              },
+              {
+                "name": "RepositoryObject",
+                "value": "",
+                "type": "path",
+                "description": "Type of repository object (e.g., Applet, View, Business Component)"
+              },
+              {
+                "name": "ObjectName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the specific repository object"
+              }
+            ]
+          },
+          "docs": "Retrieve the definition of a specific repository object within a workspace. Returns the object properties including child objects such as controls, columns, and list items for applets."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

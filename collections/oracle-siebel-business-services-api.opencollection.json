@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Oracle Siebel REST Business Services API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Business Services",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Invoke a business service method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{siebel-server}/siebel/v1.0/service/:ServiceName/:MethodName",
+            "params": [
+              {
+                "name": "ServiceName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Siebel business service to invoke"
+              },
+              {
+                "name": "MethodName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the method to execute on the business service"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute a method on a named Siebel business service. The service name and method name are specified in the URL path. The request body contains the input parameters as a Siebel property set or integration object message. Business services must be explicitly configured for REST access and associated with a responsibility to control access."
+        },
+        {
+          "info": {
+            "name": "Get business service catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{siebel-server}/siebel/v1.0/service/describe"
+          },
+          "docs": "Retrieve a catalog of all Siebel business service names, methods defined for each service, and links to individual service descriptions. Returns an OpenAPI-compatible specification."
+        },
+        {
+          "info": {
+            "name": "Describe a business service",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{siebel-server}/siebel/v1.0/service/:ServiceName/describe",
+            "params": [
+              {
+                "name": "ServiceName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Siebel business service to describe"
+              }
+            ]
+          },
+          "docs": "Retrieve the metadata description for a specific business service including its methods, input and output arguments, and data types."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

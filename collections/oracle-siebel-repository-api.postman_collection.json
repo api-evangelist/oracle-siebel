@@ -1,0 +1,499 @@
+{
+  "item": [
+    {
+      "id": "9f637469-720e-40a3-8fcc-3682a26fd46a",
+      "name": "Repository",
+      "description": {
+        "content": "Access to Siebel repository objects including applets, views, business components, and other metadata through workspace-based paths",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fd0cff10-78ef-450f-a2ca-33acde05ae3a",
+          "name": "Describe workspace repository objects",
+          "request": {
+            "name": "Describe workspace repository objects",
+            "description": {
+              "content": "Retrieve a catalog of all repository objects available in the specified workspace. Returns an OpenAPI-compatible specification listing available applets, views, business components, and other Siebel repository metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workspace",
+                ":WorkspaceName",
+                "describe"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "main",
+                  "key": "WorkspaceName",
+                  "description": "(Required) Name of the Siebel workspace (use 'main' for the default workspace)"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c018173a-38c3-4260-a401-efb9ce5be545",
+              "name": "Workspace description retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspace",
+                    ":WorkspaceName",
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "main",
+                      "key": "WorkspaceName",
+                      "description": "(Required) Name of the Siebel workspace (use 'main' for the default workspace)"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a247abf2-da6e-4e5b-a56a-cce8187812c9",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspace",
+                    ":WorkspaceName",
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "main",
+                      "key": "WorkspaceName",
+                      "description": "(Required) Name of the Siebel workspace (use 'main' for the default workspace)"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74144da4-437b-4dc0-a0c7-c7eef4ab68ef",
+          "name": "Get a repository object",
+          "request": {
+            "name": "Get a repository object",
+            "description": {
+              "content": "Retrieve the definition of a specific repository object within a workspace. Returns the object properties including child objects such as controls, columns, and list items for applets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workspace",
+                ":WorkspaceName",
+                ":RepositoryObject",
+                ":ObjectName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "main",
+                  "key": "WorkspaceName",
+                  "description": "(Required) Name of the Siebel workspace (use 'main' for the default workspace)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "RepositoryObject",
+                  "description": "(Required) Type of repository object (e.g., Applet, View, Business Component)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ObjectName",
+                  "description": "(Required) Name of the specific repository object"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "98cf8a07-033a-4694-8f49-f7a90a84a90b",
+              "name": "Repository object retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspace",
+                    ":WorkspaceName",
+                    ":RepositoryObject",
+                    ":ObjectName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "main",
+                      "key": "WorkspaceName",
+                      "description": "(Required) Name of the Siebel workspace (use 'main' for the default workspace)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "RepositoryObject",
+                      "description": "(Required) Type of repository object (e.g., Applet, View, Business Component)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ObjectName",
+                      "description": "(Required) Name of the specific repository object"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fda75249-104e-4969-884e-266d578f05c5",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspace",
+                    ":WorkspaceName",
+                    ":RepositoryObject",
+                    ":ObjectName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "main",
+                      "key": "WorkspaceName",
+                      "description": "(Required) Name of the Siebel workspace (use 'main' for the default workspace)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "RepositoryObject",
+                      "description": "(Required) Type of repository object (e.g., Applet, View, Business Component)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ObjectName",
+                      "description": "(Required) Name of the specific repository object"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3e3b08cb-53b5-46a3-94f1-d6a1058fc050",
+              "name": "Repository object not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspace",
+                    ":WorkspaceName",
+                    ":RepositoryObject",
+                    ":ObjectName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "main",
+                      "key": "WorkspaceName",
+                      "description": "(Required) Name of the Siebel workspace (use 'main' for the default workspace)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "RepositoryObject",
+                      "description": "(Required) Type of repository object (e.g., Applet, View, Business Component)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ObjectName",
+                      "description": "(Required) Name of the specific repository object"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost",
+      "key": "siebel-server"
+    },
+    {
+      "type": "string",
+      "value": "https://{{siebel-server}}/siebel/v1.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "be198c5d-713b-4df7-85ac-7bc0669b19c0",
+    "name": "Oracle Siebel REST Repository API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for accessing Siebel CRM business objects, business services, and repository objects. The Siebel REST API supports standard CRUD operations using HTTP verbs (GET, POST, PUT, DELETE) against business object data resources, business service invocation, and workspace-based repository management. Responses are available in JSON or XML format, and the API provides built-in metadata discovery through describe endpoints that return OpenAPI-compatible specifications.\n\nContact Support:\n Name: Oracle Support",
+      "type": "text/plain"
+    }
+  }
+}

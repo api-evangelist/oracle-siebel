@@ -1,0 +1,333 @@
+openapi: 3.2.0
+info:
+  title: Oracle Siebel REST Service Requests API
+  description: RESTful API for accessing Siebel CRM business objects, business services, and repository objects. The Siebel REST API supports standard CRUD operations using HTTP verbs (GET, POST, PUT, DELETE) against business object data resources, business service invocation, and workspace-based repository management. Responses are available in JSON or XML format, and the API provides built-in metadata discovery through describe endpoints that return OpenAPI-compatible specifications.
+  version: '1.0'
+  contact:
+    name: Oracle Support
+    url: https://support.oracle.com
+  termsOfService: https://www.oracle.com/legal/terms.html
+servers:
+- url: https://{siebel-server}/siebel/v1.0
+  description: Siebel Application Interface Server
+  variables:
+    siebel-server:
+      default: localhost
+      description: Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat
+security:
+- basicAuth: []
+- oauth2: []
+tags:
+- name: Service Requests
+  description: Operations on Service Request business objects for customer service case management and issue tracking
+paths:
+  /data/Service Request/Service Request:
+    get:
+      operationId: listServiceRequests
+      summary: List service requests
+      description: Retrieve a collection of Service Request business component records from the Service Request business object. Returns service request details including status, priority, description, owner, and associated account and contact information.
+      tags:
+      - Service Requests
+      parameters:
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/searchspec'
+      - $ref: '#/components/parameters/ChildLinks'
+      - $ref: '#/components/parameters/uniformresponse'
+      - $ref: '#/components/parameters/ViewMode'
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/StartRowNum'
+      responses:
+        '200':
+          description: Service requests retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ServiceRequest'
+                  Link:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkObject'
+        '204':
+          description: No service requests found
+        '401':
+          description: Authentication credentials missing or invalid
+    post:
+      operationId: createServiceRequest
+      summary: Create a service request
+      description: Insert a new Service Request business component record into the Service Request business object.
+      tags:
+      - Service Requests
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestInput'
+      responses:
+        '201':
+          description: Service request created successfully
+        '400':
+          description: Invalid request body or missing required fields
+        '401':
+          description: Authentication credentials missing or invalid
+  /data/Service Request/Service Request/{ServiceRequestId}:
+    get:
+      operationId: getServiceRequest
+      summary: Get a service request by ID
+      description: Retrieve a single Service Request business component record by its unique row identifier.
+      tags:
+      - Service Requests
+      parameters:
+      - $ref: '#/components/parameters/ServiceRequestId'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/ChildLinks'
+      responses:
+        '200':
+          description: Service request retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceRequest'
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Service request not found
+    put:
+      operationId: upsertServiceRequest
+      summary: Upsert a service request
+      description: Insert or update a Service Request business component record by its unique row identifier.
+      tags:
+      - Service Requests
+      parameters:
+      - $ref: '#/components/parameters/ServiceRequestId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestInput'
+      responses:
+        '200':
+          description: Service request upserted successfully
+        '400':
+          description: Invalid request body
+        '401':
+          description: Authentication credentials missing or invalid
+    delete:
+      operationId: deleteServiceRequest
+      summary: Delete a service request
+      description: Delete a Service Request business component record by its unique row identifier.
+      tags:
+      - Service Requests
+      parameters:
+      - $ref: '#/components/parameters/ServiceRequestId'
+      responses:
+        '200':
+          description: Service request deleted successfully
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Service request not found
+components:
+  parameters:
+    PageSize:
+      name: PageSize
+      in: query
+      required: false
+      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
+      schema:
+        type: integer
+        minimum: 1
+        examples:
+        - 20
+    ViewMode:
+      name: ViewMode
+      in: query
+      required: false
+      description: Access control mode that determines which records are visible. Personal returns records owned by the user, Sales Rep uses position-based access, and Organization uses organization-level visibility rules.
+      schema:
+        type: string
+        enum:
+        - Personal
+        - Sales Rep
+        - Organization
+    ChildLinks:
+      name: ChildLinks
+      in: query
+      required: false
+      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
+      schema:
+        type: string
+        examples:
+        - Contact,Opportunity
+        - None
+    uniformresponse:
+      name: uniformresponse
+      in: query
+      required: false
+      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+        - y
+        - n
+    fields:
+      name: fields
+      in: query
+      required: false
+      description: Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields.
+      schema:
+        type: string
+        examples:
+        - Name,Location,Account Status
+    ServiceRequestId:
+      name: ServiceRequestId
+      in: path
+      required: true
+      description: Unique row identifier for the Service Request record
+      schema:
+        type: string
+    StartRowNum:
+      name: StartRowNum
+      in: query
+      required: false
+      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    searchspec:
+      name: searchspec
+      in: query
+      required: false
+      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
+      schema:
+        type: string
+        examples:
+        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
+  schemas:
+    LinkObject:
+      type: object
+      description: HATEOAS link object providing navigation references to related Siebel REST API resources
+      properties:
+        rel:
+          type: string
+          description: Relationship type (self, child, parent)
+          enum:
+          - self
+          - child
+          - parent
+        href:
+          type: string
+          format: uri
+          description: Full URL to the related resource
+        name:
+          type: string
+          description: Name of the related business component
+    ServiceRequest:
+      type: object
+      description: A Siebel CRM Service Request business component record representing a customer service case or issue
+      properties:
+        Id:
+          type: string
+          description: Unique row identifier for the service request record
+        SR Number:
+          type: string
+          description: Service request number
+        Abstract:
+          type: string
+          description: Brief summary of the service request
+        Description:
+          type: string
+          description: Detailed description of the issue
+        Status:
+          type: string
+          description: Current status of the service request
+        Sub-Status:
+          type: string
+          description: Sub-status for additional classification
+        Priority:
+          type: string
+          description: Priority level of the service request
+        Severity:
+          type: string
+          description: Severity level of the issue
+        Type:
+          type: string
+          description: Service request type classification
+        Sub-Type:
+          type: string
+          description: Service request sub-type
+        Account:
+          type: string
+          description: Associated account name
+        Account Id:
+          type: string
+          description: Row identifier of the associated account
+        Contact First Name:
+          type: string
+          description: First name of the reporting contact
+        Contact Last Name:
+          type: string
+          description: Last name of the reporting contact
+        Owner:
+          type: string
+          description: Owner or assignee of the service request
+        Created:
+          type: string
+          description: Date and time the record was created
+        Link:
+          type: array
+          description: HATEOAS links to related resources
+          items:
+            $ref: '#/components/schemas/LinkObject'
+    ServiceRequestInput:
+      type: object
+      description: Input payload for creating or updating a Service Request record
+      required:
+      - Abstract
+      properties:
+        Abstract:
+          type: string
+          description: Brief summary of the service request
+        Description:
+          type: string
+          description: Detailed description of the issue
+        Status:
+          type: string
+          description: Current status
+        Priority:
+          type: string
+          description: Priority level
+        Severity:
+          type: string
+          description: Severity level
+        Type:
+          type: string
+          description: Service request type
+        Account:
+          type: string
+          description: Associated account name
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication using Siebel CRM user credentials encoded as Base64 in the Authorization header
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authentication for token-based access to the Siebel REST API
+      flows:
+        authorizationCode:
+          authorizationUrl: https://{siebel-server}/siebel/v1.0/auth/authorize
+          tokenUrl: https://{siebel-server}/siebel/v1.0/auth/token
+          scopes: {}
+externalDocs:
+  description: Oracle Siebel REST API Documentation
+  url: https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html

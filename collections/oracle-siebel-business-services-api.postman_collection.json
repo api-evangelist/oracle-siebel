@@ -1,0 +1,770 @@
+{
+  "item": [
+    {
+      "id": "795a7953-ee7a-4ed8-b5ef-0be7c5ef2e21",
+      "name": "Business Services",
+      "description": {
+        "content": "Invocation of Siebel business services and their methods for executing server-side business logic including integration object operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6a11fe8f-a0a1-42b0-aa11-5d400bc4fa2c",
+          "name": "Invoke a business service method",
+          "request": {
+            "name": "Invoke a business service method",
+            "description": {
+              "content": "Execute a method on a named Siebel business service. The service name and method name are specified in the URL path. The request body contains the input parameters as a Siebel property set or integration object message. Business services must be explicitly configured for REST access and associated with a responsibility to control access.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "service",
+                ":ServiceName",
+                ":MethodName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ServiceName",
+                  "description": "(Required) Name of the Siebel business service to invoke"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "MethodName",
+                  "description": "(Required) Name of the method to execute on the business service"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"body\": {\n    \"SiebelMessage\": {\n      \"MessageId\": \"<string>\",\n      \"MessageType\": \"Integration Object\",\n      \"IntObjectName\": \"<string>\",\n      \"IntObjectFormat\": \"Siebel Hierarchical\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "65aa83a5-3273-4fbe-a8a9-7580e5037493",
+              "name": "Business service method executed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service",
+                    ":ServiceName",
+                    ":MethodName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ServiceName",
+                      "description": "(Required) Name of the Siebel business service to invoke"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "MethodName",
+                      "description": "(Required) Name of the method to execute on the business service"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": {\n    \"SiebelMessage\": {\n      \"MessageId\": \"<string>\",\n      \"MessageType\": \"Integration Object\",\n      \"IntObjectName\": \"<string>\",\n      \"IntObjectFormat\": \"Siebel Hierarchical\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aad4536b-8367-480a-aeda-ae94a722b048",
+              "name": "Invalid request or method parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service",
+                    ":ServiceName",
+                    ":MethodName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ServiceName",
+                      "description": "(Required) Name of the Siebel business service to invoke"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "MethodName",
+                      "description": "(Required) Name of the method to execute on the business service"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": {\n    \"SiebelMessage\": {\n      \"MessageId\": \"<string>\",\n      \"MessageType\": \"Integration Object\",\n      \"IntObjectName\": \"<string>\",\n      \"IntObjectFormat\": \"Siebel Hierarchical\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fab545fe-7f25-4003-a130-fc167a3abd97",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service",
+                    ":ServiceName",
+                    ":MethodName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ServiceName",
+                      "description": "(Required) Name of the Siebel business service to invoke"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "MethodName",
+                      "description": "(Required) Name of the method to execute on the business service"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": {\n    \"SiebelMessage\": {\n      \"MessageId\": \"<string>\",\n      \"MessageType\": \"Integration Object\",\n      \"IntObjectName\": \"<string>\",\n      \"IntObjectFormat\": \"Siebel Hierarchical\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "79e48c40-ae6c-416f-af4d-c6a29adb7f9a",
+              "name": "Business service execution error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service",
+                    ":ServiceName",
+                    ":MethodName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ServiceName",
+                      "description": "(Required) Name of the Siebel business service to invoke"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "MethodName",
+                      "description": "(Required) Name of the method to execute on the business service"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": {\n    \"SiebelMessage\": {\n      \"MessageId\": \"<string>\",\n      \"MessageType\": \"Integration Object\",\n      \"IntObjectName\": \"<string>\",\n      \"IntObjectFormat\": \"Siebel Hierarchical\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2eaf049-90e8-4265-b35e-606c1cbfa2f5",
+          "name": "Get business service catalog",
+          "request": {
+            "name": "Get business service catalog",
+            "description": {
+              "content": "Retrieve a catalog of all Siebel business service names, methods defined for each service, and links to individual service descriptions. Returns an OpenAPI-compatible specification.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "service",
+                "describe"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5862ce15-77d6-4a60-aade-86f3679de374",
+              "name": "Business service catalog retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service",
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6b702dd-dacd-4687-a2eb-5561ae66713c",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service",
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5dd1d9e6-9c53-463d-b470-d71a23e804be",
+          "name": "Describe a business service",
+          "request": {
+            "name": "Describe a business service",
+            "description": {
+              "content": "Retrieve the metadata description for a specific business service including its methods, input and output arguments, and data types.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "service",
+                ":ServiceName",
+                "describe"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ServiceName",
+                  "description": "(Required) Name of the Siebel business service to describe"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b4d04d25-fe65-4ba5-9966-3c44622f33d2",
+              "name": "Business service description retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service",
+                    ":ServiceName",
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ServiceName",
+                      "description": "(Required) Name of the Siebel business service to describe"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02996a0b-7c6e-44b9-8eb3-986b3ceadab9",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service",
+                    ":ServiceName",
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ServiceName",
+                      "description": "(Required) Name of the Siebel business service to describe"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e6b38cfa-c8a9-433e-99ef-fad1d63c77b4",
+              "name": "Business service not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service",
+                    ":ServiceName",
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ServiceName",
+                      "description": "(Required) Name of the Siebel business service to describe"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost",
+      "key": "siebel-server"
+    },
+    {
+      "type": "string",
+      "value": "https://{{siebel-server}}/siebel/v1.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "448d4c72-778d-40b0-b085-cbf57837de63",
+    "name": "Oracle Siebel REST Business Services API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for accessing Siebel CRM business objects, business services, and repository objects. The Siebel REST API supports standard CRUD operations using HTTP verbs (GET, POST, PUT, DELETE) against business object data resources, business service invocation, and workspace-based repository management. Responses are available in JSON or XML format, and the API provides built-in metadata discovery through describe endpoints that return OpenAPI-compatible specifications.\n\nContact Support:\n Name: Oracle Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,1728 @@
+{
+  "item": [
+    {
+      "id": "10e8ceb5-019d-4211-af80-25fb9c499fa0",
+      "name": "Opportunities",
+      "description": {
+        "content": "Operations on Opportunity business objects for managing sales pipeline, deals, and revenue forecasting",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cecab49e-2cf8-4111-9675-a4e35b5d0077",
+          "name": "List opportunities for an account",
+          "request": {
+            "name": "List opportunities for an account",
+            "description": {
+              "content": "Retrieve the Opportunity child business component records associated with a specific Account. Returns opportunity details including name, sales stage, close date, and revenue amount.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Account",
+                "Account",
+                ":AccountId",
+                "Opportunity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "searchspec",
+                  "value": "<string>",
+                  "description": "Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators."
+                },
+                {
+                  "disabled": false,
+                  "key": "uniformresponse",
+                  "value": "<string>",
+                  "description": "When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records."
+                },
+                {
+                  "disabled": false,
+                  "key": "PageSize",
+                  "value": "<integer>",
+                  "description": "Maximum number of records to return in the response. Controls pagination by limiting the result set size."
+                },
+                {
+                  "disabled": false,
+                  "key": "StartRowNum",
+                  "value": "0",
+                  "description": "Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "AccountId",
+                  "description": "(Required) Unique row identifier for the Account record"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c8a9d01a-1e09-45d5-a2cc-69f868c0708c",
+              "name": "Opportunities retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Account",
+                    "Account",
+                    ":AccountId",
+                    "Opportunity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "AccountId",
+                      "description": "(Required) Unique row identifier for the Account record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"Id\": \"string\",\n      \"Name\": \"string\",\n      \"Account\": \"string\",\n      \"Account Id\": \"string\",\n      \"Sales Stage\": \"string\",\n      \"Status\": \"string\",\n      \"Close Date\": \"string\",\n      \"Revenue\": 7975.531534795828,\n      \"Win Probability\": 38.39749055833903,\n      \"Description\": \"string\",\n      \"Primary Organization Id\": \"string\",\n      \"Link\": [\n        {\n          \"rel\": \"child\",\n          \"href\": \"https://FjYFpeBAotk.nvdzzk5GWGYrpiS7hvf+nT0A\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"parent\",\n          \"href\": \"http://tioNQnpRyDDmNGvbEbJWOYUD.pzJcjKkEHaR,NkTiBMuE\",\n          \"name\": \"string\"\n        }\n      ]\n    },\n    {\n      \"Id\": \"string\",\n      \"Name\": \"string\",\n      \"Account\": \"string\",\n      \"Account Id\": \"string\",\n      \"Sales Stage\": \"string\",\n      \"Status\": \"string\",\n      \"Close Date\": \"string\",\n      \"Revenue\": 1699.7784354436862,\n      \"Win Probability\": 54.17359735609214,\n      \"Description\": \"string\",\n      \"Primary Organization Id\": \"string\",\n      \"Link\": [\n        {\n          \"rel\": \"parent\",\n          \"href\": \"http://ByfhkovLYYCbDBdT.lgxOvsoJIA8+vuunGBDB\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"parent\",\n          \"href\": \"https://G.bjceiPtcWawTfRXu+1kHXEotexHA,S269b\",\n          \"name\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"Link\": [\n    {\n      \"rel\": \"child\",\n      \"href\": \"http://mZRHLmjIxILRTvTixCWiWPWEtasrE.ekmSyjEFWTFnVTQ3KSE1+vi,W,kBL0Fv\",\n      \"name\": \"string\"\n    },\n    {\n      \"rel\": \"child\",\n      \"href\": \"https://gpOQIEpDd.hfvpOy7xkFbPqZcmEvipaQzoxEsLah+Xtbr+MpzWPHRhnk8tWwi0UD-\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1e0daa5-0236-4e7a-a8da-f1d7a467fbae",
+              "name": "No opportunities found for this account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Account",
+                    "Account",
+                    ":AccountId",
+                    "Opportunity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "AccountId",
+                      "description": "(Required) Unique row identifier for the Account record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "685b2bdf-52df-4659-b186-f1713f7815ed",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Account",
+                    "Account",
+                    ":AccountId",
+                    "Opportunity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "AccountId",
+                      "description": "(Required) Unique row identifier for the Account record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "722c1601-f21a-4d1e-a579-edb47f788f96",
+              "name": "Parent account not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Account",
+                    "Account",
+                    ":AccountId",
+                    "Opportunity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "AccountId",
+                      "description": "(Required) Unique row identifier for the Account record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d776199-0639-4e3b-a177-d5f832be92c1",
+          "name": "List opportunities",
+          "request": {
+            "name": "List opportunities",
+            "description": {
+              "content": "Retrieve a collection of Opportunity business component records from the Opportunity business object. Returns opportunity details including name, sales stage, revenue, close date, and associated account information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Opportunity",
+                "Opportunity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "searchspec",
+                  "value": "<string>",
+                  "description": "Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators."
+                },
+                {
+                  "disabled": false,
+                  "key": "ChildLinks",
+                  "value": "<string>",
+                  "description": "Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links."
+                },
+                {
+                  "disabled": false,
+                  "key": "uniformresponse",
+                  "value": "<string>",
+                  "description": "When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records."
+                },
+                {
+                  "disabled": false,
+                  "key": "ViewMode",
+                  "value": "<string>",
+                  "description": "Access control mode that determines which records are visible. Personal returns records owned by the user, Sales Rep uses position-based access, and Organization uses organization-level visibility rules."
+                },
+                {
+                  "disabled": false,
+                  "key": "PageSize",
+                  "value": "<integer>",
+                  "description": "Maximum number of records to return in the response. Controls pagination by limiting the result set size."
+                },
+                {
+                  "disabled": false,
+                  "key": "StartRowNum",
+                  "value": "0",
+                  "description": "Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0d7013c0-00d4-404d-b819-86589d4108bc",
+              "name": "Opportunities retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Opportunity",
+                    "Opportunity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ViewMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"Id\": \"string\",\n      \"Name\": \"string\",\n      \"Account\": \"string\",\n      \"Account Id\": \"string\",\n      \"Sales Stage\": \"string\",\n      \"Status\": \"string\",\n      \"Close Date\": \"string\",\n      \"Revenue\": 3060.011289525403,\n      \"Win Probability\": 13.285805341875879,\n      \"Description\": \"string\",\n      \"Primary Organization Id\": \"string\",\n      \"Link\": [\n        {\n          \"rel\": \"child\",\n          \"href\": \"https://aZVDx.xsvJwHrJ07bEDn-ZugyQUaS+MOiU0a1UhTtvrFWaZeRfIJ75hXK\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"self\",\n          \"href\": \"http://ocugMWcsMWIVkWwlOTXIFtDURQoXFwF.pdyxYc7pHRwh2RDSgwjDF3S0JgaH5UGDigTYUTIGc\",\n          \"name\": \"string\"\n        }\n      ]\n    },\n    {\n      \"Id\": \"string\",\n      \"Name\": \"string\",\n      \"Account\": \"string\",\n      \"Account Id\": \"string\",\n      \"Sales Stage\": \"string\",\n      \"Status\": \"string\",\n      \"Close Date\": \"string\",\n      \"Revenue\": 7212.025943396737,\n      \"Win Probability\": 69.78000891961129,\n      \"Description\": \"string\",\n      \"Primary Organization Id\": \"string\",\n      \"Link\": [\n        {\n          \"rel\": \"child\",\n          \"href\": \"https://QSVrt.dlTzQ+fJ0nH,whHcp.WDYFAdZv2rRBmOE\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"child\",\n          \"href\": \"http://BnrMDfutJD.vqwCUuskC,lt,lj,JrYsfC7uhRsp9F\",\n          \"name\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"Link\": [\n    {\n      \"rel\": \"child\",\n      \"href\": \"https://sBiM.kipjw8B6wYzLQnMq,HQpUlSv0i6nznFTpBdIUQrI.jsbBA\",\n      \"name\": \"string\"\n    },\n    {\n      \"rel\": \"child\",\n      \"href\": \"https://cTOUMLQpYWDbSkCXUExgxKk.snjzoX1E1xq3aSKFdN\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d456f41-78b1-4c4f-af08-a0c9a408e41c",
+              "name": "No opportunities found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Opportunity",
+                    "Opportunity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ViewMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f3d86be3-0a18-43d9-a7f1-9589ca3c0cab",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Opportunity",
+                    "Opportunity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ViewMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2d57efb6-e1c8-40a3-8233-5c255e34a29e",
+          "name": "Create an opportunity",
+          "request": {
+            "name": "Create an opportunity",
+            "description": {
+              "content": "Insert a new Opportunity business component record into the Opportunity business object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Opportunity",
+                "Opportunity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Name\": \"<string>\",\n  \"Account\": \"<string>\",\n  \"Sales Stage\": \"<string>\",\n  \"Close Date\": \"<string>\",\n  \"Revenue\": \"<number>\",\n  \"Win Probability\": \"<number>\",\n  \"Description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "19939751-b7d3-468a-b25a-93444b526faa",
+              "name": "Opportunity created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Opportunity",
+                    "Opportunity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Name\": \"<string>\",\n  \"Account\": \"<string>\",\n  \"Sales Stage\": \"<string>\",\n  \"Close Date\": \"<string>\",\n  \"Revenue\": \"<number>\",\n  \"Win Probability\": \"<number>\",\n  \"Description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "26de3bdb-e4f3-43be-8ceb-11571f9074d8",
+              "name": "Invalid request body or missing required fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Opportunity",
+                    "Opportunity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Name\": \"<string>\",\n  \"Account\": \"<string>\",\n  \"Sales Stage\": \"<string>\",\n  \"Close Date\": \"<string>\",\n  \"Revenue\": \"<number>\",\n  \"Win Probability\": \"<number>\",\n  \"Description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c3831d8b-022d-4768-b33b-89fc08f79517",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Opportunity",
+                    "Opportunity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Name\": \"<string>\",\n  \"Account\": \"<string>\",\n  \"Sales Stage\": \"<string>\",\n  \"Close Date\": \"<string>\",\n  \"Revenue\": \"<number>\",\n  \"Win Probability\": \"<number>\",\n  \"Description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "491b2584-b1c8-41bf-8b78-96cbc5b7c337",
+          "name": "Get an opportunity by ID",
+          "request": {
+            "name": "Get an opportunity by ID",
+            "description": {
+              "content": "Retrieve a single Opportunity business component record by its unique row identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Opportunity",
+                "Opportunity",
+                ":OpportunityId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "ChildLinks",
+                  "value": "<string>",
+                  "description": "Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "OpportunityId",
+                  "description": "(Required) Unique row identifier for the Opportunity record"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cee55837-d216-4c85-b6d7-e8a9eecddc5d",
+              "name": "Opportunity retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Opportunity",
+                    "Opportunity",
+                    ":OpportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "OpportunityId",
+                      "description": "(Required) Unique row identifier for the Opportunity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": \"string\",\n  \"Name\": \"string\",\n  \"Account\": \"string\",\n  \"Account Id\": \"string\",\n  \"Sales Stage\": \"string\",\n  \"Status\": \"string\",\n  \"Close Date\": \"string\",\n  \"Revenue\": 3170.231418815085,\n  \"Win Probability\": 16.76134168346437,\n  \"Description\": \"string\",\n  \"Primary Organization Id\": \"string\",\n  \"Link\": [\n    {\n      \"rel\": \"child\",\n      \"href\": \"https://tVkSiM.wkysKu4O0ItTFpFV2L\",\n      \"name\": \"string\"\n    },\n    {\n      \"rel\": \"self\",\n      \"href\": \"https://ufkPHHaAmvsizoROnPcGLFWR.qiLsG1ZM.y8X-Xpe+criaa2HdiIY.-WNGlVd9db-vMDjOZQKI\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82a5554b-b8ae-4660-b21e-2575e3f71d56",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Opportunity",
+                    "Opportunity",
+                    ":OpportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "OpportunityId",
+                      "description": "(Required) Unique row identifier for the Opportunity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "23cf65f0-6f53-4124-aa8c-6744b934eaea",
+              "name": "Opportunity not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Opportunity",
+                    "Opportunity",
+                    ":OpportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "OpportunityId",
+                      "description": "(Required) Unique row identifier for the Opportunity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50a21fa4-3f84-4b6f-99bf-299218466f02",
+          "name": "Upsert an opportunity",
+          "request": {
+            "name": "Upsert an opportunity",
+            "description": {
+              "content": "Insert or update an Opportunity business component record by its unique row identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Opportunity",
+                "Opportunity",
+                ":OpportunityId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "OpportunityId",
+                  "description": "(Required) Unique row identifier for the Opportunity record"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Name\": \"<string>\",\n  \"Account\": \"<string>\",\n  \"Sales Stage\": \"<string>\",\n  \"Close Date\": \"<string>\",\n  \"Revenue\": \"<number>\",\n  \"Win Probability\": \"<number>\",\n  \"Description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "efcda4d1-acd3-401a-b5ba-03d1b973f0de",
+              "name": "Opportunity upserted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Opportunity",
+                    "Opportunity",
+                    ":OpportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "OpportunityId",
+                      "description": "(Required) Unique row identifier for the Opportunity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Name\": \"<string>\",\n  \"Account\": \"<string>\",\n  \"Sales Stage\": \"<string>\",\n  \"Close Date\": \"<string>\",\n  \"Revenue\": \"<number>\",\n  \"Win Probability\": \"<number>\",\n  \"Description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4acafbf9-3356-43a5-b3ef-8bcaa0959ae7",
+              "name": "Invalid request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Opportunity",
+                    "Opportunity",
+                    ":OpportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "OpportunityId",
+                      "description": "(Required) Unique row identifier for the Opportunity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Name\": \"<string>\",\n  \"Account\": \"<string>\",\n  \"Sales Stage\": \"<string>\",\n  \"Close Date\": \"<string>\",\n  \"Revenue\": \"<number>\",\n  \"Win Probability\": \"<number>\",\n  \"Description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7054bfbe-d0f0-4ef3-9999-03ec4266da9f",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Opportunity",
+                    "Opportunity",
+                    ":OpportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "OpportunityId",
+                      "description": "(Required) Unique row identifier for the Opportunity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Name\": \"<string>\",\n  \"Account\": \"<string>\",\n  \"Sales Stage\": \"<string>\",\n  \"Close Date\": \"<string>\",\n  \"Revenue\": \"<number>\",\n  \"Win Probability\": \"<number>\",\n  \"Description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58f38559-a220-4942-82bd-c019562a3e1b",
+          "name": "Delete an opportunity",
+          "request": {
+            "name": "Delete an opportunity",
+            "description": {
+              "content": "Delete an Opportunity business component record by its unique row identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Opportunity",
+                "Opportunity",
+                ":OpportunityId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "OpportunityId",
+                  "description": "(Required) Unique row identifier for the Opportunity record"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d40ce69e-2962-4c29-a424-0221dcd39c5f",
+              "name": "Opportunity deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Opportunity",
+                    "Opportunity",
+                    ":OpportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "OpportunityId",
+                      "description": "(Required) Unique row identifier for the Opportunity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2edce195-fedb-4e15-a272-73166c10af4e",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Opportunity",
+                    "Opportunity",
+                    ":OpportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "OpportunityId",
+                      "description": "(Required) Unique row identifier for the Opportunity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ab9b9e85-52ac-41c5-b36a-badc0a326995",
+              "name": "Opportunity not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Opportunity",
+                    "Opportunity",
+                    ":OpportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "OpportunityId",
+                      "description": "(Required) Unique row identifier for the Opportunity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost",
+      "key": "siebel-server"
+    },
+    {
+      "type": "string",
+      "value": "https://{{siebel-server}}/siebel/v1.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0673f270-8ae8-4c83-a74d-d2d497b4a125",
+    "name": "Oracle Siebel REST Opportunities API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for accessing Siebel CRM business objects, business services, and repository objects. The Siebel REST API supports standard CRUD operations using HTTP verbs (GET, POST, PUT, DELETE) against business object data resources, business service invocation, and workspace-based repository management. Responses are available in JSON or XML format, and the API provides built-in metadata discovery through describe endpoints that return OpenAPI-compatible specifications.\n\nContact Support:\n Name: Oracle Support",
+      "type": "text/plain"
+    }
+  }
+}

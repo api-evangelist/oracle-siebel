@@ -1,0 +1,71 @@
+# Oracle Siebel
+
+> Oracle Siebel CRM is enterprise customer relationship management software for sales, marketing and service automation. It is CUSTOMER-DEPLOYED: Oracle operates no Siebel API host, so every base URL below is templated on the customer's own Siebel Application Interface. Siebel exposes REST, SOAP, EAI, scripting/object-interface, Open UI JavaScript and Kafka event-driven integration surfaces, and — since the 26.7 update (GA 17 July 2026) — a first-party MCP framework, Siebel AI Connectors.
+
+Generated: 2026-08-13
+Method: generated
+Source: apis.yml plus the artifacts in this repository (openapi/, asyncapi/, conventions/, errors/, authentication/, lifecycle/, rate-limits/, mcp/, data-model/)
+Note: This file is authored by API Evangelist from Oracle's published documentation. Oracle serves no llms.txt of its own — https://www.oracle.com/llms.txt and https://docs.oracle.com/llms.txt both return HTTP 404 (probed 2026-08-13).
+
+## What an agent needs to know first
+
+- There is no public Siebel endpoint to call. Base URL is `https://{siebel-server}/siebel/v1.0`, where `{siebel-server}` is the customer's Siebel Application Interface host running `siebel-rest.war`.
+- Authentication is decided server-side by the `Authentication type` in `siebsrvr.properties`: `Basic`/`SSO` means `Authorization: Basic`, `OAuth` means `Authorization: Bearer`. Siebel issues no tokens; bearer tokens are validated by introspection (RFC 7662) against an external OAuth provider.
+- `Content-Type` — not `Accept` — selects the response format, including on GET. Default `application/json`.
+- Paging is offset-based: `PageSize` (default 10, MAXIMUM 100) and `StartRowNum`. No total count, no next link. An empty page returns HTTP 204, which is NOT an error.
+- There is NO idempotency key. A retried POST creates a duplicate record. De-duplicate client-side with a `searchspec` query before creating.
+- There are NO rate-limit headers and no 429. Overload surfaces as HTTP 500 or a timeout.
+- Errors are Siebel proprietary field/value pairs, not RFC 9457 problem+json, and carry no stable machine-readable code.
+- JSON field names are Siebel field names verbatim, with spaces and punctuation: `"First Name"`, `"Work Phone #"`, `"SR Number"`, `"Sub-Status"`.
+
+## APIs
+
+- [Siebel REST API](https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html): CRUD over Siebel Business Objects at `/data/{BusinessObject}/{BusinessComponent}`, business service invocation at `/service/{ServiceName}/{MethodName}`, repository access at `/workspace/{WorkspaceName}/...`.
+- [Siebel SOAP Web Services](https://docs.oracle.com/cd/F26413_08/books/CRMWeb/siebel-crm-web-services-overview.html): inbound and outbound web services with generated WSDL.
+- [Siebel EAI](https://docs.oracle.com/cd/F26413_25/books/EAI1/overview-of-siebel-eai.html): bidirectional, real-time and batch integration over HTTP, MQSeries, MSMQ and JMS.
+- [Siebel Object Interfaces](https://docs.oracle.com/cd/F26413_13/books/OIRef/siebel-object-interfaces-reference.html): eScript, Siebel VB, COM and the Java Data Bean.
+- [Siebel Open UI JavaScript API](https://docs.oracle.com/cd/F26413_17/books/DeployOpenUI/features-of-siebel-open-ui.html): presentation model / physical renderer client customisation, plus portlets for embedding Siebel UI in a third-party page.
+- [Siebel Event Pub/Sub](https://docs.oracle.com/cd/F26413_50/books/SystAdm/c-Overview-of-Siebel-CRM-Event-Publication-and-Subscription.html): Kafka publish/subscribe with Avro serialisation and OAuth 2.0 security.
+- [Siebel Open Integration](https://docs.oracle.com/cd/G30562_01/books/RestAPI/c-using-siebel-rest-api-for-siebel-open-integration.html): the newer REST layer at `/openintegration/v1.0/data/{Resource}/{Resource}/` that generates its own OpenAPI from Siebel metadata. This is the layer the MCP tools are selected from.
+
+## Runtime metadata discovery
+
+Siebel's strongest contract feature is that a running instance describes itself. Appending `/describe` returns a JSON description of a resource's attributes, actions and links, and Siebel can emit it as an OpenAPI 2.0 or OpenAPI 3.0 document.
+
+- `/data/describe` — every Business Object exposed as a Base Integration Object
+- `/data/{BusinessObject}/{BusinessComponent}/describe`
+- `/service/describe` and `/service/{ServiceName}/describe`
+- `/workspace/{WorkspaceName}/describe`
+
+Because each customer configures their own Business Components and custom fields, the describe output — not any published file — is the authoritative contract for a given deployment. Oracle publishes no canonical downloadable Siebel OpenAPI, and that is a consequence of the deployment model, not an omission.
+
+## Agents and MCP
+
+- [Siebel AI Connectors](https://docs.oracle.com/en/applications/siebel/siebel-crm/26.7/szsig/siebel-ai-connectors.html) — Oracle's first-party framework for exposing selected Open Integration REST operations as MCP tools grouped into MCP servers.
+- Endpoint pattern: `<scheme>://<host>:<port>/siebelAIConnectors/mcp/<mcp-server-path>`. Oracle's documented examples are `/account`, `/product`, `/service-request`.
+- Deployment is on-premises (Windows/Linux, JRE 21) or via Siebel Cloud Manager on Kubernetes. **Oracle runs no hosted Siebel MCP endpoint.** Every Siebel MCP server is customer-deployed with a customer-authored tool catalog.
+- MCP auth is OAuth 2.0 JWT validated locally against a configured issuer/audience/scope/JWKS URI — note that this is the opposite of the Siebel REST layer, which supports introspection only.
+- No A2A agent card is published on any Oracle host (probed 2026-08-13; `/.well-known/agent-card.json` returns 404 on docs.oracle.com and 403 on www.oracle.com).
+
+## Repository artifacts
+
+- `openapi/` — ten refined OpenAPI 3.2.0 documents, one per resource tag (Accounts, Activities, Business Services, Contacts, Metadata, Opportunities, Orders, Products, Repository, Service Requests). `openapi/_original/` holds the source document.
+- `asyncapi/oracle-siebel-event-pubsub-asyncapi.yml` — the Kafka event surface described as AsyncAPI 2.6.0.
+- `conventions/oracle-siebel-conventions.yml` — auth style, pagination, filtering, field selection, versioning, tracing, error envelope, rate-limit signalling.
+- `errors/oracle-siebel-problem-types.yml` — Oracle's published status-code table plus the gaps (no 403, no 429, no problem+json).
+- `authentication/oracle-siebel-authentication.yml` and `scopes/oracle-siebel-scopes.yml` — the auth model, and why there is no scope registry.
+- `data-model/oracle-siebel-data-model.yml` — the entity graph. Account is the hub; every other entity carries an `Account Id`.
+- `lifecycle/oracle-siebel-lifecycle.yml` — Continuous Delivery monthly updates, Premier Support stated through at least 2037, no Sunset/Deprecation headers.
+- `rate-limits/oracle-siebel-rate-limits.yml`, `plans/oracle-siebel-plans-pricing.yml`, `finops/oracle-siebel-finops.yml`.
+- `cli/oracle-siebel-cli.yml` — `srvrmgr`, the Siebel Server Manager CLI (administrative, not an API client).
+- `mcp/oracle-siebel-mcp.yml` and `mcp/oracle-siebel-tool-crosswalk.yml`.
+- `skills/` — packaged Agent Skills grounded in real operationIds from `openapi/`.
+- `collections/` — Postman and OpenCollection runnables per API.
+
+## Optional
+
+- [Siebel documentation library](https://docs.oracle.com/en/applications/siebel/)
+- [Siebel CRM blog](https://blogs.oracle.com/siebelcrm/)
+- [Oracle Customer Connect — Siebel CRM](https://community.oracle.com/customerconnect/categories/onprem-siebel-crm)
+- [Oracle security alerts and Critical Patch Updates](https://www.oracle.com/security-alerts/)
+- [Postman workspace](https://www.postman.com/kinlaneapi/oracle-siebel/overview)

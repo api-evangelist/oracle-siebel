@@ -1,0 +1,171 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/*.yml, conventions/oracle-siebel-conventions.yml,
+  errors/oracle-siebel-problem-types.yml,
+  authentication/oracle-siebel-authentication.yml,
+  security/oracle-siebel-trust-center.yml, plus the Siebel REST API and Security
+  guides at https://docs.oracle.com/cd/G30562_01/books/Secur/ and
+  https://docs.oracle.com/cd/G30554_01/books/RestAPI/
+provider: Oracle Siebel
+providerId: oracle-siebel
+summary: >-
+  Cross-cutting standards assertions for the Oracle Siebel API surface. Siebel
+  conforms to OpenAPI (it can emit its own spec at runtime), to OAuth 2.0 as a
+  RESOURCE SERVER only, and — as of 26.7 — to the Model Context Protocol through
+  Siebel AI Connectors. It conforms to none of the modern REST hygiene
+  standards: no RFC 9457 problem details, no RFC 8594 sunset signalling, no
+  standard rate-limit headers, no idempotency, no OData, no SCIM.
+standards:
+  - id: openapi
+    name: OpenAPI Specification
+    conforms: true
+    versions:
+      - '2.0'
+      - '3.0'
+    evidence: >-
+      Siebel emits its own OpenAPI 2.0 or 3.0 document at runtime through the
+      describe URI parameter. Documented at
+      https://docs.oracle.com/cd/G26828_01/books/RestAPI/c-About-Getting-the-Siebel-REST-API-Specificationin-the-Open-API-30-Standard-Using-Describe.html
+      and
+      https://docs.oracle.com/cd/F26413_61/books/RestAPI/c-About-Getting-the-Siebel-REST-API-Specificationin-the-Open-API-20-Standard-Using-Describe-ti1016067.html
+    caveat: >-
+      The document is per-deployment, generated from the customer's own
+      metadata. Oracle publishes no canonical downloadable Siebel OpenAPI.
+  - id: oauth2
+    name: OAuth 2.0 (RFC 6749)
+    conforms: partial
+    role: resource-server
+    evidence: >-
+      Siebel accepts Bearer tokens when the Authentication type in
+      siebsrvr.properties is OAuth, and validates them against an external OAuth
+      provider. Documented at
+      https://docs.oracle.com/cd/G30562_01/books/Secur/c-Using-OAuth-with-REST-Inbound-Web-Services.html
+    caveat: >-
+      Siebel is NOT an authorization server. It issues no tokens, exposes no
+      /authorize or /token endpoint, and publishes no scope registry.
+  - id: rfc7662
+    name: OAuth 2.0 Token Introspection (RFC 7662)
+    conforms: true
+    evidence: >-
+      "The Siebel application supports only the introspection method of
+      validating incoming access tokens." Signature-based (local JWT) validation
+      is explicitly unavailable and must be terminated at an API gateway ahead of
+      Siebel.
+  - id: oidc
+    name: OpenID Connect
+    conforms: false
+    evidence: >-
+      Siebel integrates with SSO/OAM at the web tier but publishes no
+      /.well-known/openid-configuration and is not an OP. Probed: no discovery
+      document on any Oracle host in this profile.
+  - id: mcp
+    name: Model Context Protocol
+    conforms: true
+    since: '26.7'
+    evidence: >-
+      Siebel AI Connectors expose selected Open Integration REST operations as
+      MCP tools grouped into deployable MCP servers, documented at
+      https://docs.oracle.com/en/applications/siebel/siebel-crm/26.7/szsig/siebel-ai-connectors.html
+    caveat: >-
+      Customer-deployed. No Oracle-operated MCP endpoint exists. See
+      mcp/oracle-siebel-mcp.yml.
+  - id: soap
+    name: SOAP 1.1 / 1.2 + WSDL
+    conforms: true
+    evidence: >-
+      Siebel publishes inbound and outbound web services with generated WSDL at
+      the Application Interface. Documented at
+      https://docs.oracle.com/cd/F26413_08/books/CRMWeb/siebel-crm-web-services-overview.html
+  - id: kafka
+    name: Apache Kafka protocol
+    conforms: true
+    evidence: >-
+      Siebel Event Pub/Sub publishes and consumes Kafka topics using the Kafka
+      Java producer and consumer APIs, with Avro serialisation and OAuth 2.0
+      security. See asyncapi/oracle-siebel-event-pubsub-asyncapi.yml.
+  - id: asyncapi
+    name: AsyncAPI
+    conforms: partial
+    evidence: >-
+      Oracle publishes no AsyncAPI document. The AsyncAPI 2.6.0 document in this
+      repo is API-Evangelist-authored from Oracle's Event Pub/Sub documentation,
+      not a provider artifact.
+  - id: rfc9457
+    name: 'RFC 9457 Problem Details for HTTP APIs'
+    conforms: false
+    evidence: >-
+      Error bodies are Siebel proprietary field/value pairs. No
+      application/problem+json media type appears anywhere in openapi/*.yml. See
+      errors/oracle-siebel-problem-types.yml.
+  - id: rfc8594
+    name: 'RFC 8594 Sunset HTTP Header'
+    conforms: false
+    evidence: >-
+      No Sunset or Deprecation header is documented or emitted. Desupport is
+      announced in release documentation only. See
+      lifecycle/oracle-siebel-lifecycle.yml.
+  - id: rate-limit-headers
+    name: 'RateLimit header fields (draft-ietf-httpapi-ratelimit-headers)'
+    conforms: false
+    evidence: >-
+      No X-RateLimit-*, RateLimit-* or Retry-After headers documented. See
+      rate-limits/oracle-siebel-rate-limits.yml.
+  - id: idempotency
+    name: 'Idempotency-Key header (draft-ietf-httpapi-idempotency-key-header)'
+    conforms: false
+    evidence: >-
+      No idempotency key, no dedupe window. POST retries create duplicates. See
+      conventions/oracle-siebel-conventions.yml.
+  - id: pagination
+    name: Offset pagination
+    conforms: true
+    evidence: >-
+      PageSize (default 10, maximum 100) and StartRowNum are documented query
+      parameters. No total count and no next link are returned.
+  - id: json-api
+    name: 'JSON:API'
+    conforms: false
+    evidence: Siebel uses its own response envelope with a Link array; not JSON:API.
+  - id: odata
+    name: OData
+    conforms: false
+    evidence: >-
+      Siebel uses its own searchspec expression language, not $filter/$select.
+  - id: scim
+    name: SCIM
+    conforms: false
+    evidence: No SCIM user/group provisioning endpoints.
+  - id: fhir
+    name: FHIR
+    conforms: false
+    applicable: false
+    evidence: Not a healthcare API.
+  - id: psd2
+    name: PSD2 / Open Banking
+    conforms: false
+    applicable: false
+    evidence: Not a payments API.
+  - id: fapi
+    name: FAPI
+    conforms: false
+    applicable: false
+compliance:
+  source: security/oracle-siebel-trust-center.yml
+  caveat: >-
+    Parent-brand certifications covering infrastructure Siebel may run on, not
+    certifications of Siebel CRM itself.
+  programs:
+    - name: SOC 1 / SOC 2 / SOC 3
+      scope: Oracle Cloud Infrastructure (parent brand)
+    - name: ISO/IEC 27001 / 27017 / 27018
+      scope: Oracle Cloud Infrastructure (parent brand)
+    - name: PCI DSS
+      scope: Oracle Cloud Infrastructure (parent brand)
+    - name: HIPAA
+      scope: Oracle Cloud Infrastructure (parent brand)
+    - name: FedRAMP
+      scope: Oracle US Government Cloud (parent brand)
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

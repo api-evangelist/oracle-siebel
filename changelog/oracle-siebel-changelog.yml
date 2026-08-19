@@ -1,0 +1,88 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://blogs.oracle.com/siebelcrm/ update posts (26.4, 26.5, 26.6, 26.7) and
+  the Siebel CRM documentation library at https://docs.oracle.com/en/applications/siebel/
+provider: Oracle Siebel
+providerId: oracle-siebel
+scheme: 'calendar update (YY.M), Continuous Delivery model'
+current_version: '26.7'
+cadence: monthly
+changelog_url: https://blogs.oracle.com/siebelcrm/
+docs_changelog_url: https://docs.oracle.com/cd/F26413_61/homepage.htm
+machine_readable: false
+summary: >-
+  Siebel publishes a dated, per-release changelog as a blog post per monthly
+  update, plus per-book "What's New in ..." pages in the documentation library.
+  Neither is machine-readable — there is no feed a client can subscribe to
+  (blogs.oracle.com/siebelcrm/rss returns HTTP 403 to unauthenticated fetches),
+  and the entries describe product features rather than API contract changes.
+  API-affecting changes are not separated from the rest.
+entries:
+  - version: '26.7'
+    date: '2026-07-17'
+    type: update
+    breaking: false
+    highlights:
+      - >-
+        Siebel AI Connectors shipped as part of the product: a
+        configuration-driven framework for exposing selected Siebel Open
+        Integration REST APIs as MCP tools, grouped into deployable MCP servers,
+        on-premises or via Siebel Cloud Manager. This is the first
+        agent-addressable interface Oracle has shipped for Siebel.
+    url: https://blogs.oracle.com/siebelcrm/siebel-crm-26-7-update
+    api_affecting: true
+  - version: '26.6'
+    date: '2026-06-22'
+    type: update
+    breaking: false
+    highlights:
+      - New features and bug fixes under the Continuous Delivery model.
+    url: https://blogs.oracle.com/siebelcrm/siebel-crm-26-6-update
+    api_affecting: unknown
+    note: >-
+      Post body not machine-readable to an unauthenticated fetch (HTTP 403);
+      GA date captured from Oracle's own summary. Highlights left unenumerated
+      rather than guessed.
+  - version: '26.5'
+    date: '2026-05-15'
+    type: update
+    breaking: false
+    highlights:
+      - New features and bug fixes under the Continuous Delivery model.
+    url: https://blogs.oracle.com/siebelcrm/siebel-crm-26-5-update
+    api_affecting: unknown
+    note: Same fetch limitation as 26.6.
+  - version: '26.4'
+    date: '2026-04-17'
+    type: update
+    breaking: false
+    highlights:
+      - New features and bug fixes under the Continuous Delivery model.
+    url: https://blogs.oracle.com/siebelcrm/siebel-crm-26-4-update
+    api_affecting: unknown
+    note: Same fetch limitation as 26.6.
+  - version: '26.3'
+    date: '2026-03'
+    type: update
+    breaking: false
+    highlights:
+      - >-
+        Installation-related changes documented at
+        https://docs.oracle.com/en/applications/siebel/siebel-crm/26.3/szsig/c-Installation-Related-Changes-for-Siebel-CRM.html
+      - Siebel REST API Guide reissued March 2026.
+    url: https://blogs.oracle.com/siebelcrm/siebel-crm-26-3-update
+    api_affecting: unknown
+window: >-
+  Recent releases only (26.3 through 26.7). Siebel has shipped a numbered update
+  every month since the Continuous Delivery model began; the full history lives
+  on the blog.
+gaps:
+  - No RSS/Atom feed reachable unauthenticated (403).
+  - >-
+    No separate API changelog. Contract changes to the REST API, if any, are
+    buried in product release notes, so a client cannot diff the interface
+    between updates without re-running describe against an upgraded instance.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

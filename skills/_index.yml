@@ -1,0 +1,92 @@
+generated: '2026-08-13'
+method: generated
+source: >-
+  openapi/*.yml (every operationId below is grepped from a spec in this repo, not
+  invented), conventions/oracle-siebel-conventions.yml,
+  errors/oracle-siebel-problem-types.yml, data-model/oracle-siebel-data-model.yml
+provider: Oracle Siebel
+providerId: oracle-siebel
+author: API Evangelist
+provider_published: false
+provider_published_note: >-
+  Oracle publishes no Agent Skills or AGENTS.md for Siebel. These are
+  API-Evangelist-generated from Oracle's documentation and the OpenAPI documents
+  in this repo, and are graded accordingly.
+base: 'https://{siebel-server}/siebel/v1.0'
+preconditions:
+  - >-
+    There is no public Siebel endpoint. Every skill assumes the caller has a
+    Siebel Application Interface host and credentials for it.
+  - >-
+    Run oracle-siebel-metadata-discovery FIRST against any instance you have not
+    seen. Field lists and picklist values are deployment-specific.
+cross_cutting_rules:
+  - 'Content-Type — not Accept — selects the response format, including on GET.'
+  - 'PageSize defaults to 10 and cannot exceed 100. StartRowNum pages. No total, no next link.'
+  - 'HTTP 204 is an empty result set, not an error.'
+  - 'No Idempotency-Key. POST is not idempotent; PUT is an upsert and is the retry-safe verb.'
+  - 'No rate-limit headers and no 429. Overload surfaces as 500 or a timeout.'
+  - 'Errors are Siebel proprietary field/value pairs with no stable code — capture the body.'
+  - 'Field names are Siebel field names verbatim, spaces and punctuation included.'
+skills:
+  - name: oracle-siebel-metadata-discovery
+    file: skills/oracle-siebel-metadata-discovery.md
+    summary: >-
+      Discover what a specific Siebel deployment exposes via the describe
+      endpoints before calling anything else.
+    operations:
+      - describeBusinessComponent
+      - describeBusinessServices
+      - describeBusinessService
+      - describeWorkspace
+      - getRepositoryObject
+      - invokeBusinessService
+    run_order: 1
+  - name: oracle-siebel-account-onboarding
+    file: skills/oracle-siebel-account-onboarding.md
+    summary: Create an Account, attach contacts, verify — without creating duplicates.
+    operations:
+      - listAccounts
+      - createAccount
+      - getAccount
+      - upsertAccount
+      - listAccountContacts
+      - upsertAccountContact
+      - createContact
+    run_order: 2
+  - name: oracle-siebel-opportunity-pipeline
+    file: skills/oracle-siebel-opportunity-pipeline.md
+    summary: Read and advance the sales pipeline against an account.
+    operations:
+      - listOpportunities
+      - listAccountOpportunities
+      - createOpportunity
+      - getOpportunity
+      - upsertOpportunity
+      - deleteOpportunity
+      - listAccounts
+    run_order: 3
+  - name: oracle-siebel-service-request-handling
+    file: skills/oracle-siebel-service-request-handling.md
+    summary: Open, triage, update and close service requests, and log activities against them.
+    operations:
+      - listServiceRequests
+      - createServiceRequest
+      - getServiceRequest
+      - upsertServiceRequest
+      - deleteServiceRequest
+      - listActivities
+      - createActivity
+      - getActivity
+      - upsertActivity
+    run_order: 4
+not_covered:
+  - >-
+    Orders and Products are read-only in this contract (listOrders, listProducts
+    only) — there is no create/update flow to package as a skill.
+  - >-
+    SOAP web services, EAI and the Object Interfaces (eScript / Java Data Bean)
+    have no OpenAPI in this repo to ground a skill in.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

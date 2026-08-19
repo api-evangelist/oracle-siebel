@@ -1,0 +1,139 @@
+openapi: 3.2.0
+info:
+  title: Oracle Siebel REST Metadata API
+  description: RESTful API for accessing Siebel CRM business objects, business services, and repository objects. The Siebel REST API supports standard CRUD operations using HTTP verbs (GET, POST, PUT, DELETE) against business object data resources, business service invocation, and workspace-based repository management. Responses are available in JSON or XML format, and the API provides built-in metadata discovery through describe endpoints that return OpenAPI-compatible specifications.
+  version: '1.0'
+  contact:
+    name: Oracle Support
+    url: https://support.oracle.com
+  termsOfService: https://www.oracle.com/legal/terms.html
+servers:
+- url: https://{siebel-server}/siebel/v1.0
+  description: Siebel Application Interface Server
+  variables:
+    siebel-server:
+      default: localhost
+      description: Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat
+security:
+- basicAuth: []
+- oauth2: []
+tags:
+- name: Metadata
+  description: Discovery endpoints that return OpenAPI-compatible metadata describing available resources, fields, and operations
+paths:
+  /service/describe:
+    get:
+      operationId: describeBusinessServices
+      summary: Get business service catalog
+      description: Retrieve a catalog of all Siebel business service names, methods defined for each service, and links to individual service descriptions. Returns an OpenAPI-compatible specification.
+      tags:
+      - Metadata
+      responses:
+        '200':
+          description: Business service catalog retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Authentication credentials missing or invalid
+  /service/{ServiceName}/describe:
+    get:
+      operationId: describeBusinessService
+      summary: Describe a business service
+      description: Retrieve the metadata description for a specific business service including its methods, input and output arguments, and data types.
+      tags:
+      - Metadata
+      parameters:
+      - name: ServiceName
+        in: path
+        required: true
+        description: Name of the Siebel business service to describe
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Business service description retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Business service not found
+  /workspace/{WorkspaceName}/describe:
+    get:
+      operationId: describeWorkspace
+      summary: Describe workspace repository objects
+      description: Retrieve a catalog of all repository objects available in the specified workspace. Returns an OpenAPI-compatible specification listing available applets, views, business components, and other Siebel repository metadata.
+      tags:
+      - Metadata
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceName'
+      responses:
+        '200':
+          description: Workspace description retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Authentication credentials missing or invalid
+  /data/{BusinessObject}/{BusinessComponent}/describe:
+    get:
+      operationId: describeBusinessComponent
+      summary: Describe a business component
+      description: Retrieve the OpenAPI-compatible metadata description for a specific business component within a business object. Returns field names, data types, picklist values, and available operations.
+      tags:
+      - Metadata
+      parameters:
+      - name: BusinessObject
+        in: path
+        required: true
+        description: Name of the Siebel business object
+        schema:
+          type: string
+      - name: BusinessComponent
+        in: path
+        required: true
+        description: Name of the Siebel business component
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Business component description retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Business object or component not found
+components:
+  parameters:
+    WorkspaceName:
+      name: WorkspaceName
+      in: path
+      required: true
+      description: Name of the Siebel workspace (use 'main' for the default workspace)
+      schema:
+        type: string
+        default: main
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication using Siebel CRM user credentials encoded as Base64 in the Authorization header
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authentication for token-based access to the Siebel REST API
+      flows:
+        authorizationCode:
+          authorizationUrl: https://{siebel-server}/siebel/v1.0/auth/authorize
+          tokenUrl: https://{siebel-server}/siebel/v1.0/auth/token
+          scopes: {}
+externalDocs:
+  description: Oracle Siebel REST API Documentation
+  url: https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html

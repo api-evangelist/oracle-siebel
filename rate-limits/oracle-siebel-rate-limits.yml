@@ -4,28 +4,45 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Oracle Siebel
 providerId: oracle-siebel
 created: '2026-05-04'
-modified: '2026-05-05'
-reconciled: false
+modified: '2026-08-13'
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.oracle.com/cd/E95904_01/books/RestAPI/using-the-siebel-rest-api.html,
+  https://docs.oracle.com/cd/G30554_01/books/RestAPI/c-About-Standard-HTTP-Status-Codes-and-Error-Messages-ti1009567.html,
+  https://docs.oracle.com/cd/F26413_01/books/SystemAdmin/ —
+  upgraded 2026-08-13 from the 2026-05-04 generated sweep artifact, which
+  carried no documented published limit.
+reconciled: true
+limit_count: 1
 tags:
   - CRM
   - Enterprise Software
   - Oracle Cloud
   - Rate Limiting
 description: >-
-  Oracle Siebel CRM is a customer-deployed application; its REST, SOAP, EAI,
-  and Object Interface APIs do not enforce a centrally-published per-second
-  or per-minute rate-limit table. Throughput is bound by the customer-deployed
-  Siebel Application Object Manager (AOM), Application Server, Web Server,
-  and Database tier capacity. Rate limiting, when enforced, is implemented at
-  the surrounding application server (Oracle WebLogic / IIS / Apache) or via
-  a customer-fronted API gateway.
-sources:
-  - https://docs.oracle.com/cd/F26413_01/
-  - https://docs.oracle.com/cd/F26413_01/books/SystemAdmin/
-notes: >-
-  No public per-tier RPS/RPM numbers are published. Siebel deployments are
-  capacity-planned per AOM, Application Server, and Database tier; set
-  reconciled to true after capturing deployment-specific tuning values.
+  Oracle publishes exactly ONE hard numeric limit for the Siebel REST API: a
+  query returns at most 100 records per call (PageSize, default 10). There is no
+  published requests-per-second or requests-per-minute table, and there are no
+  rate-limit response headers of any kind. Siebel is customer-deployed, so
+  throughput is bound by the customer's own Application Object Manager (AOM),
+  Application Server, Web Server and Database tier capacity. Where throttling is
+  enforced at all it is enforced by the surrounding web/application server
+  (WebLogic, IIS, Apache) or by a customer-fronted API gateway — neither of which
+  Oracle documents on Siebel's behalf.
+headers:
+  request: []
+  response: []
+  note: >-
+    No X-RateLimit-*, no RateLimit-*, no Retry-After. This is the most consequential
+    gap for an agent: there is no runtime signal to back off on, only a 500 or a
+    connection-level failure once the AOM saturates.
+status_on_exhaustion: null
+status_on_exhaustion_note: >-
+  Oracle documents no 429. The documented status codes stop at 200, 204, 401,
+  404, 405, 406, 415 and 500 — see errors/oracle-siebel-problem-types.yml. An
+  overloaded Siebel deployment surfaces as 500 or as a timeout, not as a
+  throttling response.
 responseCodes:
   unauthorized: 401
   forbidden: 403
@@ -33,48 +50,69 @@ responseCodes:
   serverError: 500
   serviceUnavailable: 503
 limits:
+  - name: Records per query
+    scope: per-request
+    metric: records
+    limit: 100
+    default: 10
+    parameter: PageSize
+    window: per-request
+    published: true
+    source: https://docs.oracle.com/cd/E95904_01/books/RestAPI/using-the-siebel-rest-api.html
+    notes: >-
+      "The PageSize parameter is the integer that tells the Siebel Server how
+      many records to return. The default value is 10... The maximum number of
+      records cannot exceed 100." Page through larger sets by incrementing
+      StartRowNum. This is the only numeric limit Oracle publishes for the REST
+      API, and it is a payload cap rather than a rate cap.
   - name: REST API Throughput
     scope: deployment
     metric: varies
     limit: bound by Siebel AOM / Application Server capacity
+    published: false
     notes: >-
-      Throughput is governed by the deployed Siebel Application Object
-      Manager and Application Server sizing rather than a public per-tenancy
-      rate.
+      Throughput is governed by the deployed Siebel Application Object Manager
+      and Application Server sizing rather than a public per-tenancy rate.
   - name: SOAP Web Services Throughput
     scope: deployment
     metric: varies
     limit: bound by Siebel AOM / Application Server capacity
-    notes: >-
-      As with REST, SOAP web service throughput is bound by the deployed
-      Siebel server tier.
+    published: false
+    notes: As with REST, SOAP web service throughput is bound by the deployed Siebel server tier.
   - name: EAI Inbound / Outbound Throughput
     scope: deployment
     metric: varies
     limit: bound by deployed EAI configuration
+    published: false
     notes: >-
-      EAI throughput depends on the configured business-service component
-      pools and underlying transport (HTTP, JMS, MQ).
+      EAI throughput depends on the configured business-service component pools
+      and underlying transport (HTTP, JMS, MQ).
 policies:
   - name: Capacity-Bound Throttling
     description: >-
-      Throughput limits are determined by the deployed Siebel Application
-      Object Manager, Application Server, Web Server, and Database tier
-      sizing rather than a published per-tenancy rate-limit table.
+      Throughput limits are determined by the deployed Siebel Application Object
+      Manager, Application Server, Web Server and Database tier sizing rather
+      than a published per-tenancy rate-limit table.
   - name: Backoff Strategy
     description: >-
-      Clients should implement exponential backoff with jitter on 5xx
-      responses; honor any Retry-After header when present.
+      Clients should implement exponential backoff with jitter on 5xx responses.
+      Honor any Retry-After header if a fronting gateway emits one; Siebel itself
+      does not.
   - name: AOM Tuning
     description: >-
-      Siebel administrators should tune AOM component thread pools,
-      MaxTasks, and MaxMTServers settings to match observed load rather
-      than relying on a centrally-imposed rate.
+      Siebel administrators tune AOM component thread pools, MaxTasks and
+      MaxMTServers to match observed load rather than relying on a
+      centrally-imposed rate.
   - name: API Gateway Pattern
     description: >-
-      Customers exposing Siebel APIs to third parties should front them
-      with an API gateway (Oracle API Platform, Apigee, etc.) and apply
-      rate limits there.
+      Customers exposing Siebel APIs to third parties should front them with an
+      API gateway (Oracle API Platform, Apigee, etc.) and apply rate limits
+      there. This is also where JWT signature validation must happen, since
+      Siebel supports introspection only.
+sources:
+  - https://docs.oracle.com/cd/E95904_01/books/RestAPI/using-the-siebel-rest-api.html
+  - https://docs.oracle.com/cd/G30554_01/books/RestAPI/
+  - https://docs.oracle.com/cd/F26413_01/books/SystemAdmin/
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

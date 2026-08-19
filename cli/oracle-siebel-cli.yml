@@ -1,0 +1,183 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.oracle.com/cd/F26413_61/books/SystAdm/c-Starting-the-Siebel-Server-Manager-CommandLine-Interface--am1004202.html
+  and https://docs.oracle.com/cd/E74890_01/books/SystAdm/systadm_srvrmgrcli7003.htm
+provider: Oracle Siebel
+providerId: oracle-siebel
+name: Siebel Server Manager command-line interface (srvrmgr)
+official: true
+summary: >-
+  Siebel ships a first-party CLI, srvrmgr, the Siebel Server Manager
+  command-line interface. It is an ADMINISTRATIVE CLI, not an API client: it
+  drives the Siebel Enterprise — servers, component groups, components, tasks,
+  parameters, named subsystems, event logging — over the Siebel Gateway. There is
+  no first-party CLI for the Siebel REST API itself; a caller uses curl or their
+  own tooling for that. srvrmgr is nonetheless how Siebel actually gets operated
+  in scripts and CI, which is why it is captured here.
+scope: administrative
+install:
+  - method: bundled
+    description: >-
+      Installed with the Siebel Server and with the Siebel Enterprise
+      installation. Not distributed through any public package registry — see
+      packages/oracle-siebel-packages.yml.
+    platforms:
+      - Windows
+      - Linux
+      - UNIX
+invocation:
+  windows: 'srvrmgr /g gateway1:2320 /e enterprise1 /s server1 /u sadmin /p pwd'
+  unix: 'srvrmgr -g gateway1:2320 -e enterprise1 -s server1 -u sadmin -p pwd'
+  flags:
+    - flag: '-g / /g'
+      description: Siebel Gateway hostname and port.
+    - flag: '-e / /e'
+      description: Siebel Enterprise name.
+    - flag: '-s / /s'
+      description: Siebel Server name.
+    - flag: '-u / /u'
+      description: Siebel administrator username.
+    - flag: '-p / /p'
+      description: Password.
+  batch_mode: >-
+    The `read input_file` environment command executes a file of srvrmgr
+    commands, and `spool output_file` / `spool off` capture output — together
+    they are how Siebel administration is scripted.
+  access_requirement: >-
+    The caller must hold Siebel administrative responsibilities and have a user
+    definition in the Siebel database.
+command_groups:
+  - group: help
+    commands: [help, 'help <command>']
+  - group: environment
+    commands:
+      - set server <siebel_server_name>
+      - unset server
+      - show
+      - show <variable_name>
+      - spool <output_file>
+      - spool off
+      - read <input_file>
+      - refresh enterprise
+      - set header false/true
+      - set footer false/true
+      - exit
+      - quit
+  - group: list
+    commands:
+      - list servers
+      - list component groups
+      - list component
+      - list tasks
+      - list sessions
+      - list parameters
+      - list statistics
+      - list state values
+      - list subsystem
+      - list named subsystem
+  - group: list-configuration
+    commands:
+      - configure list <list_object>
+      - configure list <list_object> show <column_1>, <column_2>, ...
+  - group: server-management
+    commands:
+      - startup appserver <siebel_server_name>
+      - shutdown appserver <siebel_server_name>
+      - backup nameserver [file_name]
+      - backup namesrvr [file_name]
+  - group: server-groups
+    commands:
+      - change attribute groupname=<server_group_name> for server <siebel_server_name>
+  - group: component-groups
+    commands:
+      - create component group <alias> full name "<name>" description "<description>"
+      - assign component group <alias> to server <siebel_server_name>
+      - unassign component group <alias> from server <siebel_server_name>
+      - enable component group <alias>
+      - disable component group <alias>
+      - remove component group <alias> from server <siebel_server_name>
+      - delete component group <alias>
+      - describe component group
+  - group: component-definitions
+    commands:
+      - create component definition <alias> for component type <type> component group <group> run mode <run_mode> full name "<name>" description "<description>" with parameter <param>=<value> fixparam <fixed>=<value>
+      - activate component definition <alias>
+      - deactivate component definition <alias>
+      - delete component definition <alias>
+      - copy compdef from <source> to <target>
+      - reconfig compdef <alias>
+      - commit reconfig compdef <alias>
+      - cancel reconfig compdef <alias>
+  - group: component-management
+    commands:
+      - startup component <alias> for server <siebel_server_name>
+      - shutdown component <alias> for server <siebel_server_name>
+      - auto start comp <alias> for server <siebel_server_name>
+      - manual start comp <alias> for server <siebel_server_name>
+      - startup systemcomps for server <siebel_server_name>
+      - shutdown systemcomps for server <siebel_server_name>
+      - startup nonsystemcomps for server <siebel_server_name>
+      - shutdown nonsystemcomps for server <siebel_server_name>
+  - group: tasks
+    commands:
+      - start task for component <alias> server <siebel_server_name> with <param>=<value>
+      - run task for component <alias> server <siebel_server_name> with <param>=<value>
+      - pause task <task_ID> for server <siebel_server_name>
+      - resume task <task_ID> for server <siebel_server_name>
+      - stop task <task_ID> for server <siebel_server_name>
+      - kill task <task_ID> for server <siebel_server_name>
+  - group: parameters
+    commands:
+      - change ent param <param>=<value>
+      - change parameter <param>=<value> for compdef <component_definition_name>
+      - change parameter <param>=<value> for server <siebel_server_name>
+      - change parameter <param>=<value> for component <alias> server <siebel_server_name>
+      - change parameter <param>=<value> for task <task_number>
+      - delete enterprise parameter override param <param>
+      - delete parameter override for server <siebel_server_name> param "<param>"
+      - delete parameter override for comp <alias> server <siebel_server_name> param "<param>"
+  - group: named-subsystems
+    commands:
+      - create named subsystem <alias> for subsystem <subsystem_alias> with <param>=<value>
+      - delete named subsystem <alias>
+      - list parameters for named subsystem <alias>
+      - change parameter <param>=<value> for named subsystem <alias>
+  - group: event-logging
+    commands:
+      - list evtloglvl for component <alias>
+      - change evtloglvl <event_alias>=<level> for component <alias>
+      - change evtloglvl <event_alias>=<level> for server <siebel_server_name>
+      - change evtloglvl <event_alias>=<level> for server <siebel_server_name> component <alias>
+  - group: preferences
+    commands:
+      - alias <alias> <command_name>
+      - unalias <alias>
+      - save preferences
+      - load preferences
+key_flows:
+  - name: Restart a component after a configuration change
+    steps:
+      - 'srvrmgr -g <gateway>:2320 -e <enterprise> -s <server> -u <user> -p <pwd>'
+      - 'change parameter <param>=<value> for component <alias> server <server>'
+      - 'shutdown component <alias> for server <server>'
+      - 'startup component <alias> for server <server>'
+      - 'list component'
+  - name: Script an administrative run in CI
+    steps:
+      - 'Write the commands to a file, one per line.'
+      - 'spool /var/log/siebel/srvrmgr-run.log'
+      - 'read /opt/siebel/scripts/commands.txt'
+      - 'spool off'
+related_cli:
+  - name: siebctl
+    description: >-
+      Service-control utility used to configure and manage Siebel services on
+      the server host. Bundled with the Siebel Server.
+    official: true
+  - name: odbcsql
+    description: Siebel-bundled ODBC SQL utility used to verify database connectivity.
+    official: true
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,161 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  mcp/oracle-siebel-mcp.yml (Siebel AI Connectors documentation) bound against
+  the OpenAPI operations in openapi/*.yml. No live tools/list introspection was
+  possible: every Siebel MCP server runs on a customer host.
+provider: Oracle Siebel
+providerId: oracle-siebel
+summary: >-
+  Siebel's MCP surface is configuration-driven, so this crosswalk cannot be a
+  one-to-one map of a shipped tool catalog. What it records instead is the
+  binding RULE Oracle documents — one MCP tool per selected Open Integration
+  REST operation — anchored on the only tool names Oracle publishes (the Account
+  MCP Server example), plus the full set of REST operations in this repo that a
+  customer could select but that no documented tool covers.
+surfaces:
+  openapi:
+    files:
+      - openapi/oracle-siebel-accounts-api-openapi.yml
+      - openapi/oracle-siebel-activities-api-openapi.yml
+      - openapi/oracle-siebel-business-services-api-openapi.yml
+      - openapi/oracle-siebel-contacts-api-openapi.yml
+      - openapi/oracle-siebel-metadata-api-openapi.yml
+      - openapi/oracle-siebel-opportunities-api-openapi.yml
+      - openapi/oracle-siebel-orders-api-openapi.yml
+      - openapi/oracle-siebel-products-api-openapi.yml
+      - openapi/oracle-siebel-repository-api-openapi.yml
+      - openapi/oracle-siebel-service-requests-api-openapi.yml
+    base: 'https://{siebel-server}/siebel/v1.0'
+    gated: templated-host
+  graphql:
+    endpoint: null
+    note: Siebel publishes no GraphQL surface.
+  mcp:
+    url: null
+    pattern: '<scheme>://<host>:<port>/siebelAIConnectors/mcp/<mcp-server-path>'
+    gated: customer-hosted
+    note: >-
+      No live tools/list could be issued. Oracle runs no Siebel MCP endpoint;
+      each server is deployed by the customer.
+crosswalk:
+  - tool: Account GET
+    category: accounts
+    rest:
+      - listAccounts
+      - getAccount
+    binding: openintegration_v1.0_data_Account_Account__get
+    confidence: medium
+    note: >-
+      Oracle's documented example tool binds to the Open Integration GET on
+      /openintegration/v1.0/data/Account/Account/. The equivalent operations in
+      this repo are the Siebel REST API v1.0 Account reads. Mapped by resource
+      and method, not by observed schema — Open Integration paths differ from
+      the /siebel/v1.0 paths captured here.
+  - tool: Account POST
+    category: accounts
+    rest:
+      - createAccount
+    binding: openintegration_v1.0_data_Account_Account__post
+    confidence: medium
+    note: Same basis as Account GET.
+  - tool: Account PUT
+    category: accounts
+    rest:
+      - upsertAccount
+      - upsertAccountContact
+    binding: openintegration_v1.0_data_Account_Account__put
+    confidence: medium
+    note: >-
+      Siebel PUT is an upsert. The documented example does not distinguish the
+      Account record from its child Contact upsert; both are listed because both
+      are reachable through the same Open Integration resource.
+mcp_only: []
+rest_only:
+  - operationId: listAccountContacts
+    reason: No documented MCP tool; a customer would have to select this operation.
+  - operationId: listAccountOpportunities
+    reason: No documented MCP tool.
+  - operationId: deleteAccount
+    reason: >-
+      No documented MCP tool. Oracle's example server exposes GET/PUT/POST only —
+      DELETE is deliberately absent from the published example, consistent with
+      the framework's stated purpose of selective exposure.
+  - operationId: listActivities
+    reason: No documented MCP tool.
+  - operationId: createActivity
+    reason: No documented MCP tool.
+  - operationId: getActivity
+    reason: No documented MCP tool.
+  - operationId: upsertActivity
+    reason: No documented MCP tool.
+  - operationId: deleteActivity
+    reason: No documented MCP tool.
+  - operationId: listContacts
+    reason: No documented MCP tool.
+  - operationId: createContact
+    reason: No documented MCP tool.
+  - operationId: getContact
+    reason: No documented MCP tool.
+  - operationId: upsertContact
+    reason: No documented MCP tool.
+  - operationId: deleteContact
+    reason: No documented MCP tool.
+  - operationId: listOpportunities
+    reason: No documented MCP tool.
+  - operationId: createOpportunity
+    reason: No documented MCP tool.
+  - operationId: getOpportunity
+    reason: No documented MCP tool.
+  - operationId: upsertOpportunity
+    reason: No documented MCP tool.
+  - operationId: deleteOpportunity
+    reason: No documented MCP tool.
+  - operationId: listServiceRequests
+    reason: >-
+      No documented MCP tool, although Oracle names /service-request as an
+      example MCP server path without publishing its tool list.
+  - operationId: createServiceRequest
+    reason: No documented MCP tool.
+  - operationId: getServiceRequest
+    reason: No documented MCP tool.
+  - operationId: upsertServiceRequest
+    reason: No documented MCP tool.
+  - operationId: deleteServiceRequest
+    reason: No documented MCP tool.
+  - operationId: listOrders
+    reason: No documented MCP tool.
+  - operationId: listProducts
+    reason: >-
+      No documented MCP tool, although Oracle names /product as an example MCP
+      server path without publishing its tool list.
+  - operationId: invokeBusinessService
+    reason: >-
+      No documented MCP tool. Business service invocation is the most powerful
+      and least constrained Siebel operation; exposing it as a tool would defeat
+      the selective-exposure model the framework exists to enforce.
+  - operationId: describeBusinessServices
+    reason: Metadata discovery; not a business capability an agent would be granted.
+  - operationId: describeBusinessService
+    reason: Metadata discovery.
+  - operationId: describeWorkspace
+    reason: Metadata discovery.
+  - operationId: describeBusinessComponent
+    reason: >-
+      Metadata discovery. This is the operation Siebel Open Integration itself
+      consumes to generate the OpenAPI the MCP tools are selected from.
+  - operationId: getRepositoryObject
+    reason: Repository/design-time access; not an agent capability.
+coverage:
+  mcp_tools_documented: 3
+  rest_operations: 35
+  mapped: 4
+  mcp_only: 0
+  rest_only: 31
+  note: >-
+    "mapped" counts distinct operationIds bound to at least one documented tool.
+    The low coverage is not a gap in Siebel — it reflects that Oracle publishes a
+    framework and one worked example, not a catalog.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,75 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  Direct HTTPS probes of every host reachable from apis.yml. Oracle Siebel is
+  customer-deployed software whose API base URL is templated
+  (https://{siebel-server}/siebel/v1.0), so the only Oracle-controlled hosts in
+  this profile are the documentation and corporate hosts.
+provider: Oracle Siebel
+providerId: oracle-siebel
+result: no-hit
+summary: >-
+  No /.well-known/ document is served on any host in this profile. docs.oracle.com
+  returns an HTML 404 page for every probed path; www.oracle.com returns 403 for
+  every /.well-known/* path (edge bot challenge, not a document). NO WellKnown or
+  SecurityTxt pointer is emitted in apis.yml, because nothing here is a served
+  document. Oracle does publish a vulnerability-disclosure policy and a trust
+  centre as HTML pages — those are captured in security/, not here.
+hosts:
+  - host: docs.oracle.com
+    probes:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+        note: HTML 404 page, not a document.
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /llms.txt
+        status: 404
+        file: null
+      - path: /openapi.json
+        status: 404
+        file: null
+  - host: www.oracle.com
+    probes:
+      - path: /.well-known/security.txt
+        status: 403
+        file: null
+        note: >-
+          403 with a 1.4KB HTML challenge body. Oracle's edge blocks
+          unauthenticated /.well-known/* requests; this is neither a served
+          document nor a confirmed absence.
+      - path: /.well-known/openid-configuration
+        status: 403
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+        file: null
+      - path: /.well-known/api-catalog
+        status: 403
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 403
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 403
+        file: null
+      - path: /.well-known/agent.json
+        status: 403
+        file: null
+      - path: /llms.txt
+        status: 404
+        file: null
+      - path: /openapi.json
+        status: 404
+        file: null
+untestable_hosts:
+  - host: '{siebel-server}'
+    reason: >-
+      The Siebel Application Interface host is the customer's own server. A
+      Siebel deployment could serve /.well-known/ documents, but there is no
+      Oracle-operated instance to probe.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

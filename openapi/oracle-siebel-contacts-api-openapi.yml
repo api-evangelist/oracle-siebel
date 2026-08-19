@@ -1,0 +1,401 @@
+openapi: 3.2.0
+info:
+  title: Oracle Siebel REST Contacts API
+  description: RESTful API for accessing Siebel CRM business objects, business services, and repository objects. The Siebel REST API supports standard CRUD operations using HTTP verbs (GET, POST, PUT, DELETE) against business object data resources, business service invocation, and workspace-based repository management. Responses are available in JSON or XML format, and the API provides built-in metadata discovery through describe endpoints that return OpenAPI-compatible specifications.
+  version: '1.0'
+  contact:
+    name: Oracle Support
+    url: https://support.oracle.com
+  termsOfService: https://www.oracle.com/legal/terms.html
+servers:
+- url: https://{siebel-server}/siebel/v1.0
+  description: Siebel Application Interface Server
+  variables:
+    siebel-server:
+      default: localhost
+      description: Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat
+security:
+- basicAuth: []
+- oauth2: []
+tags:
+- name: Contacts
+  description: Operations on Contact business objects representing individual people associated with accounts and organizations
+paths:
+  /data/Account/Account/{AccountId}/Contact:
+    get:
+      operationId: listAccountContacts
+      summary: List contacts for an account
+      description: Retrieve the Contact child business component records associated with a specific Account. Returns contact details including name, email, phone, and job title for all contacts linked to the parent account.
+      tags:
+      - Contacts
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/searchspec'
+      - $ref: '#/components/parameters/uniformresponse'
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/StartRowNum'
+      responses:
+        '200':
+          description: Contacts retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Contact'
+                  Link:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkObject'
+        '204':
+          description: No contacts found for this account
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Parent account not found
+    put:
+      operationId: upsertAccountContact
+      summary: Add or update a contact for an account
+      description: Insert or update a Contact child record under a specific Account. Supports inserting single contacts or multiple contacts in a batch using an array payload.
+      tags:
+      - Contacts
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInput'
+      responses:
+        '200':
+          description: Contact upserted successfully
+        '201':
+          description: Contact created successfully
+        '400':
+          description: Invalid request body
+        '401':
+          description: Authentication credentials missing or invalid
+  /data/Contact/Contact:
+    get:
+      operationId: listContacts
+      summary: List contacts
+      description: Retrieve a collection of Contact business component records from the Contact business object. Returns contact details including name, email, phone number, job title, and account associations.
+      tags:
+      - Contacts
+      parameters:
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/searchspec'
+      - $ref: '#/components/parameters/ChildLinks'
+      - $ref: '#/components/parameters/uniformresponse'
+      - $ref: '#/components/parameters/ViewMode'
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/StartRowNum'
+      responses:
+        '200':
+          description: Contacts retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Contact'
+                  Link:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkObject'
+        '204':
+          description: No contacts found
+        '401':
+          description: Authentication credentials missing or invalid
+    post:
+      operationId: createContact
+      summary: Create a contact
+      description: Insert a new Contact business component record into the Contact business object. The request body must contain the required contact fields including First Name, Last Name, and Primary Organization Id.
+      tags:
+      - Contacts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInput'
+      responses:
+        '201':
+          description: Contact created successfully
+        '400':
+          description: Invalid request body or missing required fields
+        '401':
+          description: Authentication credentials missing or invalid
+  /data/Contact/Contact/{ContactId}:
+    get:
+      operationId: getContact
+      summary: Get a contact by ID
+      description: Retrieve a single Contact business component record by its unique row identifier.
+      tags:
+      - Contacts
+      parameters:
+      - $ref: '#/components/parameters/ContactId'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/ChildLinks'
+      responses:
+        '200':
+          description: Contact retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Contact not found
+    put:
+      operationId: upsertContact
+      summary: Upsert a contact
+      description: Insert or update a Contact business component record by its unique row identifier.
+      tags:
+      - Contacts
+      parameters:
+      - $ref: '#/components/parameters/ContactId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInput'
+      responses:
+        '200':
+          description: Contact upserted successfully
+        '400':
+          description: Invalid request body
+        '401':
+          description: Authentication credentials missing or invalid
+    delete:
+      operationId: deleteContact
+      summary: Delete a contact
+      description: Delete a Contact business component record by its unique row identifier.
+      tags:
+      - Contacts
+      parameters:
+      - $ref: '#/components/parameters/ContactId'
+      responses:
+        '200':
+          description: Contact deleted successfully
+        '401':
+          description: Authentication credentials missing or invalid
+        '404':
+          description: Contact not found
+components:
+  parameters:
+    PageSize:
+      name: PageSize
+      in: query
+      required: false
+      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
+      schema:
+        type: integer
+        minimum: 1
+        examples:
+        - 20
+    ViewMode:
+      name: ViewMode
+      in: query
+      required: false
+      description: Access control mode that determines which records are visible. Personal returns records owned by the user, Sales Rep uses position-based access, and Organization uses organization-level visibility rules.
+      schema:
+        type: string
+        enum:
+        - Personal
+        - Sales Rep
+        - Organization
+    ChildLinks:
+      name: ChildLinks
+      in: query
+      required: false
+      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
+      schema:
+        type: string
+        examples:
+        - Contact,Opportunity
+        - None
+    AccountId:
+      name: AccountId
+      in: path
+      required: true
+      description: Unique row identifier for the Account record
+      schema:
+        type: string
+        examples:
+        - 88-26CND
+    ContactId:
+      name: ContactId
+      in: path
+      required: true
+      description: Unique row identifier for the Contact record
+      schema:
+        type: string
+        examples:
+        - 0CR-1MF5Z6
+    uniformresponse:
+      name: uniformresponse
+      in: query
+      required: false
+      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+        - y
+        - n
+    fields:
+      name: fields
+      in: query
+      required: false
+      description: Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields.
+      schema:
+        type: string
+        examples:
+        - Name,Location,Account Status
+    StartRowNum:
+      name: StartRowNum
+      in: query
+      required: false
+      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    searchspec:
+      name: searchspec
+      in: query
+      required: false
+      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
+      schema:
+        type: string
+        examples:
+        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
+  schemas:
+    ContactInput:
+      type: object
+      description: Input payload for creating or updating a Contact record
+      required:
+      - First Name
+      - Last Name
+      properties:
+        First Name:
+          type: string
+          description: Contact first name
+        Last Name:
+          type: string
+          description: Contact last name
+        Job Title:
+          type: string
+          description: Job title or role
+        Email Address:
+          type: string
+          description: Email address
+        'Work Phone #':
+          type: string
+          description: Work phone number
+        'Cellular Phone #':
+          type: string
+          description: Mobile phone number
+        Employee Number:
+          type: string
+          description: Employee number
+        Employer Name:
+          type: string
+          description: Employer organization name
+        Primary Organization Id:
+          type: string
+          description: Row identifier of the primary organization
+    LinkObject:
+      type: object
+      description: HATEOAS link object providing navigation references to related Siebel REST API resources
+      properties:
+        rel:
+          type: string
+          description: Relationship type (self, child, parent)
+          enum:
+          - self
+          - child
+          - parent
+        href:
+          type: string
+          format: uri
+          description: Full URL to the related resource
+        name:
+          type: string
+          description: Name of the related business component
+    Contact:
+      type: object
+      description: A Siebel CRM Contact business component record representing an individual person associated with an account
+      properties:
+        Id:
+          type: string
+          description: Unique row identifier for the contact record
+        First Name:
+          type: string
+          description: Contact first name
+        Last Name:
+          type: string
+          description: Contact last name
+        Job Title:
+          type: string
+          description: Job title or role
+        Email Address:
+          type: string
+          description: Email address
+        'Work Phone #':
+          type: string
+          description: Work phone number
+        'Cellular Phone #':
+          type: string
+          description: Mobile phone number
+        Account:
+          type: string
+          description: Associated account name
+        Account Id:
+          type: string
+          description: Row identifier of the associated account
+        Employee Number:
+          type: string
+          description: Employee number if applicable
+        Employer Name:
+          type: string
+          description: Employer organization name
+        Primary Organization Id:
+          type: string
+          description: Row identifier of the primary organization
+        Status:
+          type: string
+          description: Contact status
+        Link:
+          type: array
+          description: HATEOAS links to related resources
+          items:
+            $ref: '#/components/schemas/LinkObject'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication using Siebel CRM user credentials encoded as Base64 in the Authorization header
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authentication for token-based access to the Siebel REST API
+      flows:
+        authorizationCode:
+          authorizationUrl: https://{siebel-server}/siebel/v1.0/auth/authorize
+          tokenUrl: https://{siebel-server}/siebel/v1.0/auth/token
+          scopes: {}
+externalDocs:
+  description: Oracle Siebel REST API Documentation
+  url: https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html

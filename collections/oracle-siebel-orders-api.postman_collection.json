@@ -1,0 +1,376 @@
+{
+  "item": [
+    {
+      "id": "6bd15b87-5d0f-455e-a46f-25dacb393ed2",
+      "name": "Orders",
+      "description": {
+        "content": "Operations on Order business objects for managing sales orders, order line items, and order fulfillment",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "42d0704b-c79c-4d74-b10e-3621c9c5fc83",
+          "name": "List orders",
+          "request": {
+            "name": "List orders",
+            "description": {
+              "content": "Retrieve a collection of Order Entry business component records from the Order Entry business object. Returns order details including order number, status, account, and order total.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Order Entry",
+                "Order Entry - Orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "searchspec",
+                  "value": "<string>",
+                  "description": "Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators."
+                },
+                {
+                  "disabled": false,
+                  "key": "ChildLinks",
+                  "value": "<string>",
+                  "description": "Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links."
+                },
+                {
+                  "disabled": false,
+                  "key": "uniformresponse",
+                  "value": "<string>",
+                  "description": "When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records."
+                },
+                {
+                  "disabled": false,
+                  "key": "ViewMode",
+                  "value": "<string>",
+                  "description": "Access control mode that determines which records are visible. Personal returns records owned by the user, Sales Rep uses position-based access, and Organization uses organization-level visibility rules."
+                },
+                {
+                  "disabled": false,
+                  "key": "PageSize",
+                  "value": "<integer>",
+                  "description": "Maximum number of records to return in the response. Controls pagination by limiting the result set size."
+                },
+                {
+                  "disabled": false,
+                  "key": "StartRowNum",
+                  "value": "0",
+                  "description": "Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "569e76a3-2509-4526-b04b-85aa20462df6",
+              "name": "Orders retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Order Entry",
+                    "Order Entry - Orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ViewMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"Id\": \"string\",\n      \"Order Number\": \"string\",\n      \"Revision\": \"string\",\n      \"Status\": \"string\",\n      \"Order Type\": \"string\",\n      \"Account\": \"string\",\n      \"Account Id\": \"string\",\n      \"Order Date\": \"string\",\n      \"Requested Ship Date\": \"string\",\n      \"Total\": 9584.449928418919,\n      \"Currency Code\": \"string\",\n      \"Link\": [\n        {\n          \"rel\": \"child\",\n          \"href\": \"http://itsTlvHjxteKkrrjUQLLNeDChqxU.faobZ4w36uiojaWss-sEfCjr-CEjy830PJr3nd1iZb-gnXoa+7x\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"parent\",\n          \"href\": \"https://zJh.oydkWkbiTq0rW,9s79V\",\n          \"name\": \"string\"\n        }\n      ]\n    },\n    {\n      \"Id\": \"string\",\n      \"Order Number\": \"string\",\n      \"Revision\": \"string\",\n      \"Status\": \"string\",\n      \"Order Type\": \"string\",\n      \"Account\": \"string\",\n      \"Account Id\": \"string\",\n      \"Order Date\": \"string\",\n      \"Requested Ship Date\": \"string\",\n      \"Total\": 1357.428395618896,\n      \"Currency Code\": \"string\",\n      \"Link\": [\n        {\n          \"rel\": \"parent\",\n          \"href\": \"https://nuNuEypfCMZtXjIimbmwQDIJ.vgeTwNB+PcbMEX6kvcxYr,+kM+i5EdgIPP2hsfUGzVuALVE\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"child\",\n          \"href\": \"https://evVrWMawAyIdiTUbt.xluOTtxfJlRS5vDk2EtjRV\",\n          \"name\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"Link\": [\n    {\n      \"rel\": \"self\",\n      \"href\": \"http://hUeYKENBM.yzaAdtdb-X7kLakmRm0Wcf29mxJ773y0bE-ShBB4AmuzPIPEXeztTlq0\",\n      \"name\": \"string\"\n    },\n    {\n      \"rel\": \"parent\",\n      \"href\": \"http://PC.iuyuhqL3z+rzPy56AV58o3McseyCBLp2tWAwMWsmNbkdMB5kUH8ShPrg5r7u\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c14cd8a-7a9b-4428-a081-58216066369f",
+              "name": "No orders found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Order Entry",
+                    "Order Entry - Orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ViewMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f1f3c1b1-1af0-4726-952f-bae2c7e298b9",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Order Entry",
+                    "Order Entry - Orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ViewMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost",
+      "key": "siebel-server"
+    },
+    {
+      "type": "string",
+      "value": "https://{{siebel-server}}/siebel/v1.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3144dbc6-e007-4fd0-868b-67e354b2007e",
+    "name": "Oracle Siebel REST Orders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for accessing Siebel CRM business objects, business services, and repository objects. The Siebel REST API supports standard CRUD operations using HTTP verbs (GET, POST, PUT, DELETE) against business object data resources, business service invocation, and workspace-based repository management. Responses are available in JSON or XML format, and the API provides built-in metadata discovery through describe endpoints that return OpenAPI-compatible specifications.\n\nContact Support:\n Name: Oracle Support",
+      "type": "text/plain"
+    }
+  }
+}

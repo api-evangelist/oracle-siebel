@@ -1,0 +1,170 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.oracle.com/cd/E95904_01/books/RestAPI/using-the-siebel-rest-api.html,
+  https://docs.oracle.com/cd/G30554_01/books/RestAPI/c-About-Supported-HTTP-Header-Fields--ti1009563.html,
+  https://docs.oracle.com/cd/G30554_01/books/RestAPI/c-About-Siebel-CRM-REST-API-Requests-and-Responses-ti1009559.html,
+  https://docs.oracle.com/cd/F26413_61/books/RestAPI/c-About-Getting-the-Siebel-REST-API-Specificationin-the-Open-API-20-Standard-Using-Describe-ti1016067.html;
+  cross-checked against openapi/*.yml
+provider: Oracle Siebel
+providerId: oracle-siebel
+summary: >-
+  Cross-cutting runtime semantics for the Siebel CRM REST API. Siebel predates
+  most modern REST conventions and shows it: paging is offset-based with a hard
+  100-record ceiling, there is no idempotency key, no request-id header, no
+  rate-limit headers, and no RFC 9457 error envelope. What it does have, and
+  unusually well, is runtime metadata discovery — every resource can describe
+  itself as an OpenAPI document.
+auth:
+  style: header
+  schemes:
+    - name: basic
+      header: 'Authorization: Basic <base64>'
+      condition: >-
+        Used when the Authentication type configured in siebsrvr.properties is
+        Basic or SSO.
+    - name: bearer
+      header: 'Authorization: Bearer <access_token>'
+      condition: Used when the Authentication type configured in siebsrvr.properties is OAuth.
+      validation: >-
+        Introspection only. Siebel contacts the external OAuth provider over
+        HTTPS to validate the token. Signature-based (local JWT) validation is
+        NOT supported and must be terminated at an API gateway in front of
+        Siebel.
+  see_also: authentication/oracle-siebel-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    Siebel documents no Idempotency-Key header and no request-deduplication
+    window. PUT is an upsert and is naturally idempotent for a known record id;
+    POST is not, and a retried POST creates a second record. Agents must
+    de-duplicate client-side, typically by querying with a searchspec on a
+    natural key before creating. NO Idempotency pointer is emitted in apis.yml,
+    because the capability does not exist.
+pagination:
+  style: offset
+  parameters:
+    - name: PageSize
+      in: query
+      type: integer
+      default: 10
+      maximum: 100
+      description: >-
+        How many records the Siebel Server returns. If unset, only 10 records
+        come back. The maximum number of records cannot exceed 100.
+    - name: StartRowNum
+      in: query
+      type: integer
+      default: 0
+      description: >-
+        The row to start returning records from. Page by incrementing
+        StartRowNum by PageSize on each call.
+  response_fields:
+    total_count: null
+    next_cursor: null
+    note: >-
+      Siebel returns no total count and no next-page link. A client cannot tell
+      whether more records exist except by requesting the next page and seeing
+      whether it is empty (HTTP 204).
+filtering:
+  - name: searchspec
+    in: query
+    description: >-
+      Siebel search specification expression against Business Object fields, in
+      Siebel bracket syntax. Example verbatim from the documentation:
+      searchspec=([First Name] LIKE 'J*' AND [Last Name] LIKE 'A*')
+  - name: ViewMode
+    in: query
+    description: >-
+      Visibility mode applied to the query, for example ViewMode=All. Controls
+      which records the authenticated user's position can see.
+  - name: uniformresponse
+    in: query
+    description: >-
+      Flag that normalises the response shape when querying for multiple
+      records, so a single-record result is still returned as a collection.
+field_selection:
+  supported: true
+  parameters:
+    - name: fields
+      description: >-
+        Restricts the fields returned for a Business Component, reducing both
+        payload size and Object Manager work.
+    - name: ChildLinks
+      description: >-
+        Controls whether hypertext links to child resources are included in the
+        response.
+  expansion: >-
+    Child records are reached by path composition rather than an expand
+    parameter — /data/Account/Account/{AccountId}/Contact returns the contacts
+    of an account.
+metadata_discovery:
+  supported: true
+  mechanism: describe
+  description: >-
+    Appending /describe to a resource path returns a JSON object describing the
+    attributes, actions and links of that REST resource. Siebel can emit this as
+    an OpenAPI 2.0 or OpenAPI 3.0 document, which makes the running instance
+    self-describing at runtime — the strongest contract feature Siebel has.
+  endpoints:
+    - '/data/describe'
+    - '/data/{BusinessObject}/{BusinessComponent}/describe'
+    - '/service/describe'
+    - '/service/{ServiceName}/describe'
+    - '/workspace/{WorkspaceName}/describe'
+  note: >-
+    This is why a published Siebel OpenAPI is deployment-specific: each customer's
+    describe output reflects their own configured Business Objects and custom
+    fields. There is no single canonical Siebel OpenAPI for Oracle to publish.
+request_tracing:
+  request_id_header: null
+  note: >-
+    No correlation-id or request-id header is documented on request or response.
+    Tracing is done server-side through Siebel event logging and the Application
+    Interface logs, which a caller cannot correlate to.
+versioning:
+  style: path
+  current: v1.0
+  pattern: 'https://{siebel-server}/siebel/v1.0/...'
+  open_integration_pattern: '/openintegration/v1.0/data/{Resource}/{Resource}/'
+  note: >-
+    The REST path version (v1.0) has not moved. Product versioning is separate
+    and moves monthly under the Continuous Delivery model (see
+    lifecycle/oracle-siebel-lifecycle.yml).
+error_envelope:
+  format: siebel-proprietary
+  problem_json: false
+  see_also: errors/oracle-siebel-problem-types.yml
+rate_limit_signalling:
+  headers: []
+  status_on_exhaustion: null
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After headers are documented. The only
+    published volumetric limit is the 100-record PageSize ceiling. See
+    rate-limits/oracle-siebel-rate-limits.yml.
+content_negotiation:
+  request_headers:
+    - name: Authorization
+      description: Basic or Bearer, per the configured Authentication type.
+    - name: Content-Type
+      description: >-
+        Indicates the content type of the message body and decides the format of
+        the response for ALL requests, including GET. Default application/json.
+        Supported: JSON and XML.
+  response_headers:
+    - name: Content-Type
+      description: Echoes the negotiated representation.
+  note: >-
+    Siebel uses Content-Type rather than Accept to select the response
+    representation, including on GET. This is non-standard and is the most
+    common first-hour surprise for a new Siebel REST client.
+cross_links:
+  errors: errors/oracle-siebel-problem-types.yml
+  lifecycle: lifecycle/oracle-siebel-lifecycle.yml
+  authentication: authentication/oracle-siebel-authentication.yml
+  rate_limits: rate-limits/oracle-siebel-rate-limits.yml
+  scopes: scopes/oracle-siebel-scopes.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

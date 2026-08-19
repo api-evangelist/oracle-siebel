@@ -1,0 +1,1328 @@
+{
+  "item": [
+    {
+      "id": "f6d87528-ea1a-4d2d-b704-9b0c7225d6d9",
+      "name": "Activities",
+      "description": {
+        "content": "Operations on Activity business objects for managing tasks, appointments, call logs, and other scheduled items",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "480b3d9d-eee0-45c4-af28-199dbac8a817",
+          "name": "List activities",
+          "request": {
+            "name": "List activities",
+            "description": {
+              "content": "Retrieve a collection of Activity business component records from the Activity business object. Returns activity details including type, status, due date, description, and associated account and contact information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Activity",
+                "Activity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "searchspec",
+                  "value": "<string>",
+                  "description": "Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators."
+                },
+                {
+                  "disabled": false,
+                  "key": "ChildLinks",
+                  "value": "<string>",
+                  "description": "Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links."
+                },
+                {
+                  "disabled": false,
+                  "key": "uniformresponse",
+                  "value": "<string>",
+                  "description": "When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records."
+                },
+                {
+                  "disabled": false,
+                  "key": "ViewMode",
+                  "value": "<string>",
+                  "description": "Access control mode that determines which records are visible. Personal returns records owned by the user, Sales Rep uses position-based access, and Organization uses organization-level visibility rules."
+                },
+                {
+                  "disabled": false,
+                  "key": "PageSize",
+                  "value": "<integer>",
+                  "description": "Maximum number of records to return in the response. Controls pagination by limiting the result set size."
+                },
+                {
+                  "disabled": false,
+                  "key": "StartRowNum",
+                  "value": "0",
+                  "description": "Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a1df23e9-93f0-49c0-8f79-adcb4172c574",
+              "name": "Activities retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Activity",
+                    "Activity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ViewMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"Id\": \"string\",\n      \"Type\": \"string\",\n      \"Description\": \"string\",\n      \"Status\": \"string\",\n      \"Priority\": \"string\",\n      \"Due\": \"string\",\n      \"Planned\": \"string\",\n      \"Account\": \"string\",\n      \"Account Id\": \"string\",\n      \"Contact First Name\": \"string\",\n      \"Contact Last Name\": \"string\",\n      \"Owner\": \"string\",\n      \"Link\": [\n        {\n          \"rel\": \"parent\",\n          \"href\": \"https://OOSRlYrEilBA.xhtoKVudOP.nV,DeZJAz1gr0dT,8tElmLuASjWgAj8uKJ.oobLKLY778A-oroACBPrXRxri6dBqjlnnsKaDG\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"parent\",\n          \"href\": \"https://WMWoxmCzWAIyewXKpZJC.lwjgSg2eH46dDg,0p0o8Uf5vdPoggf9zG5FzrLQb3TriER2JZOCs5PwRyDb8H3SpxLvIr8WWPmdBG9uh0xLfHF\",\n          \"name\": \"string\"\n        }\n      ]\n    },\n    {\n      \"Id\": \"string\",\n      \"Type\": \"string\",\n      \"Description\": \"string\",\n      \"Status\": \"string\",\n      \"Priority\": \"string\",\n      \"Due\": \"string\",\n      \"Planned\": \"string\",\n      \"Account\": \"string\",\n      \"Account Id\": \"string\",\n      \"Contact First Name\": \"string\",\n      \"Contact Last Name\": \"string\",\n      \"Owner\": \"string\",\n      \"Link\": [\n        {\n          \"rel\": \"parent\",\n          \"href\": \"http://FVVxEsqka.cbqaTGXIds8wxHbUx,LBpHPBbpQf5GpAv9pMLf\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"child\",\n          \"href\": \"https://eKCxzdbrAJGlgxQOBdhpkNTC.seqOnFhMHfVzWHU,Mhw122BT1W8trXS203bpcV,XNBwosuSgL,z\",\n          \"name\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"Link\": [\n    {\n      \"rel\": \"parent\",\n      \"href\": \"https://wnX.tjc\",\n      \"name\": \"string\"\n    },\n    {\n      \"rel\": \"self\",\n      \"href\": \"http://rpDhJbaUtIWhrxidvb.lddNiBO,KLXOOjZBtQ0eJLFf1B7BeBPCr,umQ1H+zhiETz2sPXZfI-7rK07zpzTZrEKoP\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f07b08a-b6bd-4ff4-ae60-bb362a0a9403",
+              "name": "No activities found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Activity",
+                    "Activity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ViewMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "08858a11-f8e1-4140-9f6c-e88186e4d4ff",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Activity",
+                    "Activity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ViewMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "19bdb6d1-9a59-4e21-b5fd-59df89c22219",
+          "name": "Create an activity",
+          "request": {
+            "name": "Create an activity",
+            "description": {
+              "content": "Insert a new Activity business component record into the Activity business object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Activity",
+                "Activity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Type\": \"<string>\",\n  \"Description\": \"<string>\",\n  \"Status\": \"<string>\",\n  \"Priority\": \"<string>\",\n  \"Due\": \"<string>\",\n  \"Planned\": \"<string>\",\n  \"Account\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e87fb509-db03-45cd-8cdb-9404eca2ca64",
+              "name": "Activity created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Activity",
+                    "Activity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Type\": \"<string>\",\n  \"Description\": \"<string>\",\n  \"Status\": \"<string>\",\n  \"Priority\": \"<string>\",\n  \"Due\": \"<string>\",\n  \"Planned\": \"<string>\",\n  \"Account\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "52928369-a140-495f-b71f-598741c5b965",
+              "name": "Invalid request body or missing required fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Activity",
+                    "Activity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Type\": \"<string>\",\n  \"Description\": \"<string>\",\n  \"Status\": \"<string>\",\n  \"Priority\": \"<string>\",\n  \"Due\": \"<string>\",\n  \"Planned\": \"<string>\",\n  \"Account\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f25b4361-3529-43f0-8729-a48c52b440f9",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Activity",
+                    "Activity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Type\": \"<string>\",\n  \"Description\": \"<string>\",\n  \"Status\": \"<string>\",\n  \"Priority\": \"<string>\",\n  \"Due\": \"<string>\",\n  \"Planned\": \"<string>\",\n  \"Account\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1a199a7a-4dc8-4679-8117-292b8dc04450",
+          "name": "Get an activity by ID",
+          "request": {
+            "name": "Get an activity by ID",
+            "description": {
+              "content": "Retrieve a single Activity business component record by its unique row identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Activity",
+                "Activity",
+                ":ActivityId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "ChildLinks",
+                  "value": "<string>",
+                  "description": "Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ActivityId",
+                  "description": "(Required) Unique row identifier for the Activity record"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0150f27f-769e-4078-be88-afda7315d509",
+              "name": "Activity retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Activity",
+                    "Activity",
+                    ":ActivityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ActivityId",
+                      "description": "(Required) Unique row identifier for the Activity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": \"string\",\n  \"Type\": \"string\",\n  \"Description\": \"string\",\n  \"Status\": \"string\",\n  \"Priority\": \"string\",\n  \"Due\": \"string\",\n  \"Planned\": \"string\",\n  \"Account\": \"string\",\n  \"Account Id\": \"string\",\n  \"Contact First Name\": \"string\",\n  \"Contact Last Name\": \"string\",\n  \"Owner\": \"string\",\n  \"Link\": [\n    {\n      \"rel\": \"self\",\n      \"href\": \"http://QkhGyonwbwoVSX.xwtWRI+Eatj+w\",\n      \"name\": \"string\"\n    },\n    {\n      \"rel\": \"self\",\n      \"href\": \"http://pKFcPoewBgrzBHDWqrLOGSTzepEaGf.ytawiK1WQmzWcWSEbTCCD.GtNytCqnY70XGJuOf2KMACIT8,egkfU7eRTHJH8ZtGrT.BqE9\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb3f288e-94da-4703-b4cb-4cd886103a60",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Activity",
+                    "Activity",
+                    ":ActivityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ActivityId",
+                      "description": "(Required) Unique row identifier for the Activity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a8393173-9232-471e-8937-5daa03aa6c81",
+              "name": "Activity not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Activity",
+                    "Activity",
+                    ":ActivityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ActivityId",
+                      "description": "(Required) Unique row identifier for the Activity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "95dd01ef-35b7-4026-b6e2-dd9feb2095cd",
+          "name": "Upsert an activity",
+          "request": {
+            "name": "Upsert an activity",
+            "description": {
+              "content": "Insert or update an Activity business component record by its unique row identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Activity",
+                "Activity",
+                ":ActivityId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ActivityId",
+                  "description": "(Required) Unique row identifier for the Activity record"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Type\": \"<string>\",\n  \"Description\": \"<string>\",\n  \"Status\": \"<string>\",\n  \"Priority\": \"<string>\",\n  \"Due\": \"<string>\",\n  \"Planned\": \"<string>\",\n  \"Account\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aa470686-b2f0-44a2-b8a8-05d660ea1e6c",
+              "name": "Activity upserted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Activity",
+                    "Activity",
+                    ":ActivityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ActivityId",
+                      "description": "(Required) Unique row identifier for the Activity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Type\": \"<string>\",\n  \"Description\": \"<string>\",\n  \"Status\": \"<string>\",\n  \"Priority\": \"<string>\",\n  \"Due\": \"<string>\",\n  \"Planned\": \"<string>\",\n  \"Account\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "396d2aa8-4fc7-4cb0-ac6e-f0e5a6b9430d",
+              "name": "Invalid request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Activity",
+                    "Activity",
+                    ":ActivityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ActivityId",
+                      "description": "(Required) Unique row identifier for the Activity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Type\": \"<string>\",\n  \"Description\": \"<string>\",\n  \"Status\": \"<string>\",\n  \"Priority\": \"<string>\",\n  \"Due\": \"<string>\",\n  \"Planned\": \"<string>\",\n  \"Account\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "91e139a0-90e6-4e22-a1f9-917d34a96c52",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Activity",
+                    "Activity",
+                    ":ActivityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ActivityId",
+                      "description": "(Required) Unique row identifier for the Activity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Type\": \"<string>\",\n  \"Description\": \"<string>\",\n  \"Status\": \"<string>\",\n  \"Priority\": \"<string>\",\n  \"Due\": \"<string>\",\n  \"Planned\": \"<string>\",\n  \"Account\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d14a9ee-272f-47a8-8bf9-026ae3e27e5f",
+          "name": "Delete an activity",
+          "request": {
+            "name": "Delete an activity",
+            "description": {
+              "content": "Delete an Activity business component record by its unique row identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Activity",
+                "Activity",
+                ":ActivityId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ActivityId",
+                  "description": "(Required) Unique row identifier for the Activity record"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e9afb3ad-c2e1-41aa-a564-e1ec4c9726e5",
+              "name": "Activity deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Activity",
+                    "Activity",
+                    ":ActivityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ActivityId",
+                      "description": "(Required) Unique row identifier for the Activity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9cbccfdd-1b61-45dc-9088-9e345008455c",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Activity",
+                    "Activity",
+                    ":ActivityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ActivityId",
+                      "description": "(Required) Unique row identifier for the Activity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a502a650-1619-42e9-aa12-342b405bdcaa",
+              "name": "Activity not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Activity",
+                    "Activity",
+                    ":ActivityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ActivityId",
+                      "description": "(Required) Unique row identifier for the Activity record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost",
+      "key": "siebel-server"
+    },
+    {
+      "type": "string",
+      "value": "https://{{siebel-server}}/siebel/v1.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "19189093-b466-408c-9365-5879011aa888",
+    "name": "Oracle Siebel REST Activities API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for accessing Siebel CRM business objects, business services, and repository objects. The Siebel REST API supports standard CRUD operations using HTTP verbs (GET, POST, PUT, DELETE) against business object data resources, business service invocation, and workspace-based repository management. Responses are available in JSON or XML format, and the API provides built-in metadata discovery through describe endpoints that return OpenAPI-compatible specifications.\n\nContact Support:\n Name: Oracle Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,2050 @@
+{
+  "item": [
+    {
+      "id": "614d5ebb-805a-4a4c-8467-0f174d6df95d",
+      "name": "Contacts",
+      "description": {
+        "content": "Operations on Contact business objects representing individual people associated with accounts and organizations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7a7e6224-0b82-4482-ac47-fd31c8983c40",
+          "name": "List contacts for an account",
+          "request": {
+            "name": "List contacts for an account",
+            "description": {
+              "content": "Retrieve the Contact child business component records associated with a specific Account. Returns contact details including name, email, phone, and job title for all contacts linked to the parent account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Account",
+                "Account",
+                ":AccountId",
+                "Contact"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "searchspec",
+                  "value": "<string>",
+                  "description": "Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators."
+                },
+                {
+                  "disabled": false,
+                  "key": "uniformresponse",
+                  "value": "<string>",
+                  "description": "When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records."
+                },
+                {
+                  "disabled": false,
+                  "key": "PageSize",
+                  "value": "<integer>",
+                  "description": "Maximum number of records to return in the response. Controls pagination by limiting the result set size."
+                },
+                {
+                  "disabled": false,
+                  "key": "StartRowNum",
+                  "value": "0",
+                  "description": "Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "AccountId",
+                  "description": "(Required) Unique row identifier for the Account record"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a23d8db5-5435-4869-9598-dc95de363dc1",
+              "name": "Contacts retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Account",
+                    "Account",
+                    ":AccountId",
+                    "Contact"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "AccountId",
+                      "description": "(Required) Unique row identifier for the Account record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"Id\": \"string\",\n      \"First Name\": \"string\",\n      \"Last Name\": \"string\",\n      \"Job Title\": \"string\",\n      \"Email Address\": \"string\",\n      \"Work Phone #\": \"string\",\n      \"Cellular Phone #\": \"string\",\n      \"Account\": \"string\",\n      \"Account Id\": \"string\",\n      \"Employee Number\": \"string\",\n      \"Employer Name\": \"string\",\n      \"Primary Organization Id\": \"string\",\n      \"Status\": \"string\",\n      \"Link\": [\n        {\n          \"rel\": \"self\",\n          \"href\": \"http://NrKOVoyItCtRWOHVDBvMzfKpD.vmdoG1jE,sXbl0fpgUxhVgX+OhIjymqhJuSNCxLZtBzk\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"child\",\n          \"href\": \"https://XxviikZpWxIPNAyfAcbBegkEEASDswo.hlbjGGEO8ewcRU13oIM,ewBmKPcWKx37lkfvXqetT6RWSaI1dWfVvBi6ESMrd-QFmUVtU,L-H\",\n          \"name\": \"string\"\n        }\n      ]\n    },\n    {\n      \"Id\": \"string\",\n      \"First Name\": \"string\",\n      \"Last Name\": \"string\",\n      \"Job Title\": \"string\",\n      \"Email Address\": \"string\",\n      \"Work Phone #\": \"string\",\n      \"Cellular Phone #\": \"string\",\n      \"Account\": \"string\",\n      \"Account Id\": \"string\",\n      \"Employee Number\": \"string\",\n      \"Employer Name\": \"string\",\n      \"Primary Organization Id\": \"string\",\n      \"Status\": \"string\",\n      \"Link\": [\n        {\n          \"rel\": \"self\",\n          \"href\": \"https://soX.cvpf9sFdIpt0WKC\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"parent\",\n          \"href\": \"http://vGQVtBwRLyRzEbnlTqPuPRyoVsySOevV.xozxwESkUENvKymHr+.YjF67bu0D1bFpl\",\n          \"name\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"Link\": [\n    {\n      \"rel\": \"self\",\n      \"href\": \"http://kxyPVwupSynYnJAcNmIikMfz.imkW6BQDfy+N+tTVRsCqtJCW2IgKZ0fsLnx4iDiJ,cn0xy.Az0,jYYPS\",\n      \"name\": \"string\"\n    },\n    {\n      \"rel\": \"parent\",\n      \"href\": \"https://rGzYmvSDiLpCBgXsuICv.cjtqT4y9GdTK.gG,1qbiT,k0GuB5IGgySHI.noGnMMP,6BwOUhSkAAT\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62db6cbd-a883-4104-938f-b1f89cde4fbc",
+              "name": "No contacts found for this account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Account",
+                    "Account",
+                    ":AccountId",
+                    "Contact"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "AccountId",
+                      "description": "(Required) Unique row identifier for the Account record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1a1f8bb0-041a-4457-a225-900886392e58",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Account",
+                    "Account",
+                    ":AccountId",
+                    "Contact"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "AccountId",
+                      "description": "(Required) Unique row identifier for the Account record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b05af4f1-d971-45ff-ac7f-792baaa2152c",
+              "name": "Parent account not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Account",
+                    "Account",
+                    ":AccountId",
+                    "Contact"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "AccountId",
+                      "description": "(Required) Unique row identifier for the Account record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fb89fc3f-996a-4b0e-90c2-fe040167b63f",
+          "name": "Add or update a contact for an account",
+          "request": {
+            "name": "Add or update a contact for an account",
+            "description": {
+              "content": "Insert or update a Contact child record under a specific Account. Supports inserting single contacts or multiple contacts in a batch using an array payload.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Account",
+                "Account",
+                ":AccountId",
+                "Contact"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "AccountId",
+                  "description": "(Required) Unique row identifier for the Account record"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"First Name\": \"<string>\",\n  \"Last Name\": \"<string>\",\n  \"Job Title\": \"<string>\",\n  \"Email Address\": \"<string>\",\n  \"Work Phone #\": \"<string>\",\n  \"Cellular Phone #\": \"<string>\",\n  \"Employee Number\": \"<string>\",\n  \"Employer Name\": \"<string>\",\n  \"Primary Organization Id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "425fe14a-0ffd-49a7-9302-a9c9e35d94cf",
+              "name": "Contact upserted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Account",
+                    "Account",
+                    ":AccountId",
+                    "Contact"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "AccountId",
+                      "description": "(Required) Unique row identifier for the Account record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"First Name\": \"<string>\",\n  \"Last Name\": \"<string>\",\n  \"Job Title\": \"<string>\",\n  \"Email Address\": \"<string>\",\n  \"Work Phone #\": \"<string>\",\n  \"Cellular Phone #\": \"<string>\",\n  \"Employee Number\": \"<string>\",\n  \"Employer Name\": \"<string>\",\n  \"Primary Organization Id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bc017950-6d95-47d5-aee8-bffcba1dee62",
+              "name": "Contact created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Account",
+                    "Account",
+                    ":AccountId",
+                    "Contact"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "AccountId",
+                      "description": "(Required) Unique row identifier for the Account record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"First Name\": \"<string>\",\n  \"Last Name\": \"<string>\",\n  \"Job Title\": \"<string>\",\n  \"Email Address\": \"<string>\",\n  \"Work Phone #\": \"<string>\",\n  \"Cellular Phone #\": \"<string>\",\n  \"Employee Number\": \"<string>\",\n  \"Employer Name\": \"<string>\",\n  \"Primary Organization Id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d500f4bb-e840-4d0e-8b65-3ae949292917",
+              "name": "Invalid request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Account",
+                    "Account",
+                    ":AccountId",
+                    "Contact"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "AccountId",
+                      "description": "(Required) Unique row identifier for the Account record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"First Name\": \"<string>\",\n  \"Last Name\": \"<string>\",\n  \"Job Title\": \"<string>\",\n  \"Email Address\": \"<string>\",\n  \"Work Phone #\": \"<string>\",\n  \"Cellular Phone #\": \"<string>\",\n  \"Employee Number\": \"<string>\",\n  \"Employer Name\": \"<string>\",\n  \"Primary Organization Id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b23be825-fd92-4809-b01a-c3a72269e513",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Account",
+                    "Account",
+                    ":AccountId",
+                    "Contact"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "AccountId",
+                      "description": "(Required) Unique row identifier for the Account record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"First Name\": \"<string>\",\n  \"Last Name\": \"<string>\",\n  \"Job Title\": \"<string>\",\n  \"Email Address\": \"<string>\",\n  \"Work Phone #\": \"<string>\",\n  \"Cellular Phone #\": \"<string>\",\n  \"Employee Number\": \"<string>\",\n  \"Employer Name\": \"<string>\",\n  \"Primary Organization Id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "daf75fd7-8dba-43e2-b69e-2d4b41025648",
+          "name": "List contacts",
+          "request": {
+            "name": "List contacts",
+            "description": {
+              "content": "Retrieve a collection of Contact business component records from the Contact business object. Returns contact details including name, email, phone number, job title, and account associations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Contact",
+                "Contact"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "searchspec",
+                  "value": "<string>",
+                  "description": "Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators."
+                },
+                {
+                  "disabled": false,
+                  "key": "ChildLinks",
+                  "value": "<string>",
+                  "description": "Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links."
+                },
+                {
+                  "disabled": false,
+                  "key": "uniformresponse",
+                  "value": "<string>",
+                  "description": "When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records."
+                },
+                {
+                  "disabled": false,
+                  "key": "ViewMode",
+                  "value": "<string>",
+                  "description": "Access control mode that determines which records are visible. Personal returns records owned by the user, Sales Rep uses position-based access, and Organization uses organization-level visibility rules."
+                },
+                {
+                  "disabled": false,
+                  "key": "PageSize",
+                  "value": "<integer>",
+                  "description": "Maximum number of records to return in the response. Controls pagination by limiting the result set size."
+                },
+                {
+                  "disabled": false,
+                  "key": "StartRowNum",
+                  "value": "0",
+                  "description": "Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cd4cf137-5f26-4e6f-9a4f-95964e44d045",
+              "name": "Contacts retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Contact",
+                    "Contact"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ViewMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"Id\": \"string\",\n      \"First Name\": \"string\",\n      \"Last Name\": \"string\",\n      \"Job Title\": \"string\",\n      \"Email Address\": \"string\",\n      \"Work Phone #\": \"string\",\n      \"Cellular Phone #\": \"string\",\n      \"Account\": \"string\",\n      \"Account Id\": \"string\",\n      \"Employee Number\": \"string\",\n      \"Employer Name\": \"string\",\n      \"Primary Organization Id\": \"string\",\n      \"Status\": \"string\",\n      \"Link\": [\n        {\n          \"rel\": \"parent\",\n          \"href\": \"https://oapGbXolWNekqVm.vjqQ9.Ei8liVcq5UvsDOK2gXqaAcjVOPRQYag\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"self\",\n          \"href\": \"http://WnhuNeJnv.yiiWr2dnACv22SzZyGLSE.ks-B6EZiXe-tvi.ki5HqV-sfRlYyB,Z-1YT8UJPb7wl\",\n          \"name\": \"string\"\n        }\n      ]\n    },\n    {\n      \"Id\": \"string\",\n      \"First Name\": \"string\",\n      \"Last Name\": \"string\",\n      \"Job Title\": \"string\",\n      \"Email Address\": \"string\",\n      \"Work Phone #\": \"string\",\n      \"Cellular Phone #\": \"string\",\n      \"Account\": \"string\",\n      \"Account Id\": \"string\",\n      \"Employee Number\": \"string\",\n      \"Employer Name\": \"string\",\n      \"Primary Organization Id\": \"string\",\n      \"Status\": \"string\",\n      \"Link\": [\n        {\n          \"rel\": \"child\",\n          \"href\": \"https://qVU.jhllLk8F,VaTqd+L7m8pfnqKkYW-\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"parent\",\n          \"href\": \"https://TPgEPdD.sqaqCZYnBxhGvJoBx3,AWX50zwWmdnfpWSMSOPh,jXGo4nd,cNRoGRYV5W\",\n          \"name\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"Link\": [\n    {\n      \"rel\": \"parent\",\n      \"href\": \"https://QCEGe.xtx2K9n+.y,5\",\n      \"name\": \"string\"\n    },\n    {\n      \"rel\": \"self\",\n      \"href\": \"http://gyRGrejfb.mtexhubv+6DNPzo8DQYZgJED8Bnbe5SMarI4BGAHutYFsZsNYC6ta1iqHVdcX+rPQv+BbNhDUnOi96pT67c\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c03d7dc-1ae6-4c50-b28a-806fd7da7fec",
+              "name": "No contacts found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Contact",
+                    "Contact"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ViewMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2189e7a8-5465-4b6c-b13d-c33fda909da5",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Contact",
+                    "Contact"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchspec",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "uniformresponse",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ViewMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "StartRowNum",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ccd8fb51-e5e1-4935-8a08-3ba607812d35",
+          "name": "Create a contact",
+          "request": {
+            "name": "Create a contact",
+            "description": {
+              "content": "Insert a new Contact business component record into the Contact business object. The request body must contain the required contact fields including First Name, Last Name, and Primary Organization Id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Contact",
+                "Contact"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"First Name\": \"<string>\",\n  \"Last Name\": \"<string>\",\n  \"Job Title\": \"<string>\",\n  \"Email Address\": \"<string>\",\n  \"Work Phone #\": \"<string>\",\n  \"Cellular Phone #\": \"<string>\",\n  \"Employee Number\": \"<string>\",\n  \"Employer Name\": \"<string>\",\n  \"Primary Organization Id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "35999b60-eb59-4098-a4f0-b5c8a14f2cd1",
+              "name": "Contact created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Contact",
+                    "Contact"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"First Name\": \"<string>\",\n  \"Last Name\": \"<string>\",\n  \"Job Title\": \"<string>\",\n  \"Email Address\": \"<string>\",\n  \"Work Phone #\": \"<string>\",\n  \"Cellular Phone #\": \"<string>\",\n  \"Employee Number\": \"<string>\",\n  \"Employer Name\": \"<string>\",\n  \"Primary Organization Id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1b11b459-4b44-4d92-a5ac-b3de84817e01",
+              "name": "Invalid request body or missing required fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Contact",
+                    "Contact"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"First Name\": \"<string>\",\n  \"Last Name\": \"<string>\",\n  \"Job Title\": \"<string>\",\n  \"Email Address\": \"<string>\",\n  \"Work Phone #\": \"<string>\",\n  \"Cellular Phone #\": \"<string>\",\n  \"Employee Number\": \"<string>\",\n  \"Employer Name\": \"<string>\",\n  \"Primary Organization Id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ac67df4a-b9ca-43ef-a294-d0016199e3ee",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Contact",
+                    "Contact"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"First Name\": \"<string>\",\n  \"Last Name\": \"<string>\",\n  \"Job Title\": \"<string>\",\n  \"Email Address\": \"<string>\",\n  \"Work Phone #\": \"<string>\",\n  \"Cellular Phone #\": \"<string>\",\n  \"Employee Number\": \"<string>\",\n  \"Employer Name\": \"<string>\",\n  \"Primary Organization Id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7d313350-f742-4613-aac3-3e105fe92fd8",
+          "name": "Get a contact by ID",
+          "request": {
+            "name": "Get a contact by ID",
+            "description": {
+              "content": "Retrieve a single Contact business component record by its unique row identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Contact",
+                "Contact",
+                ":ContactId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "ChildLinks",
+                  "value": "<string>",
+                  "description": "Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ContactId",
+                  "description": "(Required) Unique row identifier for the Contact record"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a1d89600-8943-4221-a683-4e544a516940",
+              "name": "Contact retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Contact",
+                    "Contact",
+                    ":ContactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ContactId",
+                      "description": "(Required) Unique row identifier for the Contact record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": \"string\",\n  \"First Name\": \"string\",\n  \"Last Name\": \"string\",\n  \"Job Title\": \"string\",\n  \"Email Address\": \"string\",\n  \"Work Phone #\": \"string\",\n  \"Cellular Phone #\": \"string\",\n  \"Account\": \"string\",\n  \"Account Id\": \"string\",\n  \"Employee Number\": \"string\",\n  \"Employer Name\": \"string\",\n  \"Primary Organization Id\": \"string\",\n  \"Status\": \"string\",\n  \"Link\": [\n    {\n      \"rel\": \"child\",\n      \"href\": \"http://uzzTeTcHyOchFbilabeNKc.xhbeGyi\",\n      \"name\": \"string\"\n    },\n    {\n      \"rel\": \"self\",\n      \"href\": \"http://vyPkWLbbOtjgtMMpVgovyRRgXtgiXImP.bmiE6saSkT8FbOdWk3Jei-bVpeEb,HLoQ852R3lOridRJHmZIGWA\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aadf068d-bce6-4dfc-9aa8-57dc41bd8e60",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Contact",
+                    "Contact",
+                    ":ContactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ContactId",
+                      "description": "(Required) Unique row identifier for the Contact record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "04084fad-0499-42e9-82b8-36129aaab995",
+              "name": "Contact not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Contact",
+                    "Contact",
+                    ":ContactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ChildLinks",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ContactId",
+                      "description": "(Required) Unique row identifier for the Contact record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77eccc44-ebd5-4f00-b941-6f6cbe759147",
+          "name": "Upsert a contact",
+          "request": {
+            "name": "Upsert a contact",
+            "description": {
+              "content": "Insert or update a Contact business component record by its unique row identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Contact",
+                "Contact",
+                ":ContactId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ContactId",
+                  "description": "(Required) Unique row identifier for the Contact record"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"First Name\": \"<string>\",\n  \"Last Name\": \"<string>\",\n  \"Job Title\": \"<string>\",\n  \"Email Address\": \"<string>\",\n  \"Work Phone #\": \"<string>\",\n  \"Cellular Phone #\": \"<string>\",\n  \"Employee Number\": \"<string>\",\n  \"Employer Name\": \"<string>\",\n  \"Primary Organization Id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e84e38a2-abde-4c14-8856-05909481deea",
+              "name": "Contact upserted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Contact",
+                    "Contact",
+                    ":ContactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ContactId",
+                      "description": "(Required) Unique row identifier for the Contact record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"First Name\": \"<string>\",\n  \"Last Name\": \"<string>\",\n  \"Job Title\": \"<string>\",\n  \"Email Address\": \"<string>\",\n  \"Work Phone #\": \"<string>\",\n  \"Cellular Phone #\": \"<string>\",\n  \"Employee Number\": \"<string>\",\n  \"Employer Name\": \"<string>\",\n  \"Primary Organization Id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c87a0216-b33c-4b69-83d3-7170f5390ec6",
+              "name": "Invalid request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Contact",
+                    "Contact",
+                    ":ContactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ContactId",
+                      "description": "(Required) Unique row identifier for the Contact record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"First Name\": \"<string>\",\n  \"Last Name\": \"<string>\",\n  \"Job Title\": \"<string>\",\n  \"Email Address\": \"<string>\",\n  \"Work Phone #\": \"<string>\",\n  \"Cellular Phone #\": \"<string>\",\n  \"Employee Number\": \"<string>\",\n  \"Employer Name\": \"<string>\",\n  \"Primary Organization Id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4f4f18ce-d06a-4a8f-865b-f7900113d743",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Contact",
+                    "Contact",
+                    ":ContactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ContactId",
+                      "description": "(Required) Unique row identifier for the Contact record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"First Name\": \"<string>\",\n  \"Last Name\": \"<string>\",\n  \"Job Title\": \"<string>\",\n  \"Email Address\": \"<string>\",\n  \"Work Phone #\": \"<string>\",\n  \"Cellular Phone #\": \"<string>\",\n  \"Employee Number\": \"<string>\",\n  \"Employer Name\": \"<string>\",\n  \"Primary Organization Id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0014852e-604d-416d-8b63-55e6022b6b96",
+          "name": "Delete a contact",
+          "request": {
+            "name": "Delete a contact",
+            "description": {
+              "content": "Delete a Contact business component record by its unique row identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "Contact",
+                "Contact",
+                ":ContactId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ContactId",
+                  "description": "(Required) Unique row identifier for the Contact record"
+                },
+                {
+                  "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                  "type": "any",
+                  "value": "{{siebel-server}}",
+                  "key": "siebel-server"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "81c9df5e-70ab-41f4-bc93-c6be94ba7ab6",
+              "name": "Contact deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Contact",
+                    "Contact",
+                    ":ContactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ContactId",
+                      "description": "(Required) Unique row identifier for the Contact record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e90adc53-0ff1-4264-b039-f4f0fc0d6825",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Contact",
+                    "Contact",
+                    ":ContactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ContactId",
+                      "description": "(Required) Unique row identifier for the Contact record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ed9137fd-96fa-4ac9-a1f6-51429a4a8793",
+              "name": "Contact not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "Contact",
+                    "Contact",
+                    ":ContactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ContactId",
+                      "description": "(Required) Unique row identifier for the Contact record"
+                    },
+                    {
+                      "description": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+                      "type": "any",
+                      "value": "{{siebel-server}}",
+                      "key": "siebel-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Hostname and port of the Siebel Application Interface running the siebel-rest.war deployment on Apache Tomcat",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost",
+      "key": "siebel-server"
+    },
+    {
+      "type": "string",
+      "value": "https://{{siebel-server}}/siebel/v1.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b8d29c88-1c1f-4bea-ab43-01e5e1efa949",
+    "name": "Oracle Siebel REST Contacts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for accessing Siebel CRM business objects, business services, and repository objects. The Siebel REST API supports standard CRUD operations using HTTP verbs (GET, POST, PUT, DELETE) against business object data resources, business service invocation, and workspace-based repository management. Responses are available in JSON or XML format, and the API provides built-in metadata discovery through describe endpoints that return OpenAPI-compatible specifications.\n\nContact Support:\n Name: Oracle Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,108 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.oracle.com/en/applications/siebel/siebel-crm/26.7/szsig/siebel-ai-connectors.html
+  and
+  https://docs.oracle.com/en/applications/siebel/siebel-crm/26.7/szapi/using-siebel-ai-connectors-with-open-integration-to-create-mcp-servers.html
+provider: Oracle Siebel
+providerId: oracle-siebel
+name: Siebel AI Connectors — MCP Servers
+status: published
+summary: >-
+  Oracle ships a first-party MCP capability with Siebel CRM as of the 26.7
+  update (GA 17 July 2026): Siebel AI Connectors. It is a configuration-driven
+  framework that exposes selected Siebel Open Integration REST operations as MCP
+  tools, groups those tools into named MCP servers, and runs them as a Java
+  runtime the CUSTOMER deploys — either on-premises (Windows/Linux, JRE 21) or
+  through Siebel Cloud Manager on Kubernetes. Oracle does NOT operate a hosted
+  Siebel MCP endpoint: there is no vendor URL an agent can call. Every Siebel MCP
+  server is a customer-run server on a customer host, with a customer-authored
+  tool catalog.
+deployment:
+  mode: local-stdio
+  endpoint: null
+  install: >-
+    Deploy the Siebel AI Connectors runtime package on-premises (Windows or
+    Linux with JRE 21), or provision it through Siebel Cloud Manager (SCM) on
+    Kubernetes. Requires an entitled Siebel CRM 26.7 (or later) installation.
+  package: >-
+    https://docs.oracle.com/en/applications/siebel/siebel-crm/26.7/szsig/siebel-ai-connectors.html
+  auth: oauth
+  verified: searched
+  note: >-
+    `mode` is recorded as local-stdio because that is the honest scoring
+    equivalence: a human must install and run software before any agent can
+    reach it. The TRANSPORT is not stdio — the runtime serves HTTP at
+    <scheme>://<host>:<port>/siebelAIConnectors/mcp/<mcp-server-path> (Oracle's
+    documented examples are http://localhost:8081/siebelAIConnectors/mcp/account,
+    /product and /service-request). There is deliberately no `endpoint` value
+    here: every real endpoint is a customer hostname, and inventing one would
+    read as a verified agent surface that does not exist.
+transport: streamable-http
+endpoint_pattern: '<scheme>://<host>:<port>/siebelAIConnectors/mcp/<mcp-server-path>'
+authentication:
+  scheme: oauth2-jwt
+  header: 'Authorization: Bearer <access_token>'
+  validation: >-
+    The runtime validates the JWT against a configured issuer, audience,
+    required scope and JWKS URI (application.yaml `security.jwt` block), then
+    invokes the Open Integration REST API behind it. Authentication is aligned
+    with the Siebel Open Integration auth model rather than being separate.
+  configurable_fields:
+    - security.jwt.enabled
+    - security.jwt.issuer
+    - security.jwt.audience
+    - security.jwt.required-scope
+    - security.jwt.jwks-uri
+backing_api:
+  name: Siebel Open Integration REST API
+  path_pattern: '/openintegration/v1.0/data/{Resource}/{Resource}/'
+  note: >-
+    Open Integration is the source API layer. It generates an OpenAPI
+    specification from Siebel metadata; the AI Connectors runtime selects
+    operations from that specification and republishes them as MCP tools.
+configuration:
+  - file: FINAL_SPECIFICATION.json
+    purpose: OpenAPI-compatible tool definitions built from selected Open Integration operations.
+  - file: MCP_CONFIG.json
+    purpose: MCP server definitions and the tool groupings each server exposes.
+  - file: OI_CONFIG.json
+    purpose: Open Integration server instances and connection details.
+  - file: application.yaml
+    purpose: Runtime settings, JWT security configuration, and file paths.
+  - file: logging.properties
+    purpose: Logging behaviour.
+tools:
+  status: customer-defined
+  count: null
+  note: >-
+    There is no fixed Siebel tool catalog to record. The tool list is whatever
+    the customer selects from their own Open Integration specification and
+    declares in MCP_CONFIG.json. The only tool names Oracle publishes are the
+    worked example below; they are documentation examples, not a shipped
+    catalog, and are recorded as such.
+documented_example:
+  mcp_server_name: Account MCP Server
+  mcp_server_path: /account
+  mcp_server_version: 1.0.0
+  tools:
+    - name: Account GET
+      backing_operation_id: openintegration_v1.0_data_Account_Account__get
+    - name: Account PUT
+      backing_operation_id: openintegration_v1.0_data_Account_Account__put
+    - name: Account POST
+      backing_operation_id: openintegration_v1.0_data_Account_Account__post
+  source: >-
+    https://docs.oracle.com/en/applications/siebel/siebel-crm/26.7/szsig/siebel-ai-connectors.html
+third_party_servers:
+  - name: '@jeretucu/mcp-server-siebel'
+    url: https://www.npmjs.com/package/@jeretucu/mcp-server-siebel
+    official: false
+    mode: local-stdio
+    note: >-
+      Community npm MCP server wrapping the Siebel REST API; requires Siebel API
+      credentials and a Siebel URL via environment variables. Not an Oracle
+      product and not counted as a provider-run server.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

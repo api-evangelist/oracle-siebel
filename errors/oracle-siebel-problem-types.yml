@@ -1,0 +1,119 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.oracle.com/cd/G30554_01/books/RestAPI/c-About-Standard-HTTP-Status-Codes-and-Error-Messages-ti1009567.html
+  and
+  https://docs.oracle.com/cd/G30554_01/books/RestAPI/c-About-Siebel-CRM-REST-API-Requests-and-Responses-ti1009559.html,
+  cross-checked against the 4xx/5xx responses declared in openapi/*.yml
+provider: Oracle Siebel
+providerId: oracle-siebel
+format: siebel-proprietary
+problem_json: false
+summary: >-
+  The Siebel REST API returns standard HTTP status codes with a JSON (or XML)
+  body carrying Siebel proprietary field/value pairs. It does NOT implement RFC
+  9457 problem+json: there is no type/title/detail/instance envelope, no stable
+  machine-readable error code namespace, and no documented error-code registry.
+  An agent must read the human-language message text out of the body. Oracle
+  publishes the status-code table below; it publishes no catalogue of Siebel
+  error identifiers for REST (the SBL-xxx-nnnnn identifiers seen in practice come
+  from the underlying Object Manager and are documented per-message in My Oracle
+  Support, not as a REST error reference).
+envelope:
+  content_types:
+    - application/json
+    - application/xml
+  default_content_type: application/json
+  shape: >-
+    On failure the response body contains additional information about the
+    error, expressed as Siebel proprietary field/value pairs. Oracle documents
+    neither a fixed field name for the message nor an error-code field for the
+    REST layer.
+  stable_error_code_field: null
+  retry_after_header: false
+problem_types:
+  - status: 200
+    title: OK
+    description: The request successfully executed and the response has content.
+    error: false
+  - status: 204
+    title: No Content
+    description: >-
+      The request successfully executed, but the content is unavailable. For
+      example, the content was deleted.
+    error: false
+    note: >-
+      Siebel also returns 204 for a query that matched no records — an empty
+      result set, not a failure. Agents must not treat 204 as an error.
+  - status: 401
+    title: Unauthorized
+    description: The request had invalid authorization credentials.
+    remediation: >-
+      Re-check the Authorization header. Use Basic when the Authentication type
+      in siebsrvr.properties is Basic or SSO, Bearer when it is OAuth. A Bearer
+      token is validated by introspection against the configured external OAuth
+      provider, so a 401 can mean the token is valid but the introspection
+      endpoint rejected or could not be reached.
+    declared_in_openapi: true
+  - status: 404
+    title: Not Found
+    description: The requested resource was not found because of an invalid object name.
+    remediation: >-
+      Siebel 404s on an invalid BUSINESS OBJECT or BUSINESS COMPONENT name as
+      well as on a missing record id. Confirm the object name with the describe
+      endpoints (describeBusinessComponent, describeBusinessServices) before
+      assuming the record does not exist.
+    declared_in_openapi: true
+  - status: 405
+    title: Not Allowed
+    description: The request is not allowed.
+    declared_in_openapi: false
+  - status: 406
+    title: Not Acceptable
+    description: >-
+      The resource identified by the request is capable of generating only
+      response entities that have content characteristics that are not
+      acceptable according to the accept headers sent in the request.
+    declared_in_openapi: false
+  - status: 415
+    title: Unsupported Media Type
+    description: >-
+      The data format of the request body, specified in the Content-Type header,
+      is unsupported by the targeted resource.
+    remediation: Send Content-Type application/json or application/xml.
+    declared_in_openapi: false
+  - status: 500
+    title: Internal Server Error
+    description: >-
+      The server encountered an unexpected error, preventing it from fulfilling
+      the request.
+    remediation: >-
+      Retry with exponential backoff. In Siebel a 500 frequently carries the
+      underlying Object Manager error text in the body; capture it, because
+      there is no error code to branch on.
+    declared_in_openapi: true
+openapi_declared_only:
+  - status: 400
+    title: Bad Request
+    note: >-
+      Declared on every POST/PUT operation in openapi/*.yml but absent from
+      Oracle's published status-code table.
+  - status: 201
+    title: Created
+    note: Declared on POST operations; not in Oracle's table, which stops at 200/204.
+gaps:
+  - >-
+    403 Forbidden is not documented and is not declared anywhere in the specs,
+    even though Siebel enforces record-level visibility through ViewMode and
+    position-based access. An authorisation failure is therefore
+    indistinguishable from a 401 or an empty 204.
+  - >-
+    405, 406 and 415 are documented by Oracle but declared in none of the ten
+    OpenAPI documents in this repo. openapi-overlay files under overlays/ record
+    this gap.
+  - >-
+    No Retry-After header and no rate-limit response headers are documented, so
+    there is no runtime backoff signal.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

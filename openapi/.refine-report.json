@@ -1,0 +1,44 @@
+{
+  "provider": "oracle-siebel",
+  "sources": [
+    "oracle-siebel-accounts-api-openapi.yml",
+    "oracle-siebel-activities-api-openapi.yml",
+    "oracle-siebel-business-services-api-openapi.yml",
+    "oracle-siebel-contacts-api-openapi.yml",
+    "oracle-siebel-metadata-api-openapi.yml",
+    "oracle-siebel-opportunities-api-openapi.yml",
+    "oracle-siebel-orders-api-openapi.yml",
+    "oracle-siebel-products-api-openapi.yml",
+    "oracle-siebel-repository-api-openapi.yml",
+    "oracle-siebel-service-requests-api-openapi.yml"
+  ],
+  "outputs": [
+    "oracle-siebel-accounts-api-openapi.yml",
+    "oracle-siebel-activities-api-openapi.yml",
+    "oracle-siebel-business-services-api-openapi.yml",
+    "oracle-siebel-contacts-api-openapi.yml",
+    "oracle-siebel-metadata-api-openapi.yml",
+    "oracle-siebel-opportunities-api-openapi.yml",
+    "oracle-siebel-orders-api-openapi.yml",
+    "oracle-siebel-products-api-openapi.yml",
+    "oracle-siebel-repository-api-openapi.yml",
+    "oracle-siebel-service-requests-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "oracle-siebel-accounts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "oracle-siebel-activities-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "oracle-siebel-business-services-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "oracle-siebel-contacts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "oracle-siebel-metadata-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "oracle-siebel-opportunities-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "oracle-siebel-orders-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "oracle-siebel-products-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "oracle-siebel-repository-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "oracle-siebel-service-requests-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": []
+}

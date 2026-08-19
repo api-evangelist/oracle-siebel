@@ -1,0 +1,168 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Oracle Siebel REST Service Requests API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Service Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List service requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{siebel-server}/siebel/v1.0/data/Service Request/Service Request",
+            "params": [
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields."
+              },
+              {
+                "name": "searchspec",
+                "value": "",
+                "type": "query",
+                "description": "Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators."
+              },
+              {
+                "name": "ChildLinks",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links."
+              },
+              {
+                "name": "uniformresponse",
+                "value": "",
+                "type": "query",
+                "description": "When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records."
+              },
+              {
+                "name": "ViewMode",
+                "value": "",
+                "type": "query",
+                "description": "Access control mode that determines which records are visible. Personal returns records owned by the user, Sales Rep uses position-based access, and Organization uses organization-level visibility rules."
+              },
+              {
+                "name": "PageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return in the response. Controls pagination by limiting the result set size."
+              },
+              {
+                "name": "StartRowNum",
+                "value": "",
+                "type": "query",
+                "description": "Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets."
+              }
+            ]
+          },
+          "docs": "Retrieve a collection of Service Request business component records from the Service Request business object. Returns service request details including status, priority, description, owner, and associated account and contact information."
+        },
+        {
+          "info": {
+            "name": "Create a service request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{siebel-server}/siebel/v1.0/data/Service Request/Service Request",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Insert a new Service Request business component record into the Service Request business object."
+        },
+        {
+          "info": {
+            "name": "Get a service request by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{siebel-server}/siebel/v1.0/data/Service Request/Service Request/:ServiceRequestId",
+            "params": [
+              {
+                "name": "ServiceRequestId",
+                "value": "",
+                "type": "path",
+                "description": "Unique row identifier for the Service Request record"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields."
+              },
+              {
+                "name": "ChildLinks",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links."
+              }
+            ]
+          },
+          "docs": "Retrieve a single Service Request business component record by its unique row identifier."
+        },
+        {
+          "info": {
+            "name": "Upsert a service request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{siebel-server}/siebel/v1.0/data/Service Request/Service Request/:ServiceRequestId",
+            "params": [
+              {
+                "name": "ServiceRequestId",
+                "value": "",
+                "type": "path",
+                "description": "Unique row identifier for the Service Request record"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Insert or update a Service Request business component record by its unique row identifier."
+        },
+        {
+          "info": {
+            "name": "Delete a service request",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{siebel-server}/siebel/v1.0/data/Service Request/Service Request/:ServiceRequestId",
+            "params": [
+              {
+                "name": "ServiceRequestId",
+                "value": "",
+                "type": "path",
+                "description": "Unique row identifier for the Service Request record"
+              }
+            ]
+          },
+          "docs": "Delete a Service Request business component record by its unique row identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

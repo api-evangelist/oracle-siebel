@@ -1,0 +1,305 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/oracle-siebel-accounts-api-openapi.yml,
+  openapi/oracle-siebel-activities-api-openapi.yml,
+  openapi/oracle-siebel-contacts-api-openapi.yml,
+  openapi/oracle-siebel-opportunities-api-openapi.yml,
+  openapi/oracle-siebel-orders-api-openapi.yml,
+  openapi/oracle-siebel-products-api-openapi.yml,
+  openapi/oracle-siebel-service-requests-api-openapi.yml —
+  entity graph computed from component schemas, path composition, and
+  id-reference fields
+provider: Oracle Siebel
+providerId: oracle-siebel
+summary: >-
+  Siebel's REST data model is the Siebel Business Object / Business Component
+  model exposed one-for-one: the URL is
+  /data/{BusinessObject}/{BusinessComponent}, and the JSON field names are the
+  Siebel field names verbatim, spaces and all ("First Name", "Work Phone #",
+  "SR Number"). Relationships are expressed two ways — as an "<Entity> Id"
+  scalar on the child, and as a child path segment under the parent. Every
+  entity carries an opaque `Id` and a `Link` collection of hypertext links to
+  child resources.
+conventions:
+  identifier_field: Id
+  identifier_format: >-
+    Siebel row id — an opaque base-36-ish string, not a UUID and not sequential.
+    No documented prefix scheme distinguishes an Account id from a Contact id, so
+    ids are NOT self-describing; a caller must track which entity an id came
+    from.
+  field_naming: >-
+    Siebel display names used verbatim as JSON keys, including spaces and
+    punctuation ("Work Phone #", "Cellular Phone #", "Sub-Status", "Win
+    Probability"). Not camelCase, not snake_case. Clients must quote keys.
+  link_field: Link
+  link_shape:
+    rel: string
+    href: string
+    name: string
+  extensibility: >-
+    The field set is deployment-specific. Every Siebel customer configures their
+    own Business Components, so the schemas below are the base Siebel field set,
+    not a fixed contract. The authoritative per-instance field list comes from
+    the describe endpoints — see conventions/oracle-siebel-conventions.yml.
+entities:
+  - name: Account
+    business_object: Account
+    business_component: Account
+    path: /data/Account/Account
+    key: Id
+    natural_keys:
+      - Name
+      - Location
+    required_on_create:
+      - Name
+    fields:
+      - Id
+      - Name
+      - Location
+      - Account Status
+      - Account Type
+      - Description
+      - Industry
+      - Primary Organization
+      - Primary Organization Id
+      - Main Phone Number
+      - Main Fax Number
+      - Email Address
+      - Home Page
+      - Current Volume
+      - Alias
+      - Link
+    operations: [listAccounts, createAccount, getAccount, upsertAccount, deleteAccount]
+  - name: Contact
+    business_object: Contact
+    business_component: Contact
+    path: /data/Contact/Contact
+    key: Id
+    required_on_create:
+      - First Name
+      - Last Name
+    fields:
+      - Id
+      - First Name
+      - Last Name
+      - Job Title
+      - Email Address
+      - Work Phone #
+      - Cellular Phone #
+      - Account
+      - Account Id
+      - Employee Number
+      - Employer Name
+      - Primary Organization Id
+      - Status
+      - Link
+    operations: [listContacts, createContact, getContact, upsertContact, deleteContact, listAccountContacts, upsertAccountContact]
+  - name: Opportunity
+    business_object: Opportunity
+    business_component: Opportunity
+    path: /data/Opportunity/Opportunity
+    key: Id
+    required_on_create:
+      - Name
+    fields:
+      - Id
+      - Name
+      - Account
+      - Account Id
+      - Sales Stage
+      - Status
+      - Close Date
+      - Revenue
+      - Win Probability
+      - Description
+      - Primary Organization Id
+      - Link
+    operations: [listOpportunities, createOpportunity, getOpportunity, upsertOpportunity, deleteOpportunity, listAccountOpportunities]
+  - name: Activity
+    business_object: Activity
+    business_component: Activity
+    path: /data/Activity/Activity
+    key: Id
+    required_on_create:
+      - Type
+      - Description
+    fields:
+      - Id
+      - Type
+      - Description
+      - Status
+      - Priority
+      - Due
+      - Planned
+      - Account
+      - Account Id
+      - Contact First Name
+      - Contact Last Name
+      - Owner
+      - Link
+    operations: [listActivities, createActivity, getActivity, upsertActivity, deleteActivity]
+  - name: ServiceRequest
+    business_object: Service Request
+    business_component: Service Request
+    path: /data/Service Request/Service Request
+    key: Id
+    natural_keys:
+      - SR Number
+    required_on_create:
+      - Abstract
+    fields:
+      - Id
+      - SR Number
+      - Abstract
+      - Description
+      - Status
+      - Sub-Status
+      - Priority
+      - Severity
+      - Type
+      - Sub-Type
+      - Account
+      - Account Id
+      - Contact First Name
+      - Contact Last Name
+      - Owner
+      - Created
+      - Link
+    operations: [listServiceRequests, createServiceRequest, getServiceRequest, upsertServiceRequest, deleteServiceRequest]
+  - name: Order
+    business_object: Order Entry
+    business_component: Order Entry - Orders
+    path: /data/Order Entry/Order Entry - Orders
+    key: Id
+    natural_keys:
+      - Order Number
+    fields:
+      - Id
+      - Order Number
+      - Revision
+      - Status
+      - Order Type
+      - Account
+      - Account Id
+      - Order Date
+      - Requested Ship Date
+      - Total
+      - Currency Code
+      - Link
+    operations: [listOrders]
+    note: >-
+      Read-only in this contract — only listOrders exists. Order creation in
+      Siebel goes through business services / order management workflows, not a
+      REST POST.
+  - name: Product
+    business_object: Product
+    business_component: Product
+    path: /data/Product/Product
+    key: Id
+    natural_keys:
+      - Part Number
+    fields:
+      - Id
+      - Name
+      - Part Number
+      - Description
+      - Product Line
+      - Status
+      - Price
+      - Cost
+      - Start Date
+      - End Date
+      - Link
+    operations: [listProducts]
+    note: Read-only in this contract.
+relationships:
+  - from: Account
+    to: Contact
+    type: has_many
+    via: 'Account Id (on Contact) / path /data/Account/Account/{AccountId}/Contact'
+    evidence: 'openapi paths + Contact.Account Id field'
+  - from: Contact
+    to: Account
+    type: belongs_to
+    via: Account Id
+    evidence: Contact schema field "Account Id" (plus denormalised "Account" name)
+  - from: Account
+    to: Opportunity
+    type: has_many
+    via: 'Account Id (on Opportunity) / path /data/Account/Account/{AccountId}/Opportunity'
+    evidence: openapi path listAccountOpportunities
+  - from: Opportunity
+    to: Account
+    type: belongs_to
+    via: Account Id
+    evidence: Opportunity schema field "Account Id"
+  - from: Account
+    to: Activity
+    type: has_many
+    via: Account Id
+    evidence: Activity schema field "Account Id"
+  - from: Activity
+    to: Account
+    type: belongs_to
+    via: Account Id
+    evidence: Activity schema field "Account Id"
+  - from: Account
+    to: ServiceRequest
+    type: has_many
+    via: Account Id
+    evidence: ServiceRequest schema field "Account Id"
+  - from: ServiceRequest
+    to: Account
+    type: belongs_to
+    via: Account Id
+    evidence: ServiceRequest schema field "Account Id"
+  - from: Account
+    to: Order
+    type: has_many
+    via: Account Id
+    evidence: Order schema field "Account Id"
+  - from: Order
+    to: Account
+    type: belongs_to
+    via: Account Id
+    evidence: Order schema field "Account Id"
+  - from: Account
+    to: Organization
+    type: belongs_to
+    via: Primary Organization Id
+    evidence: >-
+      Present on Account, Contact and Opportunity. The Organization (Division)
+      entity itself is NOT exposed by any operation in this contract — the id is
+      a dangling reference a client cannot resolve over REST.
+  - from: ServiceRequest
+    to: Contact
+    type: belongs_to
+    via: 'Contact First Name / Contact Last Name (denormalised, no Contact Id)'
+    confidence: low
+    evidence: >-
+      ServiceRequest carries the contact's name but NOT a Contact Id. The link is
+      not resolvable programmatically — a real modelling gap in this contract.
+  - from: Activity
+    to: Contact
+    type: belongs_to
+    via: 'Contact First Name / Contact Last Name (denormalised, no Contact Id)'
+    confidence: low
+    evidence: Same gap as ServiceRequest.
+hub_entity: Account
+notes:
+  - >-
+    Account is the hub: every other business entity in this contract carries an
+    "Account Id". A client that resolves an Account can walk the whole graph;
+    one that starts anywhere else usually cannot.
+  - >-
+    Two relationships (ServiceRequest→Contact, Activity→Contact) are carried as
+    denormalised NAME pairs with no id. Agents must not assume these resolve.
+  - >-
+    Product and Order have no relationship to each other in this contract even
+    though Siebel models order line items against products — the line-item
+    Business Component is not exposed here.
+render: null
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,115 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  Public package-registry searches (npm, PyPI, Maven Central) plus the Oracle
+  Siebel documentation library. No first-party Oracle-published Siebel client
+  package exists on any public registry; Siebel client libraries ship inside the
+  product media from Oracle Software Delivery Cloud.
+provider: Oracle Siebel
+providerId: oracle-siebel
+package_count: 0
+official_package_count: 0
+summary: >-
+  Oracle publishes NO first-party Oracle Siebel client library to any public
+  package registry. Siebel is customer-deployed software: the client bindings
+  that exist (the Siebel Java Data Bean, the Siebel COM/ActiveX interfaces, the
+  Siebel Web Client) are shipped inside the Siebel installation media and the
+  Siebel Tools install from Oracle Software Delivery Cloud, behind an Oracle
+  account and a license entitlement, not fetched from npm/PyPI/Maven. Every
+  Siebel-named package on the public registries surveyed below is community or
+  third-party work.
+registries_probed:
+  - registry: npm
+    endpoint: https://registry.npmjs.org/-/v1/search?text=siebel
+    probed: '2026-08-13'
+    first_party_hits: 0
+    note: >-
+      12 Siebel-named packages returned; none published by an Oracle-controlled
+      npm account. Nearest neighbours are @ideaportriga/nexus-bridge (community
+      Open UI wrapper) and @jeretucu/mcp-server-siebel (community MCP server) —
+      both third-party.
+  - registry: pypi
+    endpoint: https://pypi.org/pypi/{siebel,pysiebel,siebel-rest,oracle-siebel}/json
+    probed: '2026-08-13'
+    http_status: 404
+    first_party_hits: 0
+  - registry: maven-central
+    endpoint: https://search.maven.org/solrsearch/select?q=siebel
+    probed: '2026-08-13'
+    http_status: 200
+    result_count: 0
+    first_party_hits: 0
+    note: >-
+      Maven Central returns numFound 0 for "siebel". The Siebel Java Data Bean
+      (Siebel.jar / SiebelJI_enu.jar) is NOT published to Maven Central; it is
+      copied off the Siebel Server or Siebel Tools installation and added to the
+      classpath manually.
+packages: []
+first_party_distribution:
+  - name: Siebel Java Data Bean
+    artifact: Siebel.jar + SiebelJI_<lang>.jar
+    language: java
+    official: true
+    registry: none
+    version: null
+    published: null
+    distribution: >-
+      Shipped in the Siebel Server / Siebel Tools installation media obtained
+      from Oracle Software Delivery Cloud (edelivery.oracle.com) under a Siebel
+      license entitlement. There is no registry metadata endpoint to query, so
+      version and published date are recorded as null rather than guessed — a
+      consumer cannot resolve a version for this dependency either.
+    docs: >-
+      https://docs.oracle.com/cd/F26413_25/books/EAI3/integrating-siebel-crm-with-java-applications.html
+  - name: Siebel COM / ActiveX Object Interfaces
+    artifact: sstchca.dll / Siebel COM Data Control
+    language: com
+    official: true
+    registry: none
+    version: null
+    published: null
+    distribution: >-
+      Registered by the Siebel Web Client / Siebel Server installer on Windows.
+      Not distributed through NuGet or any public registry.
+    docs: https://docs.oracle.com/cd/F26413_13/books/OIRef/siebel-object-interfaces-reference.html
+  - name: Siebel AI Connectors runtime
+    artifact: siebelAIConnectors runtime package
+    language: java
+    official: true
+    registry: none
+    version: null
+    published: null
+    distribution: >-
+      Delivered with the Siebel CRM 26.7 update for on-premises install
+      (Windows/Linux, JRE 21) or via Siebel Cloud Manager. Not on a public
+      registry.
+    docs: https://docs.oracle.com/en/applications/siebel/siebel-crm/26.7/szsig/siebel-ai-connectors.html
+community_packages:
+  - name: '@jeretucu/mcp-server-siebel'
+    registry: npm
+    url: https://www.npmjs.com/package/@jeretucu/mcp-server-siebel
+    official: false
+    version: 1.0.0
+    published: '2026-03-05'
+    note: Community MCP server wrapping the Siebel REST API. Not Oracle-published.
+  - name: '@ideaportriga/nexus-bridge'
+    registry: npm
+    url: https://www.npmjs.com/package/@ideaportriga/nexus-bridge
+    official: false
+    version: 2.3.16
+    published: '2024-01-11'
+    note: >-
+      Community bridge between the jQuery-based Siebel Open UI API and modern JS
+      frameworks. Not Oracle-published.
+  - name: types-siebel
+    registry: npm
+    url: https://www.npmjs.com/package/types-siebel
+    official: false
+    version: 0.3.1
+    published: '2019-11-30'
+    note: >-
+      Community TypeScript type definitions for the Siebel Open UI browser
+      environment. Last release 2019; predates every Siebel release since.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

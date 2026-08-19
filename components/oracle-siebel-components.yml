@@ -1,0 +1,75 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.oracle.com/cd/E95904_01/books/ConfigOpenUI/customizing_external_apps8.html,
+  https://docs.oracle.com/cd/E95904_01/books/ConfigOpenUI/customizing_external_apps10.html,
+  https://docs.oracle.com/cd/F26413_17/books/DeployOpenUI/features-of-siebel-open-ui.html,
+  https://docs.oracle.com/cd/F26413_26/books/ConfigOpenUI/configuring-siebel-open-ui-guide.pdf
+provider: Oracle Siebel
+providerId: oracle-siebel
+summary: >-
+  Siebel's client-side surface is Siebel Open UI: a jQuery-era JavaScript
+  framework whose customisation model is the presentation model / physical
+  renderer pair, plus an embedding model — Siebel portlets and standalone
+  applets — for putting Siebel UI inside a third-party page. These are NOT
+  npm-distributed web components; they are served by the customer's own Siebel
+  Application Interface and embedded by URL, normally through an iframe. There is
+  no Oracle-published component library, no loader script on a CDN, and no
+  design-system package.
+distribution: server-rendered
+registry_distributed: false
+loader: null
+families:
+  - name: Siebel Portlets
+    kind: embedded-application
+    description: >-
+      A Siebel portlet is a Siebel Open UI application embedded in a third-party
+      website. Oracle names Oracle WebCenter and iGoogle as the examples in its
+      own documentation. The portlet is displayed in an HTML iframe (or any other
+      mechanism the host portal supports); Siebel accepts both GET and POST
+      requests for the portlet URL.
+    embedding: iframe
+    invocation: SWE commands on the Siebel Application Interface URL
+    security_constraint: >-
+      For security reasons only the GotoView and GetApplet methods may be used to
+      call a Siebel portlet from an external application.
+    cross_domain: >-
+      Siebel server parameters must be configured to permit communication with a
+      portlet hosted inside an iframe on another origin.
+    docs: https://docs.oracle.com/cd/E95904_01/books/ConfigOpenUI/customizing_external_apps8.html
+  - name: Standalone Applets
+    kind: embedded-component
+    description: >-
+      A standalone applet is an applet Siebel Open UI can display outside the
+      context of a Siebel CRM view — the closest thing Siebel has to a single
+      embeddable widget.
+    embedding: iframe
+    docs: https://docs.oracle.com/cd/E63029_01/books/ConfigOpenUI/customizing_external_apps002.htm
+  - name: Open UI Presentation Model / Physical Renderer
+    kind: client-extension-api
+    description: >-
+      The customisation contract of Siebel Open UI. A presentation model holds
+      the logic and state of an applet; a physical renderer binds that state to
+      the DOM. Customers write these in JavaScript against documented
+      customisation points to restyle, re-lay-out or replace Siebel UI, and to
+      include external content in the Siebel Open UI client.
+    embedding: in-client
+    docs: https://docs.oracle.com/cd/F26413_26/books/ConfigOpenUI/configuring-siebel-open-ui-guide.pdf
+    apis_yml_entry: Oracle Siebel Open UI JavaScript API
+community_wrappers:
+  - name: '@ideaportriga/nexus-bridge'
+    url: https://www.npmjs.com/package/@ideaportriga/nexus-bridge
+    official: false
+    description: >-
+      Community bridge between the jQuery-based Siebel Open UI API and modern JS
+      frameworks. The existence of a third-party bridge is itself the finding:
+      Oracle ships no modern-framework binding.
+gaps:
+  - No Oracle-published npm package, CDN bundle, or web-component library.
+  - >-
+    No versioned component contract a host page can pin. What a portlet renders
+    is whatever the customer's Siebel instance is configured to render at that
+    moment.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

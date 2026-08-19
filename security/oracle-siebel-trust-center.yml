@@ -1,0 +1,65 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.oracle.com/trust/ (HTTP 200),
+  https://www.oracle.com/corporate/cloud-compliance/ (HTTP 200),
+  https://www.oracle.com/security-alerts/ (HTTP 200)
+provider: Oracle Siebel
+providerId: oracle-siebel
+published: true
+name: Oracle Trust Center / Oracle Cloud Compliance
+url: https://www.oracle.com/trust/
+compliance_url: https://www.oracle.com/corporate/cloud-compliance/
+summary: >-
+  Oracle publishes a corporate trust centre and a cloud-compliance catalogue
+  naming the attestations and certifications its services hold. Both are
+  parent-brand pages covering Oracle and Oracle Cloud Infrastructure; neither is
+  Siebel-specific. This matters for how the certifications should be read: Siebel
+  CRM is customer-deployed software, so a SOC 2 or FedRAMP authorisation applies
+  to the OCI infrastructure a customer may run Siebel ON, not to a
+  Siebel-as-a-service that Oracle operates. Compliance of the Siebel application
+  layer is the deploying customer's own responsibility.
+certifications:
+  - name: SOC 1
+    scope: Oracle Cloud Infrastructure
+  - name: SOC 2
+    scope: Oracle Cloud Infrastructure
+  - name: SOC 3
+    scope: Oracle Cloud Infrastructure
+  - name: ISO/IEC 27001
+    scope: Oracle Cloud Infrastructure
+  - name: ISO/IEC 27017
+    scope: Oracle Cloud Infrastructure
+  - name: ISO/IEC 27018
+    scope: Oracle Cloud Infrastructure
+  - name: PCI DSS
+    scope: Oracle Cloud Infrastructure
+  - name: HIPAA
+    scope: Oracle Cloud Infrastructure
+  - name: FedRAMP
+    scope: Oracle US Government Cloud
+    detail: >-
+      Oracle's U.S. Government Cloud holds FedRAMP authorisation; Oracle also
+      publishes FedRAMP High for designated realms.
+  - name: GDPR
+    scope: Oracle corporate / Oracle Cloud
+    type: regulation-alignment
+  - name: Cyber Essentials Plus
+    scope: Oracle U.K. Government Cloud
+  - name: HMG Cloud Security Principles
+    scope: Oracle U.K. Government Cloud
+    type: framework-alignment
+report_access: >-
+  Attestation reports and audit letters are requested through Oracle account
+  teams or My Oracle Support under NDA; they are not self-serve downloads.
+related:
+  security_practices: https://www.oracle.com/corporate/security-practices/
+  advisories: https://www.oracle.com/security-alerts/
+  siebel_security_guide: https://docs.oracle.com/cd/F26413_26/books/Secur/index.html
+caveat: >-
+  Recorded as a parent-brand trust centre. Do not read these certifications as
+  certifications OF Siebel CRM. No Siebel-specific attestation is published,
+  because Oracle does not operate Siebel on the customer's behalf.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -4,8 +4,12 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Oracle Siebel
 providerId: oracle-siebel
 created: '2026-05-04'
-modified: '2026-05-05'
+# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
+# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
+method: generated
+modified: '2026-08-13'
 reconciled: false
+plan_count: 3
 tags:
   - CRM
   - Customer Management
@@ -25,11 +29,16 @@ description: >-
   surface are all included with any active Siebel license. Engage Oracle
   Sales for the per-user / per-processor rate.
 sources:
+  - https://www.oracle.com/us/corporate/pricing/price-lists/index.html
   - https://www.oracle.com/cx/siebel/
   - https://docs.oracle.com/cd/F26413_01/
   - https://www.oracle.com/applications/customer-experience/contact/
 notes: >-
-  Oracle blocks programmatic fetches of www.oracle.com pricing pages (HTTP 403).
+  Re-checked 2026-08-13: Oracle publishes a price-list index at
+  https://www.oracle.com/us/corporate/pricing/price-lists/index.html (HTTP 200),
+  but the Applications Global Price List itself is a PDF behind that index and
+  states no Siebel per-user rate that can be read programmatically. Oracle blocks
+  programmatic fetches of www.oracle.com pricing pages (HTTP 403).
   Plan structure preserved as a per-user / per-processor on-premises plan
   plus an enterprise tier; replace per-user / per-processor list price with
   the verified Oracle Applications Global Price List value when available.
