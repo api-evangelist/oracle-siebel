@@ -130,6 +130,11 @@ apis:
   tags:
   - Event-Driven
   - Kafka
+  - Pub-Sub
+  - Real-Time Integration
+  tags_raw:
+  - Event-Driven
+  - Kafka
   - Pub/Sub
   - Real-Time Integration
   properties:
@@ -147,6 +152,8 @@ apis:
     https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html
   baseURL: https://{siebel-server}/siebel/v1.0
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -299,6 +306,8 @@ apis:
     https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html
   baseURL: https://{siebel-server}/siebel/v1.0
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -324,6 +333,8 @@ apis:
     https://docs.oracle.com/cd/E95904_01/books/RestAPI/overview-of-using-the-siebel-rest-api.html
   baseURL: https://{siebel-server}/siebel/v1.0
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
