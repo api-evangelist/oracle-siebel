@@ -1,0 +1,50 @@
+slug: oracle-siebel
+provider: Oracle Siebel
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Opportunities
+  spec_file: oracle-siebel-opportunities-api-openapi.yml
+  capability_id: BC-410.30
+  capability_id_l1: BC-410
+  capability_name: Opportunity & Pipeline Management
+  confidence: 0.95
+  evidence: POST /data/Opportunity/Opportunity  createOpportunity  Create an opportunity
+  reason: Full lifecycle CRUD on CRM opportunities is opportunity and pipeline management.
+- tag: Service Requests
+  spec_file: oracle-siebel-service-requests-api-openapi.yml
+  capability_id: BC-430.10
+  capability_id_l1: BC-430
+  capability_name: Customer Inquiry Management
+  confidence: 0.85
+  evidence: POST /data/Service Request/Service Request  createServiceRequest  Create a service request
+  reason: Service request lifecycle CRUD in a CRM is customer inquiry/case handling.
+- tag: Accounts
+  spec_file: oracle-siebel-accounts-api-openapi.yml
+  capability_id: BC-410.20
+  capability_id_l1: BC-410
+  capability_name: Account Management
+  confidence: 0.8
+  evidence: '''List accounts'', ''Create an account'', ''List opportunities for an account'', schemas
+    ''Account'', ''Opportunity'', ''Contact'''
+  reason: CRM account records with linked contacts and opportunities — sales account management (could
+    also read as customer data management, hence 0.8).
+- tag: Contacts
+  spec_file: oracle-siebel-contacts-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.8
+  evidence: POST /data/Contact/Contact  createContact  Create a contact; GET /data/Account/Account/{AccountId}/Contact  listAccountContacts
+  reason: CRUD over CRM contact master records linked to accounts realises customer data management.

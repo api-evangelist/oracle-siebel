@@ -4,6 +4,19 @@ description: Oracle Siebel CRM APIs provide programmatic access to customer rela
   including sales, marketing, and service automation capabilities. Siebel CRM offers REST, SOAP, scripting, and
   event-driven integration interfaces for building integrations with enterprise systems.
 type: Index
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: unknown
@@ -347,6 +360,13 @@ apis:
   - type: GettingStarted
     url: https://docs.oracle.com/cd/E95904_01/books/RestAPI/getting-started-with-the-siebel-rest-api.html
 common:
+- type: CapabilityMap
+  url: capabilities/oracle-siebel-capability-edges.yml
+  name: Oracle Siebel Business Capability Map
+- type: IssueTracker
+  url: https://github.com/OracleSiebel/ConfiguringSiebel/issues
+- type: Releases
+  url: https://github.com/OracleSiebel/ConfiguringSiebel/releases
 - type: ParentCompany
   url: https://apis.io/providers/oracle/
   name: Oracle
