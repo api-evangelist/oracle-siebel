@@ -130,7 +130,7 @@ apis:
   tags:
   - Event-Driven
   - Kafka
-  - Pub-Sub
+  - Pub/Sub
   - Real-Time Integration
   tags_raw:
   - Event-Driven
