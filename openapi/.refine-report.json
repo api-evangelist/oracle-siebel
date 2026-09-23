@@ -1,16 +1,7 @@
 {
   "provider": "oracle-siebel",
   "sources": [
-    "oracle-siebel-accounts-api-openapi.yml",
-    "oracle-siebel-activities-api-openapi.yml",
-    "oracle-siebel-business-services-api-openapi.yml",
-    "oracle-siebel-contacts-api-openapi.yml",
-    "oracle-siebel-metadata-api-openapi.yml",
-    "oracle-siebel-opportunities-api-openapi.yml",
-    "oracle-siebel-orders-api-openapi.yml",
-    "oracle-siebel-products-api-openapi.yml",
-    "oracle-siebel-repository-api-openapi.yml",
-    "oracle-siebel-service-requests-api-openapi.yml"
+    "_original/oracle-siebel-rest-api-openapi.yml"
   ],
   "outputs": [
     "oracle-siebel-accounts-api-openapi.yml",
@@ -28,17 +19,20 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "oracle-siebel-accounts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "oracle-siebel-activities-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "oracle-siebel-business-services-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "oracle-siebel-contacts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "oracle-siebel-metadata-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "oracle-siebel-opportunities-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "oracle-siebel-orders-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "oracle-siebel-products-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "oracle-siebel-repository-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "oracle-siebel-service-requests-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "oracle-siebel-rest-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "oracle-siebel-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "oracle-siebel-activities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "oracle-siebel-business-services-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "oracle-siebel-contacts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "oracle-siebel-metadata-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "oracle-siebel-opportunities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "oracle-siebel-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "oracle-siebel-products-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "oracle-siebel-repository-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "oracle-siebel-service-requests-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

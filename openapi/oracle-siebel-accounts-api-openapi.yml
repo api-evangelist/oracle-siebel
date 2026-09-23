@@ -240,6 +240,43 @@ paths:
           description: Parent account not found
 components:
   parameters:
+    AccountId:
+      name: AccountId
+      in: path
+      required: true
+      description: Unique row identifier for the Account record
+      schema:
+        type: string
+        examples:
+        - 88-26CND
+    fields:
+      name: fields
+      in: query
+      required: false
+      description: Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields.
+      schema:
+        type: string
+        examples:
+        - Name,Location,Account Status
+    ChildLinks:
+      name: ChildLinks
+      in: query
+      required: false
+      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
+      schema:
+        type: string
+        examples:
+        - Contact,Opportunity
+        - None
+    searchspec:
+      name: searchspec
+      in: query
+      required: false
+      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
+      schema:
+        type: string
+        examples:
+        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
     PageSize:
       name: PageSize
       in: query
@@ -261,25 +298,15 @@ components:
         - Personal
         - Sales Rep
         - Organization
-    ChildLinks:
-      name: ChildLinks
+    StartRowNum:
+      name: StartRowNum
       in: query
       required: false
-      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
+      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
       schema:
-        type: string
-        examples:
-        - Contact,Opportunity
-        - None
-    AccountId:
-      name: AccountId
-      in: path
-      required: true
-      description: Unique row identifier for the Account record
-      schema:
-        type: string
-        examples:
-        - 88-26CND
+        type: integer
+        minimum: 0
+        default: 0
     uniformresponse:
       name: uniformresponse
       in: query
@@ -292,68 +319,7 @@ components:
         - 'no'
         - y
         - n
-    fields:
-      name: fields
-      in: query
-      required: false
-      description: Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields.
-      schema:
-        type: string
-        examples:
-        - Name,Location,Account Status
-    StartRowNum:
-      name: StartRowNum
-      in: query
-      required: false
-      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
-    searchspec:
-      name: searchspec
-      in: query
-      required: false
-      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
-      schema:
-        type: string
-        examples:
-        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
   schemas:
-    ContactInput:
-      type: object
-      description: Input payload for creating or updating a Contact record
-      required:
-      - First Name
-      - Last Name
-      properties:
-        First Name:
-          type: string
-          description: Contact first name
-        Last Name:
-          type: string
-          description: Contact last name
-        Job Title:
-          type: string
-          description: Job title or role
-        Email Address:
-          type: string
-          description: Email address
-        'Work Phone #':
-          type: string
-          description: Work phone number
-        'Cellular Phone #':
-          type: string
-          description: Mobile phone number
-        Employee Number:
-          type: string
-          description: Employee number
-        Employer Name:
-          type: string
-          description: Employer organization name
-        Primary Organization Id:
-          type: string
-          description: Row identifier of the primary organization
     LinkObject:
       type: object
       description: HATEOAS link object providing navigation references to related Siebel REST API resources
@@ -372,45 +338,6 @@ components:
         name:
           type: string
           description: Name of the related business component
-    AccountInput:
-      type: object
-      description: Input payload for creating or updating an Account record
-      required:
-      - Name
-      properties:
-        Name:
-          type: string
-          description: Account name
-        Location:
-          type: string
-          description: Account location identifier
-        Description:
-          type: string
-          description: Detailed description of the account
-        Account Status:
-          type: string
-          description: Current status of the account
-        Account Type:
-          type: string
-          description: Type classification of the account
-        Industry:
-          type: string
-          description: Industry classification
-        Primary Organization:
-          type: string
-          description: Primary organization name
-        Primary Organization Id:
-          type: string
-          description: Row identifier of the primary organization
-        Main Phone Number:
-          type: string
-          description: Primary phone number
-        Email Address:
-          type: string
-          description: Primary email address
-        Home Page:
-          type: string
-          description: Website URL
     Opportunity:
       type: object
       description: A Siebel CRM Opportunity business component record representing a potential sales deal in the pipeline
@@ -455,6 +382,45 @@ components:
           description: HATEOAS links to related resources
           items:
             $ref: '#/components/schemas/LinkObject'
+    AccountInput:
+      type: object
+      description: Input payload for creating or updating an Account record
+      required:
+      - Name
+      properties:
+        Name:
+          type: string
+          description: Account name
+        Location:
+          type: string
+          description: Account location identifier
+        Description:
+          type: string
+          description: Detailed description of the account
+        Account Status:
+          type: string
+          description: Current status of the account
+        Account Type:
+          type: string
+          description: Type classification of the account
+        Industry:
+          type: string
+          description: Industry classification
+        Primary Organization:
+          type: string
+          description: Primary organization name
+        Primary Organization Id:
+          type: string
+          description: Row identifier of the primary organization
+        Main Phone Number:
+          type: string
+          description: Primary phone number
+        Email Address:
+          type: string
+          description: Primary email address
+        Home Page:
+          type: string
+          description: Website URL
     Contact:
       type: object
       description: A Siebel CRM Contact business component record representing an individual person associated with an account
@@ -557,6 +523,40 @@ components:
           description: HATEOAS links to related resources
           items:
             $ref: '#/components/schemas/LinkObject'
+    ContactInput:
+      type: object
+      description: Input payload for creating or updating a Contact record
+      required:
+      - First Name
+      - Last Name
+      properties:
+        First Name:
+          type: string
+          description: Contact first name
+        Last Name:
+          type: string
+          description: Contact last name
+        Job Title:
+          type: string
+          description: Job title or role
+        Email Address:
+          type: string
+          description: Email address
+        'Work Phone #':
+          type: string
+          description: Work phone number
+        'Cellular Phone #':
+          type: string
+          description: Mobile phone number
+        Employee Number:
+          type: string
+          description: Employee number
+        Employer Name:
+          type: string
+          description: Employer organization name
+        Primary Organization Id:
+          type: string
+          description: Row identifier of the primary organization
   securitySchemes:
     basicAuth:
       type: http

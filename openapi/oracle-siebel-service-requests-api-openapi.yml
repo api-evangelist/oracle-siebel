@@ -135,6 +135,41 @@ paths:
           description: Service request not found
 components:
   parameters:
+    ServiceRequestId:
+      name: ServiceRequestId
+      in: path
+      required: true
+      description: Unique row identifier for the Service Request record
+      schema:
+        type: string
+    fields:
+      name: fields
+      in: query
+      required: false
+      description: Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields.
+      schema:
+        type: string
+        examples:
+        - Name,Location,Account Status
+    ChildLinks:
+      name: ChildLinks
+      in: query
+      required: false
+      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
+      schema:
+        type: string
+        examples:
+        - Contact,Opportunity
+        - None
+    searchspec:
+      name: searchspec
+      in: query
+      required: false
+      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
+      schema:
+        type: string
+        examples:
+        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
     PageSize:
       name: PageSize
       in: query
@@ -156,16 +191,15 @@ components:
         - Personal
         - Sales Rep
         - Organization
-    ChildLinks:
-      name: ChildLinks
+    StartRowNum:
+      name: StartRowNum
       in: query
       required: false
-      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
+      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
       schema:
-        type: string
-        examples:
-        - Contact,Opportunity
-        - None
+        type: integer
+        minimum: 0
+        default: 0
     uniformresponse:
       name: uniformresponse
       in: query
@@ -178,59 +212,7 @@ components:
         - 'no'
         - y
         - n
-    fields:
-      name: fields
-      in: query
-      required: false
-      description: Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields.
-      schema:
-        type: string
-        examples:
-        - Name,Location,Account Status
-    ServiceRequestId:
-      name: ServiceRequestId
-      in: path
-      required: true
-      description: Unique row identifier for the Service Request record
-      schema:
-        type: string
-    StartRowNum:
-      name: StartRowNum
-      in: query
-      required: false
-      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
-    searchspec:
-      name: searchspec
-      in: query
-      required: false
-      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
-      schema:
-        type: string
-        examples:
-        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
   schemas:
-    LinkObject:
-      type: object
-      description: HATEOAS link object providing navigation references to related Siebel REST API resources
-      properties:
-        rel:
-          type: string
-          description: Relationship type (self, child, parent)
-          enum:
-          - self
-          - child
-          - parent
-        href:
-          type: string
-          format: uri
-          description: Full URL to the related resource
-        name:
-          type: string
-          description: Name of the related business component
     ServiceRequest:
       type: object
       description: A Siebel CRM Service Request business component record representing a customer service case or issue
@@ -288,6 +270,24 @@ components:
           description: HATEOAS links to related resources
           items:
             $ref: '#/components/schemas/LinkObject'
+    LinkObject:
+      type: object
+      description: HATEOAS link object providing navigation references to related Siebel REST API resources
+      properties:
+        rel:
+          type: string
+          description: Relationship type (self, child, parent)
+          enum:
+          - self
+          - child
+          - parent
+        href:
+          type: string
+          format: uri
+          description: Full URL to the related resource
+        name:
+          type: string
+          description: Name of the related business component
     ServiceRequestInput:
       type: object
       description: Input payload for creating or updating a Service Request record
