@@ -194,24 +194,6 @@ paths:
           description: Contact not found
 components:
   parameters:
-    AccountId:
-      name: AccountId
-      in: path
-      required: true
-      description: Unique row identifier for the Account record
-      schema:
-        type: string
-        examples:
-        - 88-26CND
-    fields:
-      name: fields
-      in: query
-      required: false
-      description: Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields.
-      schema:
-        type: string
-        examples:
-        - Name,Location,Account Status
     ChildLinks:
       name: ChildLinks
       in: query
@@ -222,6 +204,15 @@ components:
         examples:
         - Contact,Opportunity
         - None
+    AccountId:
+      name: AccountId
+      in: path
+      required: true
+      description: Unique row identifier for the Account record
+      schema:
+        type: string
+        examples:
+        - 88-26CND
     ContactId:
       name: ContactId
       in: path
@@ -231,15 +222,18 @@ components:
         type: string
         examples:
         - 0CR-1MF5Z6
-    searchspec:
-      name: searchspec
+    uniformresponse:
+      name: uniformresponse
       in: query
       required: false
-      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
+      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
       schema:
         type: string
-        examples:
-        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
+        enum:
+        - 'yes'
+        - 'no'
+        - y
+        - n
     PageSize:
       name: PageSize
       in: query
@@ -250,6 +244,15 @@ components:
         minimum: 1
         examples:
         - 20
+    searchspec:
+      name: searchspec
+      in: query
+      required: false
+      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
+      schema:
+        type: string
+        examples:
+        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
     ViewMode:
       name: ViewMode
       in: query
@@ -270,18 +273,15 @@ components:
         type: integer
         minimum: 0
         default: 0
-    uniformresponse:
-      name: uniformresponse
+    fields:
+      name: fields
       in: query
       required: false
-      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
+      description: Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields.
       schema:
         type: string
-        enum:
-        - 'yes'
-        - 'no'
-        - y
-        - n
+        examples:
+        - Name,Location,Account Status
   schemas:
     LinkObject:
       type: object

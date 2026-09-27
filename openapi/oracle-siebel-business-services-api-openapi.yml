@@ -109,9 +109,6 @@ paths:
           description: Business service not found
 components:
   schemas:
-    BusinessServiceResponse:
-      type: object
-      description: Response payload from a Siebel business service method invocation. Contains the output data from the executed business service method.
     BusinessServiceRequest:
       type: object
       description: Request payload for invoking a Siebel business service method. Contains optional body with SiebelMessage integration object format for structured data operations.
@@ -138,6 +135,9 @@ components:
                   type: string
                   description: Format of the integration object
                   default: Siebel Hierarchical
+    BusinessServiceResponse:
+      type: object
+      description: Response payload from a Siebel business service method invocation. Contains the output data from the executed business service method.
   securitySchemes:
     basicAuth:
       type: http
