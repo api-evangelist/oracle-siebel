@@ -145,44 +145,6 @@ components:
         examples:
         - Contact,Opportunity
         - None
-    StartRowNum:
-      name: StartRowNum
-      in: query
-      required: false
-      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
-    ActivityId:
-      name: ActivityId
-      in: path
-      required: true
-      description: Unique row identifier for the Activity record
-      schema:
-        type: string
-    uniformresponse:
-      name: uniformresponse
-      in: query
-      required: false
-      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
-      schema:
-        type: string
-        enum:
-        - 'yes'
-        - 'no'
-        - y
-        - n
-    PageSize:
-      name: PageSize
-      in: query
-      required: false
-      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
-      schema:
-        type: integer
-        minimum: 1
-        examples:
-        - 20
     searchspec:
       name: searchspec
       in: query
@@ -203,6 +165,44 @@ components:
         - Personal
         - Sales Rep
         - Organization
+    StartRowNum:
+      name: StartRowNum
+      in: query
+      required: false
+      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    PageSize:
+      name: PageSize
+      in: query
+      required: false
+      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
+      schema:
+        type: integer
+        minimum: 1
+        examples:
+        - 20
+    ActivityId:
+      name: ActivityId
+      in: path
+      required: true
+      description: Unique row identifier for the Activity record
+      schema:
+        type: string
+    uniformresponse:
+      name: uniformresponse
+      in: query
+      required: false
+      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+        - y
+        - n
     fields:
       name: fields
       in: query
@@ -213,24 +213,6 @@ components:
         examples:
         - Name,Location,Account Status
   schemas:
-    LinkObject:
-      type: object
-      description: HATEOAS link object providing navigation references to related Siebel REST API resources
-      properties:
-        rel:
-          type: string
-          description: Relationship type (self, child, parent)
-          enum:
-          - self
-          - child
-          - parent
-        href:
-          type: string
-          format: uri
-          description: Full URL to the related resource
-        name:
-          type: string
-          description: Name of the related business component
     Activity:
       type: object
       description: A Siebel CRM Activity business component record representing a task, appointment, call log, or other scheduled item
@@ -276,6 +258,24 @@ components:
           description: HATEOAS links to related resources
           items:
             $ref: '#/components/schemas/LinkObject'
+    LinkObject:
+      type: object
+      description: HATEOAS link object providing navigation references to related Siebel REST API resources
+      properties:
+        rel:
+          type: string
+          description: Relationship type (self, child, parent)
+          enum:
+          - self
+          - child
+          - parent
+        href:
+          type: string
+          format: uri
+          description: Full URL to the related resource
+        name:
+          type: string
+          description: Name of the related business component
     ActivityInput:
       type: object
       description: Input payload for creating or updating an Activity record

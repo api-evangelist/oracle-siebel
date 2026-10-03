@@ -58,38 +58,6 @@ paths:
           description: Authentication credentials missing or invalid
 components:
   parameters:
-    ChildLinks:
-      name: ChildLinks
-      in: query
-      required: false
-      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
-      schema:
-        type: string
-        examples:
-        - Contact,Opportunity
-        - None
-    uniformresponse:
-      name: uniformresponse
-      in: query
-      required: false
-      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
-      schema:
-        type: string
-        enum:
-        - 'yes'
-        - 'no'
-        - y
-        - n
-    PageSize:
-      name: PageSize
-      in: query
-      required: false
-      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
-      schema:
-        type: integer
-        minimum: 1
-        examples:
-        - 20
     searchspec:
       name: searchspec
       in: query
@@ -119,6 +87,38 @@ components:
         type: integer
         minimum: 0
         default: 0
+    PageSize:
+      name: PageSize
+      in: query
+      required: false
+      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
+      schema:
+        type: integer
+        minimum: 1
+        examples:
+        - 20
+    uniformresponse:
+      name: uniformresponse
+      in: query
+      required: false
+      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+        - y
+        - n
+    ChildLinks:
+      name: ChildLinks
+      in: query
+      required: false
+      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
+      schema:
+        type: string
+        examples:
+        - Contact,Opportunity
+        - None
     fields:
       name: fields
       in: query

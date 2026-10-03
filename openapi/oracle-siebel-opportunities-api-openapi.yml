@@ -171,16 +171,15 @@ paths:
           description: Opportunity not found
 components:
   parameters:
-    ChildLinks:
-      name: ChildLinks
+    searchspec:
+      name: searchspec
       in: query
       required: false
-      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
+      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
       schema:
         type: string
         examples:
-        - Contact,Opportunity
-        - None
+        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
     AccountId:
       name: AccountId
       in: path
@@ -197,37 +196,6 @@ components:
       description: Unique row identifier for the Opportunity record
       schema:
         type: string
-    uniformresponse:
-      name: uniformresponse
-      in: query
-      required: false
-      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
-      schema:
-        type: string
-        enum:
-        - 'yes'
-        - 'no'
-        - y
-        - n
-    PageSize:
-      name: PageSize
-      in: query
-      required: false
-      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
-      schema:
-        type: integer
-        minimum: 1
-        examples:
-        - 20
-    searchspec:
-      name: searchspec
-      in: query
-      required: false
-      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
-      schema:
-        type: string
-        examples:
-        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
     ViewMode:
       name: ViewMode
       in: query
@@ -248,6 +216,38 @@ components:
         type: integer
         minimum: 0
         default: 0
+    PageSize:
+      name: PageSize
+      in: query
+      required: false
+      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
+      schema:
+        type: integer
+        minimum: 1
+        examples:
+        - 20
+    uniformresponse:
+      name: uniformresponse
+      in: query
+      required: false
+      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+        - y
+        - n
+    ChildLinks:
+      name: ChildLinks
+      in: query
+      required: false
+      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
+      schema:
+        type: string
+        examples:
+        - Contact,Opportunity
+        - None
     fields:
       name: fields
       in: query
@@ -258,6 +258,35 @@ components:
         examples:
         - Name,Location,Account Status
   schemas:
+    OpportunityInput:
+      type: object
+      description: Input payload for creating or updating an Opportunity record
+      required:
+      - Name
+      properties:
+        Name:
+          type: string
+          description: Opportunity name
+        Account:
+          type: string
+          description: Associated account name
+        Sales Stage:
+          type: string
+          description: Current stage in the sales process
+        Close Date:
+          type: string
+          description: Expected close date
+        Revenue:
+          type: number
+          description: Expected revenue amount
+        Win Probability:
+          type: number
+          description: Estimated probability of winning
+          minimum: 0
+          maximum: 100
+        Description:
+          type: string
+          description: Detailed description
     Opportunity:
       type: object
       description: A Siebel CRM Opportunity business component record representing a potential sales deal in the pipeline
@@ -320,35 +349,6 @@ components:
         name:
           type: string
           description: Name of the related business component
-    OpportunityInput:
-      type: object
-      description: Input payload for creating or updating an Opportunity record
-      required:
-      - Name
-      properties:
-        Name:
-          type: string
-          description: Opportunity name
-        Account:
-          type: string
-          description: Associated account name
-        Sales Stage:
-          type: string
-          description: Current stage in the sales process
-        Close Date:
-          type: string
-          description: Expected close date
-        Revenue:
-          type: number
-          description: Expected revenue amount
-        Win Probability:
-          type: number
-          description: Estimated probability of winning
-          minimum: 0
-          maximum: 100
-        Description:
-          type: string
-          description: Detailed description
   securitySchemes:
     basicAuth:
       type: http

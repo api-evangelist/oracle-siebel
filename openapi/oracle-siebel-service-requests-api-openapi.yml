@@ -135,6 +135,33 @@ paths:
           description: Service request not found
 components:
   schemas:
+    ServiceRequestInput:
+      type: object
+      description: Input payload for creating or updating a Service Request record
+      required:
+      - Abstract
+      properties:
+        Abstract:
+          type: string
+          description: Brief summary of the service request
+        Description:
+          type: string
+          description: Detailed description of the issue
+        Status:
+          type: string
+          description: Current status
+        Priority:
+          type: string
+          description: Priority level
+        Severity:
+          type: string
+          description: Severity level
+        Type:
+          type: string
+          description: Service request type
+        Account:
+          type: string
+          description: Associated account name
     ServiceRequest:
       type: object
       description: A Siebel CRM Service Request business component record representing a customer service case or issue
@@ -192,33 +219,6 @@ components:
           description: HATEOAS links to related resources
           items:
             $ref: '#/components/schemas/LinkObject'
-    ServiceRequestInput:
-      type: object
-      description: Input payload for creating or updating a Service Request record
-      required:
-      - Abstract
-      properties:
-        Abstract:
-          type: string
-          description: Brief summary of the service request
-        Description:
-          type: string
-          description: Detailed description of the issue
-        Status:
-          type: string
-          description: Current status
-        Priority:
-          type: string
-          description: Priority level
-        Severity:
-          type: string
-          description: Severity level
-        Type:
-          type: string
-          description: Service request type
-        Account:
-          type: string
-          description: Associated account name
     LinkObject:
       type: object
       description: HATEOAS link object providing navigation references to related Siebel REST API resources
@@ -238,45 +238,6 @@ components:
           type: string
           description: Name of the related business component
   parameters:
-    ChildLinks:
-      name: ChildLinks
-      in: query
-      required: false
-      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
-      schema:
-        type: string
-        examples:
-        - Contact,Opportunity
-        - None
-    ServiceRequestId:
-      name: ServiceRequestId
-      in: path
-      required: true
-      description: Unique row identifier for the Service Request record
-      schema:
-        type: string
-    uniformresponse:
-      name: uniformresponse
-      in: query
-      required: false
-      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
-      schema:
-        type: string
-        enum:
-        - 'yes'
-        - 'no'
-        - y
-        - n
-    PageSize:
-      name: PageSize
-      in: query
-      required: false
-      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
-      schema:
-        type: integer
-        minimum: 1
-        examples:
-        - 20
     searchspec:
       name: searchspec
       in: query
@@ -306,6 +267,45 @@ components:
         type: integer
         minimum: 0
         default: 0
+    PageSize:
+      name: PageSize
+      in: query
+      required: false
+      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
+      schema:
+        type: integer
+        minimum: 1
+        examples:
+        - 20
+    ServiceRequestId:
+      name: ServiceRequestId
+      in: path
+      required: true
+      description: Unique row identifier for the Service Request record
+      schema:
+        type: string
+    uniformresponse:
+      name: uniformresponse
+      in: query
+      required: false
+      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+        - y
+        - n
+    ChildLinks:
+      name: ChildLinks
+      in: query
+      required: false
+      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
+      schema:
+        type: string
+        examples:
+        - Contact,Opportunity
+        - None
     fields:
       name: fields
       in: query

@@ -240,6 +240,88 @@ paths:
           description: Parent account not found
 components:
   schemas:
+    Contact:
+      type: object
+      description: A Siebel CRM Contact business component record representing an individual person associated with an account
+      properties:
+        Id:
+          type: string
+          description: Unique row identifier for the contact record
+        First Name:
+          type: string
+          description: Contact first name
+        Last Name:
+          type: string
+          description: Contact last name
+        Job Title:
+          type: string
+          description: Job title or role
+        Email Address:
+          type: string
+          description: Email address
+        'Work Phone #':
+          type: string
+          description: Work phone number
+        'Cellular Phone #':
+          type: string
+          description: Mobile phone number
+        Account:
+          type: string
+          description: Associated account name
+        Account Id:
+          type: string
+          description: Row identifier of the associated account
+        Employee Number:
+          type: string
+          description: Employee number if applicable
+        Employer Name:
+          type: string
+          description: Employer organization name
+        Primary Organization Id:
+          type: string
+          description: Row identifier of the primary organization
+        Status:
+          type: string
+          description: Contact status
+        Link:
+          type: array
+          description: HATEOAS links to related resources
+          items:
+            $ref: '#/components/schemas/LinkObject'
+    ContactInput:
+      type: object
+      description: Input payload for creating or updating a Contact record
+      required:
+      - First Name
+      - Last Name
+      properties:
+        First Name:
+          type: string
+          description: Contact first name
+        Last Name:
+          type: string
+          description: Contact last name
+        Job Title:
+          type: string
+          description: Job title or role
+        Email Address:
+          type: string
+          description: Email address
+        'Work Phone #':
+          type: string
+          description: Work phone number
+        'Cellular Phone #':
+          type: string
+          description: Mobile phone number
+        Employee Number:
+          type: string
+          description: Employee number
+        Employer Name:
+          type: string
+          description: Employer organization name
+        Primary Organization Id:
+          type: string
+          description: Row identifier of the primary organization
     AccountInput:
       type: object
       description: Input payload for creating or updating an Account record
@@ -341,88 +423,6 @@ components:
         name:
           type: string
           description: Name of the related business component
-    Contact:
-      type: object
-      description: A Siebel CRM Contact business component record representing an individual person associated with an account
-      properties:
-        Id:
-          type: string
-          description: Unique row identifier for the contact record
-        First Name:
-          type: string
-          description: Contact first name
-        Last Name:
-          type: string
-          description: Contact last name
-        Job Title:
-          type: string
-          description: Job title or role
-        Email Address:
-          type: string
-          description: Email address
-        'Work Phone #':
-          type: string
-          description: Work phone number
-        'Cellular Phone #':
-          type: string
-          description: Mobile phone number
-        Account:
-          type: string
-          description: Associated account name
-        Account Id:
-          type: string
-          description: Row identifier of the associated account
-        Employee Number:
-          type: string
-          description: Employee number if applicable
-        Employer Name:
-          type: string
-          description: Employer organization name
-        Primary Organization Id:
-          type: string
-          description: Row identifier of the primary organization
-        Status:
-          type: string
-          description: Contact status
-        Link:
-          type: array
-          description: HATEOAS links to related resources
-          items:
-            $ref: '#/components/schemas/LinkObject'
-    ContactInput:
-      type: object
-      description: Input payload for creating or updating a Contact record
-      required:
-      - First Name
-      - Last Name
-      properties:
-        First Name:
-          type: string
-          description: Contact first name
-        Last Name:
-          type: string
-          description: Contact last name
-        Job Title:
-          type: string
-          description: Job title or role
-        Email Address:
-          type: string
-          description: Email address
-        'Work Phone #':
-          type: string
-          description: Work phone number
-        'Cellular Phone #':
-          type: string
-          description: Mobile phone number
-        Employee Number:
-          type: string
-          description: Employee number
-        Employer Name:
-          type: string
-          description: Employer organization name
-        Primary Organization Id:
-          type: string
-          description: Row identifier of the primary organization
     Account:
       type: object
       description: A Siebel CRM Account business component record representing a customer, prospect, or partner organization
@@ -478,47 +478,6 @@ components:
           items:
             $ref: '#/components/schemas/LinkObject'
   parameters:
-    ChildLinks:
-      name: ChildLinks
-      in: query
-      required: false
-      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
-      schema:
-        type: string
-        examples:
-        - Contact,Opportunity
-        - None
-    AccountId:
-      name: AccountId
-      in: path
-      required: true
-      description: Unique row identifier for the Account record
-      schema:
-        type: string
-        examples:
-        - 88-26CND
-    uniformresponse:
-      name: uniformresponse
-      in: query
-      required: false
-      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
-      schema:
-        type: string
-        enum:
-        - 'yes'
-        - 'no'
-        - y
-        - n
-    PageSize:
-      name: PageSize
-      in: query
-      required: false
-      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
-      schema:
-        type: integer
-        minimum: 1
-        examples:
-        - 20
     searchspec:
       name: searchspec
       in: query
@@ -528,6 +487,15 @@ components:
         type: string
         examples:
         - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
+    AccountId:
+      name: AccountId
+      in: path
+      required: true
+      description: Unique row identifier for the Account record
+      schema:
+        type: string
+        examples:
+        - 88-26CND
     ViewMode:
       name: ViewMode
       in: query
@@ -548,6 +516,38 @@ components:
         type: integer
         minimum: 0
         default: 0
+    PageSize:
+      name: PageSize
+      in: query
+      required: false
+      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
+      schema:
+        type: integer
+        minimum: 1
+        examples:
+        - 20
+    uniformresponse:
+      name: uniformresponse
+      in: query
+      required: false
+      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+        - y
+        - n
+    ChildLinks:
+      name: ChildLinks
+      in: query
+      required: false
+      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
+      schema:
+        type: string
+        examples:
+        - Contact,Opportunity
+        - None
     fields:
       name: fields
       in: query
