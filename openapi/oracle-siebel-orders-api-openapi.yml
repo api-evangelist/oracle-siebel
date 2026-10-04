@@ -58,6 +58,16 @@ paths:
           description: Authentication credentials missing or invalid
 components:
   parameters:
+    PageSize:
+      name: PageSize
+      in: query
+      required: false
+      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
+      schema:
+        type: integer
+        minimum: 1
+        examples:
+        - 20
     searchspec:
       name: searchspec
       in: query
@@ -78,37 +88,6 @@ components:
         - Personal
         - Sales Rep
         - Organization
-    StartRowNum:
-      name: StartRowNum
-      in: query
-      required: false
-      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
-    PageSize:
-      name: PageSize
-      in: query
-      required: false
-      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
-      schema:
-        type: integer
-        minimum: 1
-        examples:
-        - 20
-    uniformresponse:
-      name: uniformresponse
-      in: query
-      required: false
-      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
-      schema:
-        type: string
-        enum:
-        - 'yes'
-        - 'no'
-        - y
-        - n
     ChildLinks:
       name: ChildLinks
       in: query
@@ -128,25 +107,28 @@ components:
         type: string
         examples:
         - Name,Location,Account Status
+    StartRowNum:
+      name: StartRowNum
+      in: query
+      required: false
+      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    uniformresponse:
+      name: uniformresponse
+      in: query
+      required: false
+      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+        - y
+        - n
   schemas:
-    LinkObject:
-      type: object
-      description: HATEOAS link object providing navigation references to related Siebel REST API resources
-      properties:
-        rel:
-          type: string
-          description: Relationship type (self, child, parent)
-          enum:
-          - self
-          - child
-          - parent
-        href:
-          type: string
-          format: uri
-          description: Full URL to the related resource
-        name:
-          type: string
-          description: Name of the related business component
     Order:
       type: object
       description: A Siebel CRM Order Entry business component record representing a sales order
@@ -189,6 +171,24 @@ components:
           description: HATEOAS links to related resources
           items:
             $ref: '#/components/schemas/LinkObject'
+    LinkObject:
+      type: object
+      description: HATEOAS link object providing navigation references to related Siebel REST API resources
+      properties:
+        rel:
+          type: string
+          description: Relationship type (self, child, parent)
+          enum:
+          - self
+          - child
+          - parent
+        href:
+          type: string
+          format: uri
+          description: Full URL to the related resource
+        name:
+          type: string
+          description: Name of the related business component
   securitySchemes:
     basicAuth:
       type: http

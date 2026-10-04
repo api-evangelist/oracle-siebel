@@ -171,15 +171,6 @@ paths:
           description: Opportunity not found
 components:
   parameters:
-    searchspec:
-      name: searchspec
-      in: query
-      required: false
-      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
-      schema:
-        type: string
-        examples:
-        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
     AccountId:
       name: AccountId
       in: path
@@ -189,13 +180,25 @@ components:
         type: string
         examples:
         - 88-26CND
-    OpportunityId:
-      name: OpportunityId
-      in: path
-      required: true
-      description: Unique row identifier for the Opportunity record
+    PageSize:
+      name: PageSize
+      in: query
+      required: false
+      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
+      schema:
+        type: integer
+        minimum: 1
+        examples:
+        - 20
+    searchspec:
+      name: searchspec
+      in: query
+      required: false
+      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
       schema:
         type: string
+        examples:
+        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
     ViewMode:
       name: ViewMode
       in: query
@@ -207,37 +210,13 @@ components:
         - Personal
         - Sales Rep
         - Organization
-    StartRowNum:
-      name: StartRowNum
-      in: query
-      required: false
-      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
-    PageSize:
-      name: PageSize
-      in: query
-      required: false
-      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
-      schema:
-        type: integer
-        minimum: 1
-        examples:
-        - 20
-    uniformresponse:
-      name: uniformresponse
-      in: query
-      required: false
-      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
+    OpportunityId:
+      name: OpportunityId
+      in: path
+      required: true
+      description: Unique row identifier for the Opportunity record
       schema:
         type: string
-        enum:
-        - 'yes'
-        - 'no'
-        - y
-        - n
     ChildLinks:
       name: ChildLinks
       in: query
@@ -257,6 +236,27 @@ components:
         type: string
         examples:
         - Name,Location,Account Status
+    StartRowNum:
+      name: StartRowNum
+      in: query
+      required: false
+      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    uniformresponse:
+      name: uniformresponse
+      in: query
+      required: false
+      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+        - y
+        - n
   schemas:
     OpportunityInput:
       type: object
