@@ -240,55 +240,45 @@ paths:
           description: Parent account not found
 components:
   schemas:
-    Account:
+    Opportunity:
       type: object
-      description: A Siebel CRM Account business component record representing a customer, prospect, or partner organization
+      description: A Siebel CRM Opportunity business component record representing a potential sales deal in the pipeline
       properties:
         Id:
           type: string
-          description: Unique row identifier for the account record
+          description: Unique row identifier for the opportunity record
         Name:
           type: string
-          description: Account name
-        Location:
+          description: Opportunity name
+        Account:
           type: string
-          description: Account location identifier
-        Account Status:
+          description: Associated account name
+        Account Id:
           type: string
-          description: Current status of the account
-        Account Type:
+          description: Row identifier of the associated account
+        Sales Stage:
           type: string
-          description: Type classification of the account
+          description: Current stage in the sales process
+        Status:
+          type: string
+          description: Opportunity status
+        Close Date:
+          type: string
+          description: Expected close date
+        Revenue:
+          type: number
+          description: Expected revenue amount
+        Win Probability:
+          type: number
+          description: Estimated probability of winning the deal
+          minimum: 0
+          maximum: 100
         Description:
           type: string
-          description: Detailed description of the account
-        Industry:
-          type: string
-          description: Industry classification
-        Primary Organization:
-          type: string
-          description: Primary organization associated with the account
+          description: Detailed description of the opportunity
         Primary Organization Id:
           type: string
           description: Row identifier of the primary organization
-        Main Phone Number:
-          type: string
-          description: Primary phone number for the account
-        Main Fax Number:
-          type: string
-          description: Primary fax number for the account
-        Email Address:
-          type: string
-          description: Primary email address for the account
-        Home Page:
-          type: string
-          description: Website URL for the account
-        Current Volume:
-          type: number
-          description: Current business volume
-        Alias:
-          type: string
-          description: Alternate name or alias for the account
         Link:
           type: array
           description: HATEOAS links to related resources
@@ -381,45 +371,55 @@ components:
         Home Page:
           type: string
           description: Website URL
-    Opportunity:
+    Account:
       type: object
-      description: A Siebel CRM Opportunity business component record representing a potential sales deal in the pipeline
+      description: A Siebel CRM Account business component record representing a customer, prospect, or partner organization
       properties:
         Id:
           type: string
-          description: Unique row identifier for the opportunity record
+          description: Unique row identifier for the account record
         Name:
           type: string
-          description: Opportunity name
-        Account:
+          description: Account name
+        Location:
           type: string
-          description: Associated account name
-        Account Id:
+          description: Account location identifier
+        Account Status:
           type: string
-          description: Row identifier of the associated account
-        Sales Stage:
+          description: Current status of the account
+        Account Type:
           type: string
-          description: Current stage in the sales process
-        Status:
-          type: string
-          description: Opportunity status
-        Close Date:
-          type: string
-          description: Expected close date
-        Revenue:
-          type: number
-          description: Expected revenue amount
-        Win Probability:
-          type: number
-          description: Estimated probability of winning the deal
-          minimum: 0
-          maximum: 100
+          description: Type classification of the account
         Description:
           type: string
-          description: Detailed description of the opportunity
+          description: Detailed description of the account
+        Industry:
+          type: string
+          description: Industry classification
+        Primary Organization:
+          type: string
+          description: Primary organization associated with the account
         Primary Organization Id:
           type: string
           description: Row identifier of the primary organization
+        Main Phone Number:
+          type: string
+          description: Primary phone number for the account
+        Main Fax Number:
+          type: string
+          description: Primary fax number for the account
+        Email Address:
+          type: string
+          description: Primary email address for the account
+        Home Page:
+          type: string
+          description: Website URL for the account
+        Current Volume:
+          type: number
+          description: Current business volume
+        Alias:
+          type: string
+          description: Alternate name or alias for the account
         Link:
           type: array
           description: HATEOAS links to related resources
@@ -487,46 +487,6 @@ components:
         type: string
         examples:
         - 88-26CND
-    PageSize:
-      name: PageSize
-      in: query
-      required: false
-      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
-      schema:
-        type: integer
-        minimum: 1
-        examples:
-        - 20
-    searchspec:
-      name: searchspec
-      in: query
-      required: false
-      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
-      schema:
-        type: string
-        examples:
-        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
-    ViewMode:
-      name: ViewMode
-      in: query
-      required: false
-      description: Access control mode that determines which records are visible. Personal returns records owned by the user, Sales Rep uses position-based access, and Organization uses organization-level visibility rules.
-      schema:
-        type: string
-        enum:
-        - Personal
-        - Sales Rep
-        - Organization
-    ChildLinks:
-      name: ChildLinks
-      in: query
-      required: false
-      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
-      schema:
-        type: string
-        examples:
-        - Contact,Opportunity
-        - None
     fields:
       name: fields
       in: query
@@ -545,6 +505,15 @@ components:
         type: integer
         minimum: 0
         default: 0
+    searchspec:
+      name: searchspec
+      in: query
+      required: false
+      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
+      schema:
+        type: string
+        examples:
+        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
     uniformresponse:
       name: uniformresponse
       in: query
@@ -557,6 +526,37 @@ components:
         - 'no'
         - y
         - n
+    ChildLinks:
+      name: ChildLinks
+      in: query
+      required: false
+      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
+      schema:
+        type: string
+        examples:
+        - Contact,Opportunity
+        - None
+    PageSize:
+      name: PageSize
+      in: query
+      required: false
+      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
+      schema:
+        type: integer
+        minimum: 1
+        examples:
+        - 20
+    ViewMode:
+      name: ViewMode
+      in: query
+      required: false
+      description: Access control mode that determines which records are visible. Personal returns records owned by the user, Sales Rep uses position-based access, and Organization uses organization-level visibility rules.
+      schema:
+        type: string
+        enum:
+        - Personal
+        - Sales Rep
+        - Organization
   securitySchemes:
     basicAuth:
       type: http

@@ -134,7 +134,113 @@ paths:
         '404':
           description: Activity not found
 components:
+  parameters:
+    fields:
+      name: fields
+      in: query
+      required: false
+      description: Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields.
+      schema:
+        type: string
+        examples:
+        - Name,Location,Account Status
+    StartRowNum:
+      name: StartRowNum
+      in: query
+      required: false
+      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    searchspec:
+      name: searchspec
+      in: query
+      required: false
+      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
+      schema:
+        type: string
+        examples:
+        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
+    uniformresponse:
+      name: uniformresponse
+      in: query
+      required: false
+      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+        - y
+        - n
+    ActivityId:
+      name: ActivityId
+      in: path
+      required: true
+      description: Unique row identifier for the Activity record
+      schema:
+        type: string
+    ChildLinks:
+      name: ChildLinks
+      in: query
+      required: false
+      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
+      schema:
+        type: string
+        examples:
+        - Contact,Opportunity
+        - None
+    PageSize:
+      name: PageSize
+      in: query
+      required: false
+      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
+      schema:
+        type: integer
+        minimum: 1
+        examples:
+        - 20
+    ViewMode:
+      name: ViewMode
+      in: query
+      required: false
+      description: Access control mode that determines which records are visible. Personal returns records owned by the user, Sales Rep uses position-based access, and Organization uses organization-level visibility rules.
+      schema:
+        type: string
+        enum:
+        - Personal
+        - Sales Rep
+        - Organization
   schemas:
+    ActivityInput:
+      type: object
+      description: Input payload for creating or updating an Activity record
+      required:
+      - Type
+      - Description
+      properties:
+        Type:
+          type: string
+          description: Activity type (e.g., Task, Appointment, Call)
+        Description:
+          type: string
+          description: Activity description
+        Status:
+          type: string
+          description: Current status
+        Priority:
+          type: string
+          description: Priority level
+        Due:
+          type: string
+          description: Due date
+        Planned:
+          type: string
+          description: Planned date and time
+        Account:
+          type: string
+          description: Associated account name
     Activity:
       type: object
       description: A Siebel CRM Activity business component record representing a task, appointment, call log, or other scheduled item
@@ -198,112 +304,6 @@ components:
         name:
           type: string
           description: Name of the related business component
-    ActivityInput:
-      type: object
-      description: Input payload for creating or updating an Activity record
-      required:
-      - Type
-      - Description
-      properties:
-        Type:
-          type: string
-          description: Activity type (e.g., Task, Appointment, Call)
-        Description:
-          type: string
-          description: Activity description
-        Status:
-          type: string
-          description: Current status
-        Priority:
-          type: string
-          description: Priority level
-        Due:
-          type: string
-          description: Due date
-        Planned:
-          type: string
-          description: Planned date and time
-        Account:
-          type: string
-          description: Associated account name
-  parameters:
-    PageSize:
-      name: PageSize
-      in: query
-      required: false
-      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
-      schema:
-        type: integer
-        minimum: 1
-        examples:
-        - 20
-    searchspec:
-      name: searchspec
-      in: query
-      required: false
-      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
-      schema:
-        type: string
-        examples:
-        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
-    ViewMode:
-      name: ViewMode
-      in: query
-      required: false
-      description: Access control mode that determines which records are visible. Personal returns records owned by the user, Sales Rep uses position-based access, and Organization uses organization-level visibility rules.
-      schema:
-        type: string
-        enum:
-        - Personal
-        - Sales Rep
-        - Organization
-    ChildLinks:
-      name: ChildLinks
-      in: query
-      required: false
-      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
-      schema:
-        type: string
-        examples:
-        - Contact,Opportunity
-        - None
-    ActivityId:
-      name: ActivityId
-      in: path
-      required: true
-      description: Unique row identifier for the Activity record
-      schema:
-        type: string
-    fields:
-      name: fields
-      in: query
-      required: false
-      description: Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields.
-      schema:
-        type: string
-        examples:
-        - Name,Location,Account Status
-    StartRowNum:
-      name: StartRowNum
-      in: query
-      required: false
-      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
-    uniformresponse:
-      name: uniformresponse
-      in: query
-      required: false
-      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
-      schema:
-        type: string
-        enum:
-        - 'yes'
-        - 'no'
-        - y
-        - n
   securitySchemes:
     basicAuth:
       type: http

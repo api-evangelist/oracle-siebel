@@ -58,46 +58,6 @@ paths:
           description: Authentication credentials missing or invalid
 components:
   parameters:
-    PageSize:
-      name: PageSize
-      in: query
-      required: false
-      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
-      schema:
-        type: integer
-        minimum: 1
-        examples:
-        - 20
-    searchspec:
-      name: searchspec
-      in: query
-      required: false
-      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
-      schema:
-        type: string
-        examples:
-        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
-    ViewMode:
-      name: ViewMode
-      in: query
-      required: false
-      description: Access control mode that determines which records are visible. Personal returns records owned by the user, Sales Rep uses position-based access, and Organization uses organization-level visibility rules.
-      schema:
-        type: string
-        enum:
-        - Personal
-        - Sales Rep
-        - Organization
-    ChildLinks:
-      name: ChildLinks
-      in: query
-      required: false
-      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
-      schema:
-        type: string
-        examples:
-        - Contact,Opportunity
-        - None
     fields:
       name: fields
       in: query
@@ -116,6 +76,15 @@ components:
         type: integer
         minimum: 0
         default: 0
+    searchspec:
+      name: searchspec
+      in: query
+      required: false
+      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
+      schema:
+        type: string
+        examples:
+        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
     uniformresponse:
       name: uniformresponse
       in: query
@@ -128,6 +97,37 @@ components:
         - 'no'
         - y
         - n
+    ChildLinks:
+      name: ChildLinks
+      in: query
+      required: false
+      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
+      schema:
+        type: string
+        examples:
+        - Contact,Opportunity
+        - None
+    PageSize:
+      name: PageSize
+      in: query
+      required: false
+      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
+      schema:
+        type: integer
+        minimum: 1
+        examples:
+        - 20
+    ViewMode:
+      name: ViewMode
+      in: query
+      required: false
+      description: Access control mode that determines which records are visible. Personal returns records owned by the user, Sales Rep uses position-based access, and Organization uses organization-level visibility rules.
+      schema:
+        type: string
+        enum:
+        - Personal
+        - Sales Rep
+        - Organization
   schemas:
     Product:
       type: object

@@ -170,93 +170,6 @@ paths:
         '404':
           description: Opportunity not found
 components:
-  parameters:
-    AccountId:
-      name: AccountId
-      in: path
-      required: true
-      description: Unique row identifier for the Account record
-      schema:
-        type: string
-        examples:
-        - 88-26CND
-    PageSize:
-      name: PageSize
-      in: query
-      required: false
-      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
-      schema:
-        type: integer
-        minimum: 1
-        examples:
-        - 20
-    searchspec:
-      name: searchspec
-      in: query
-      required: false
-      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
-      schema:
-        type: string
-        examples:
-        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
-    ViewMode:
-      name: ViewMode
-      in: query
-      required: false
-      description: Access control mode that determines which records are visible. Personal returns records owned by the user, Sales Rep uses position-based access, and Organization uses organization-level visibility rules.
-      schema:
-        type: string
-        enum:
-        - Personal
-        - Sales Rep
-        - Organization
-    OpportunityId:
-      name: OpportunityId
-      in: path
-      required: true
-      description: Unique row identifier for the Opportunity record
-      schema:
-        type: string
-    ChildLinks:
-      name: ChildLinks
-      in: query
-      required: false
-      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
-      schema:
-        type: string
-        examples:
-        - Contact,Opportunity
-        - None
-    fields:
-      name: fields
-      in: query
-      required: false
-      description: Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields.
-      schema:
-        type: string
-        examples:
-        - Name,Location,Account Status
-    StartRowNum:
-      name: StartRowNum
-      in: query
-      required: false
-      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
-    uniformresponse:
-      name: uniformresponse
-      in: query
-      required: false
-      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
-      schema:
-        type: string
-        enum:
-        - 'yes'
-        - 'no'
-        - y
-        - n
   schemas:
     OpportunityInput:
       type: object
@@ -349,6 +262,93 @@ components:
         name:
           type: string
           description: Name of the related business component
+  parameters:
+    AccountId:
+      name: AccountId
+      in: path
+      required: true
+      description: Unique row identifier for the Account record
+      schema:
+        type: string
+        examples:
+        - 88-26CND
+    fields:
+      name: fields
+      in: query
+      required: false
+      description: Comma-separated list of field names to include in the response. When specified, only the listed fields are returned instead of all available fields.
+      schema:
+        type: string
+        examples:
+        - Name,Location,Account Status
+    StartRowNum:
+      name: StartRowNum
+      in: query
+      required: false
+      description: Zero-based index of the first record to return. Used in combination with PageSize for pagination through large result sets.
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    searchspec:
+      name: searchspec
+      in: query
+      required: false
+      description: Siebel search specification expression for filtering records. Uses Siebel query language syntax with field names in square brackets and standard comparison operators.
+      schema:
+        type: string
+        examples:
+        - '[Name] LIKE ''B*'' AND [Status] = ''Active'''
+    uniformresponse:
+      name: uniformresponse
+      in: query
+      required: false
+      description: When set to 'yes' or 'y', forces the response to always use the JSON array format with an items wrapper, regardless of whether the result contains a single record or multiple records.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+        - y
+        - n
+    OpportunityId:
+      name: OpportunityId
+      in: path
+      required: true
+      description: Unique row identifier for the Opportunity record
+      schema:
+        type: string
+    ChildLinks:
+      name: ChildLinks
+      in: query
+      required: false
+      description: Comma-separated list of child business component names to include as link references in the response. Use 'None' to suppress all child links.
+      schema:
+        type: string
+        examples:
+        - Contact,Opportunity
+        - None
+    PageSize:
+      name: PageSize
+      in: query
+      required: false
+      description: Maximum number of records to return in the response. Controls pagination by limiting the result set size.
+      schema:
+        type: integer
+        minimum: 1
+        examples:
+        - 20
+    ViewMode:
+      name: ViewMode
+      in: query
+      required: false
+      description: Access control mode that determines which records are visible. Personal returns records owned by the user, Sales Rep uses position-based access, and Organization uses organization-level visibility rules.
+      schema:
+        type: string
+        enum:
+        - Personal
+        - Sales Rep
+        - Organization
   securitySchemes:
     basicAuth:
       type: http
